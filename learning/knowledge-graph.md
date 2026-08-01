@@ -228,25 +228,25 @@
 - evidence: authored a form with input, textarea, label, and button; used self-closing tags correctly after a couple of iterations
 
 ## react-state
-- status: seed
+- status: practicing
 - depends-on: react-component
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: explained a plain variable won't trigger a re-render; authored a second useState for reflection
 
 ## event-handling
-- status: seed
+- status: practicing
 - depends-on: react-component
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: authored an onChange handler (e) => setReflection(e.target.value) after debugging a no-op version
 
 ## controlled-inputs
-- status: seed
+- status: practicing
 - depends-on: react-state
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: wired both fields with value + onChange; learned a controlled input freezes if onChange never calls the setter
 
 ## props
 - status: seed
