@@ -207,11 +207,18 @@
 - evidence: identified the app running at localhost:5173 on their own machine
 
 ## css
-- status: seed
+- status: practicing
 - depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: wrote real input/textarea/button rules; learned comma (this-and-that) vs space (descendant) selectors after a live bug
+
+## flexbox
+- status: introduced
+- depends-on: css
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: used the provided flex-column layout on form/label (explained by me, not yet authored solo)
 
 ## form-elements
 - status: practicing

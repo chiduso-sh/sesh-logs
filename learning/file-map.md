@@ -19,8 +19,8 @@
 - frontend/src/ — known (2026-08-01) — where your React code lives
 - frontend/src/main.jsx — known (2026-08-01) — entry point: mounts React into index.html
 - frontend/src/App.jsx — known (2026-08-01) — your main component; renders the "Sesh logs" page + session form → [[react-component]] [[jsx]] [[form-elements]]
-- frontend/src/index.css — parked (styling, section 2) — global styles
-- frontend/src/App.css — parked (styling, section 2) — styles for the App component
+- frontend/src/App.css — known (2026-08-01) — your styles for the form (you wrote input/textarea/button rules) → [[css]] [[flexbox]]
+- frontend/src/index.css — parked (base styles) — Vite's global base: color variables, dark-mode, #root centering (not yet reviewed line-by-line)
 - frontend/src/assets/ — parked (section 2) — images/static assets used by components
 - frontend/public/ — parked (section 2) — static files served as-is
 - frontend/vite.config.js — parked (section 4) — Vite's settings
