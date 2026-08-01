@@ -4,6 +4,7 @@
 <!-- known: explained in the learner's own words | parked: honest one-liner for now, deep dive scheduled | generated: machine-made, never edit, always rebuildable -->
 
 ## /
+- .git/ — generated (2026-07-31) — git's private store of all your snapshots/history; never edit by hand → [[repo]]
 - learning/project.md — known (2026-07-31) — your project, MVP, and trunk
 - learning/plan.md — known (2026-07-31) — the build plan and locked decisions → [[writing-a-plan]]
 - learning/knowledge-graph.md — known (2026-07-31) — the living map of what you actually know

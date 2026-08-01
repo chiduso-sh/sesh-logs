@@ -81,25 +81,39 @@
 - evidence: —
 
 ## git
-- status: seed
+- status: practicing
 - depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-07-31
+- last-reviewed: 2026-07-31
+- evidence: predicted git init would make the folder watched; ran init/add/commit and read the results
 
 ## repo
-- status: seed
+- status: practicing
 - depends-on: git
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-07-31
+- last-reviewed: 2026-07-31
+- evidence: identified the hidden .git folder as the repo after running git init
 
 ## commits
-- status: seed
+- status: practicing
 - depends-on: git
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-07-31
+- last-reviewed: 2026-07-31
+- evidence: made first commit with own message; read it back in git log (hash, author, HEAD -> master)
+
+## staging
+- status: practicing
+- depends-on: git
+- introduced: 2026-07-31
+- last-reviewed: 2026-07-31
+- evidence: predicted correctly that git add moves files to "changes to be committed"
+
+## git-status
+- status: practicing
+- depends-on: git
+- introduced: 2026-07-31
+- last-reviewed: 2026-07-31
+- evidence: read and decoded untracked → staged → "working tree clean" across the lesson
 
 ## npm
 - status: seed
