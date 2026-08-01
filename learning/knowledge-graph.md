@@ -116,18 +116,53 @@
 - evidence: read and decoded untracked → staged → "working tree clean" across the lesson
 
 ## npm
-- status: seed
+- status: practicing
 - depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: ran npm create vite + npm install; explained node_modules as installed packages that can be redownloaded
 
 ## vite
-- status: seed
+- status: practicing
 - depends-on: npm
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: scaffolded the frontend/ app with the react template and got the dev server running
+
+## package-json
+- status: introduced
+- depends-on: npm
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: toured as the project's dependency list + scripts (the "shopping list")
+
+## dependencies
+- status: practicing
+- depends-on: npm
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: explained node_modules holds installed package code, large, redownloadable via npm install
+
+## gitignore
+- status: practicing
+- depends-on: git
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: explained why git should ignore node_modules (large, rebuildable, no need to snapshot)
+
+## dev-server
+- status: introduced
+- depends-on: vite
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: got npm run dev serving the app and observed live output
+
+## port
+- status: introduced
+- depends-on: localhost
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: saw the app on port 5173; port explained as which running program the browser talks to
 
 ## react-component
 - status: seed
@@ -144,11 +179,11 @@
 - evidence: —
 
 ## localhost
-- status: seed
+- status: practicing
 - depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: identified the app running at localhost:5173 on their own machine
 
 ## css
 - status: seed
