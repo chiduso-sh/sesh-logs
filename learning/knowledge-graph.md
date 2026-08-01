@@ -165,18 +165,39 @@
 - evidence: saw the app on port 5173; port explained as which running program the browser talks to
 
 ## react-component
-- status: seed
+- status: practicing
 - depends-on: javascript
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: explained App's job is to return the UI; wrote their own App component
 
 ## jsx
-- status: seed
+- status: practicing
 - depends-on: react-component
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: authored JSX (h1/p with own text); learned {} injects live JS values
+
+## jsx-single-parent
+- status: practicing
+- depends-on: jsx
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: predicted the "adjacent JSX elements must be wrapped" error and stated the one-parent rule (fragments <>…</> as the alt wrapper)
+
+## hot-reload
+- status: practicing
+- depends-on: dev-server
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: correctly predicted the browser updates on save with no manual refresh (Vite HMR)
+
+## reading-errors
+- status: practicing
+- depends-on: none
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: read the error overlay calmly, identified cause, and predicted the fix during a deliberate break
 
 ## localhost
 - status: practicing

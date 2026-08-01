@@ -10,14 +10,14 @@
 
 ## Sections
 
-### 1. Project setup + first page live locally  [ ] not started
+### 1. Project setup + first page live locally  [x] DONE
 **Deliverable:** the React app running on localhost showing a "Workout Log" home page, with git tracking the code.
 **Concepts:** git, repo, commits, npm, vite, react-component, jsx, localhost
 
 - [x] 1.1 Start git — turn this folder into a repo and make your first commit
 - [x] 1.2 Scaffold the React app with Vite and tour the files it creates
 - [x] 1.3 Run the dev server and see your app live on localhost
-- [ ] 1.4 Make it say "Workout Log" — your first real React edit
+- [x] 1.4 Make it say "Workout Log" — your first real React edit
 
 ### 2. Styling + interactivity  [ ] not started
 **Deliverable:** a styled session-logging form where typing and clicking update the screen (nothing saved yet).

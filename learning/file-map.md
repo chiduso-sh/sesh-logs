@@ -18,7 +18,7 @@
 - frontend/package-lock.json — generated (2026-08-01) — exact locked versions of every package
 - frontend/src/ — known (2026-08-01) — where your React code lives
 - frontend/src/main.jsx — known (2026-08-01) — entry point: mounts React into index.html
-- frontend/src/App.jsx — known (2026-08-01) — the main component (the page you'll edit) → [[react-component]]
+- frontend/src/App.jsx — known (2026-08-01) — your main component; you rewrote it to render the "Sesh logs" page → [[react-component]] [[jsx]]
 - frontend/src/index.css — parked (styling, section 2) — global styles
 - frontend/src/App.css — parked (styling, section 2) — styles for the App component
 - frontend/src/assets/ — parked (section 2) — images/static assets used by components
