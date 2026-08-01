@@ -239,7 +239,28 @@
 - depends-on: react-component
 - introduced: 2026-08-01
 - last-reviewed: 2026-08-01
-- evidence: authored an onChange handler (e) => setReflection(e.target.value) after debugging a no-op version
+- evidence: wired onClick to handleAdd; learned a type="submit" button inside a form reloads the page and wipes state
+
+## array-state
+- status: practicing
+- depends-on: react-state
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: added useState([]) for sessions and appended objects {id, workout, reflection} on click
+
+## immutability
+- status: practicing
+- depends-on: array-state
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: wrote setSessions([...sessions, newSession]) after several guided attempts; understands push won't trigger a re-render (needs reinforcement)
+
+## list-rendering
+- status: practicing
+- depends-on: array-state
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: rendered sessions with .map + key={session.id}; debugged arrow block-body `=> {}` (no return) vs `=> ()` (implicit return)
 
 ## controlled-inputs
 - status: practicing

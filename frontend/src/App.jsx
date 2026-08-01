@@ -4,7 +4,19 @@ import './App.css'
 function App() {
   const [workout, setWorkout] = useState('')
   const [reflection, setReflection] = useState('')
+  const [sessions, setSessions] = useState([])
 
+  function handleAdd() {
+    const newSession = { id: crypto.randomUUID(), workout, reflection }
+
+    setWorkout('')
+    setReflection('')
+    setSessions([...sessions, newSession])
+  }
+
+  function clearList(){
+    setSessions([])
+  }
 
   return (
     <main>
@@ -31,13 +43,21 @@ function App() {
           />
         </label>
 
-        <label>Log sesstion</label>
-        <button type="button">add sesh</button>
+        <button type="button" onClick={() => handleAdd()}>add sesh</button>
       </form>
 
 
-      <p>Live preview — workout: {workout}</p>
-      <p>{reflection}</p>
+      <ul>
+        List
+        {sessions.map((session) => (
+          <li key={session.id}>
+            <strong>{session.workout}</strong>
+            <p>{session.reflection} </p>
+          </li>
+        ))}
+      </ul>
+
+      <button type='button' onClick={() => clearList()}>clear</button>
     </main>
   )
 }

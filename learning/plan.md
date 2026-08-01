@@ -26,7 +26,7 @@
 - [x] 2.1 Lay out the session form in JSX (a text input, a reflection box, a button)
 - [x] 2.2 Style the page with CSS so it looks like a real form
 - [x] 2.3 Wire up state — capture what you type (useState + controlled inputs)
-- [ ] 2.4 Handle the click — add the typed session to an on-screen list
+- [x] 2.4 Handle the click — add the typed session to an on-screen list
 - [ ] 2.5 Split a session item into its own component that receives props
 
 ### 3. A backend server that responds  [ ] not started

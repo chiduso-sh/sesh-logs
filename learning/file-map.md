@@ -18,7 +18,7 @@
 - frontend/package-lock.json — generated (2026-08-01) — exact locked versions of every package
 - frontend/src/ — known (2026-08-01) — where your React code lives
 - frontend/src/main.jsx — known (2026-08-01) — entry point: mounts React into index.html
-- frontend/src/App.jsx — known (2026-08-01) — your main component; session form with state-backed controlled inputs → [[react-component]] [[jsx]] [[react-state]] [[controlled-inputs]] [[event-handling]]
+- frontend/src/App.jsx — known (2026-08-01) — your main component; form + click-to-add sessions list → [[react-state]] [[controlled-inputs]] [[event-handling]] [[array-state]] [[immutability]] [[list-rendering]]
 - frontend/src/App.css — known (2026-08-01) — your styles for the form (you wrote input/textarea/button rules) → [[css]] [[flexbox]]
 - frontend/src/index.css — parked (base styles) — Vite's global base: color variables, dark-mode, #root centering (not yet reviewed line-by-line)
 - frontend/src/assets/ — parked (section 2) — images/static assets used by components
