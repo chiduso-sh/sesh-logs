@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import SessionItem from './SessionItem'
 
 function App() {
   const [workout, setWorkout] = useState('')
@@ -50,10 +51,7 @@ function App() {
       <ul>
         List
         {sessions.map((session) => (
-          <li key={session.id}>
-            <strong>{session.workout}</strong>
-            <p>{session.reflection} </p>
-          </li>
+          <SessionItem key={session.id} session={session}/>
         ))}
       </ul>
 

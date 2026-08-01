@@ -19,7 +19,7 @@
 - [x] 1.3 Run the dev server and see your app live on localhost
 - [x] 1.4 Make it say "Workout Log" — your first real React edit
 
-### 2. Styling + interactivity  [ ] not started
+### 2. Styling + interactivity  [x] DONE
 **Deliverable:** a styled session-logging form where typing and clicking update the screen (nothing saved yet).
 **Concepts:** css, react-state, event-handling, controlled-inputs, props
 
@@ -27,7 +27,7 @@
 - [x] 2.2 Style the page with CSS so it looks like a real form
 - [x] 2.3 Wire up state — capture what you type (useState + controlled inputs)
 - [x] 2.4 Handle the click — add the typed session to an on-screen list
-- [ ] 2.5 Split a session item into its own component that receives props
+- [x] 2.5 Split a session item into its own component that receives props
 
 ### 3. A backend server that responds  [ ] not started
 **Deliverable:** a Node/Express server running locally that answers a test request in the browser.

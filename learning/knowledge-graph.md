@@ -253,7 +253,7 @@
 - depends-on: array-state
 - introduced: 2026-08-01
 - last-reviewed: 2026-08-01
-- evidence: wrote setSessions([...sessions, newSession]) after several guided attempts; understands push won't trigger a re-render (needs reinforcement)
+- evidence: wrote setSessions([...sessions, newSession]) after several guided attempts; then reused replace-don't-mutate unprompted in clearList (setSessions([]))
 
 ## list-rendering
 - status: practicing
@@ -270,11 +270,18 @@
 - evidence: wired both fields with value + onChange; learned a controlled input freezes if onChange never calls the setter
 
 ## props
-- status: seed
+- status: practicing
 - depends-on: react-component
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: built SessionItem({ session }) and passed session={session} from App's map; cleared up the "map lives in the parent, child renders one" confusion
+
+## module-imports
+- status: practicing
+- depends-on: react-component
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: added `export default SessionItem` and imported it into App with `import SessionItem from './SessionItem'`
 
 ## nodejs
 - status: seed
