@@ -213,6 +213,13 @@
 - last-reviewed: —
 - evidence: —
 
+## form-elements
+- status: practicing
+- depends-on: jsx
+- introduced: 2026-08-01
+- last-reviewed: 2026-08-01
+- evidence: authored a form with input, textarea, label, and button; used self-closing tags correctly after a couple of iterations
+
 ## react-state
 - status: seed
 - depends-on: react-component
