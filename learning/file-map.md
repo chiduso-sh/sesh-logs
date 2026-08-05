@@ -11,7 +11,7 @@
 - learning/file-map.md — known (2026-07-31) — this file: why every file in the repo exists
 
 ## backend/  (the Node/Express server — the other separate program → [[frontend-backend-separation]] [[nodejs]])
-- backend/server.js — known (2026-08-05) — Express server; in-memory sessions store, GET reads + POST pushes → [[express]] [[server]] [[routes]] [[json]] [[api]] [[cors]] [[middleware]] [[http-methods]] [[request-body]] [[in-memory-storage]]
+- backend/server.js — known (2026-08-05) — Express server; GET SELECTs + POST INSERTs to the SQLite db (in-memory array now dead, removed in 5.4) → [[express]] [[server]] [[routes]] [[api]] [[cors]] [[middleware]] [[http-methods]] [[request-body]] [[sql]] [[crud]] [[parameterized-queries]] [[db-to-server]]
 - backend/package.json — known (2026-08-05) — the backend's ID card; lists express + cors, "type":"module" → [[package-json]] [[express]] [[module-systems]]
 - backend/db.js — known (2026-08-05) — opens the SQLite database file and defines the sessions table → [[sql]] [[tables]] [[schema]] [[sqlite-postgres]] [[db-to-server]]
 - backend/sessions.db — generated (2026-08-05) — the actual SQLite database file (your data lives here); gitignored

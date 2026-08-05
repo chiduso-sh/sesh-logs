@@ -53,7 +53,7 @@
 
 - [x] 5.1 Add SQLite and create the sessions table (install + connect + schema)
 - [x] 5.2 Make GET read the sessions from the database (SELECT)
-- [ ] 5.3 Make POST insert a new session into the database (INSERT)
+- [x] 5.3 Make POST insert a new session into the database (INSERT)
 - [ ] 5.4 Confirm data survives a restart; remove the old in-memory array
 
 ### 6. Accounts + private data (auth)  [ ] not started

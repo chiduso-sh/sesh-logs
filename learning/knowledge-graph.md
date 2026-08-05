@@ -431,11 +431,18 @@
 - evidence: using SQLite locally (a single .db file); same SQL that transfers to Postgres at deploy
 
 ## crud
+- status: practicing
+- depends-on: sql
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: Read (SELECT) + Create (INSERT); debugged assigning .run()'s metadata into req.body; verified data survives a full server restart
+
+## parameterized-queries
 - status: introduced
 - depends-on: sql
 - introduced: 2026-08-05
 - last-reviewed: 2026-08-05
-- evidence: did the R (Read) of CRUD — a SELECT query feeding the GET route (Create/Update/Delete still to come)
+- evidence: used ? placeholders with .run(id, workout, reflection) instead of pasting values into SQL (explained: prevents SQL injection)
 
 ## db-to-server
 - status: practicing
