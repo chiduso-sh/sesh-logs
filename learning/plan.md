@@ -33,6 +33,11 @@
 **Deliverable:** a Node/Express server running locally that answers a test request in the browser.
 **Concepts:** nodejs, express, server, routes, http-methods, request-response, ports
 
+- [x] 3.1 Create the backend/ folder, initialize a Node project, install Express
+- [ ] 3.2 Write a minimal Express server that starts and listens on a port
+- [ ] 3.3 Add your first route and see its response in the browser
+- [ ] 3.4 Add a route that returns JSON (a placeholder sessions list)
+
 ### 4. Frontend talks to backend (the API)  [ ] not started
 **Deliverable:** submitting the form sends data to the server and you see the server receive it.
 **Concepts:** api, fetch, json, http-from-react, cors, async-await

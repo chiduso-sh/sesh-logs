@@ -284,18 +284,18 @@
 - evidence: added `export default SessionItem` and imported it into App with `import SessionItem from './SessionItem'`
 
 ## nodejs
-- status: seed
+- status: introduced
 - depends-on: javascript
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: scaffolded a separate Node project in backend/ (npm init); understands Node runs JS outside the browser (not yet run Node code)
 
 ## express
-- status: seed
+- status: introduced
 - depends-on: nodejs
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: installed express ^5 as the backend's first dependency; recalled npm install adds to dependencies + node_modules
 
 ## server
 - status: seed
