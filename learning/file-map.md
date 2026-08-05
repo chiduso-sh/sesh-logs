@@ -13,7 +13,9 @@
 ## backend/  (the Node/Express server — the other separate program → [[frontend-backend-separation]] [[nodejs]])
 - backend/server.js — known (2026-08-05) — Express server; in-memory sessions store, GET reads + POST pushes → [[express]] [[server]] [[routes]] [[json]] [[api]] [[cors]] [[middleware]] [[http-methods]] [[request-body]] [[in-memory-storage]]
 - backend/package.json — known (2026-08-05) — the backend's ID card; lists express + cors, "type":"module" → [[package-json]] [[express]] [[module-systems]]
-- backend/.gitignore — known (2026-08-05) — keeps the backend's node_modules out of git → [[gitignore]]
+- backend/db.js — known (2026-08-05) — opens the SQLite database file and defines the sessions table → [[sql]] [[tables]] [[schema]] [[sqlite-postgres]] [[db-to-server]]
+- backend/sessions.db — generated (2026-08-05) — the actual SQLite database file (your data lives here); gitignored
+- backend/.gitignore — known (2026-08-05) — keeps node_modules and sessions.db out of git → [[gitignore]]
 - backend/node_modules/ — generated (2026-08-05) — installed package code; rebuild with npm install → [[dependencies]]
 - backend/package-lock.json — generated (2026-08-05) — exact locked versions for the backend
 

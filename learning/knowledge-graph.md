@@ -32,11 +32,11 @@
 - evidence: explained separation = you see how the pieces connect, no hidden magic
 
 ## sql
-- status: introduced
+- status: practicing
 - depends-on: database
 - introduced: 2026-07-31
-- last-reviewed: 2026-07-31
-- evidence: reasoned that related data (users ↔ sessions) fits relational tables (after a nudge)
+- last-reviewed: 2026-08-05
+- evidence: read and understood a CREATE TABLE statement; ran it (via import) to create the sessions table
 
 ## postgresql
 - status: introduced
@@ -410,25 +410,25 @@
 - evidence: added app.use(cors()) and app.use(express.json()) — saw express.json() populate req.body from the POST
 
 ## tables
-- status: seed
+- status: practicing
 - depends-on: sql
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: created a sessions table with columns id/workout/reflection
 
 ## schema
-- status: seed
+- status: introduced
 - depends-on: tables
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: understood schema = columns + types; PRIMARY KEY explained as a unique per-row id
 
 ## sqlite-postgres
-- status: seed
+- status: introduced
 - depends-on: postgresql
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: using SQLite locally (a single .db file); same SQL that transfers to Postgres at deploy
 
 ## crud
 - status: seed
@@ -438,11 +438,11 @@
 - evidence: —
 
 ## db-to-server
-- status: seed
+- status: practicing
 - depends-on: server, database
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: wired db.js into server via import; predicted importing runs db.js and creates sessions.db
 
 ## environment-variables
 - status: seed
