@@ -319,25 +319,25 @@
 - evidence: started an Express server and saw it hold the terminal open — explained a server never "finishes", it listens
 
 ## routes
-- status: seed
+- status: practicing
 - depends-on: express
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: wrote app.get('/', (req,res) => res.send('wesh')); learned the server needs a restart to load new code (no hot reload)
 
 ## http-methods
-- status: seed
+- status: practicing
 - depends-on: routes
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: explained a browser visiting a URL sends a GET request, matched by app.get
 
 ## request-response
-- status: seed
+- status: practicing
 - depends-on: server
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: traced the full cycle: browser GET / → handler runs → res.send → browser shows the response
 
 ## ports
 - status: seed

@@ -11,7 +11,7 @@
 - learning/file-map.md — known (2026-07-31) — this file: why every file in the repo exists
 
 ## backend/  (the Node/Express server — the other separate program → [[frontend-backend-separation]] [[nodejs]])
-- backend/server.js — known (2026-08-05) — your Express server; creates the app and listens on a port → [[express]] [[server]] [[port]]
+- backend/server.js — known (2026-08-05) — your Express server; listens on a port and answers GET / → [[express]] [[server]] [[port]] [[routes]] [[request-response]]
 - backend/package.json — known (2026-08-05) — the backend's ID card; lists express, set "type":"module" for import syntax → [[package-json]] [[express]] [[module-systems]]
 - backend/.gitignore — known (2026-08-05) — keeps the backend's node_modules out of git → [[gitignore]]
 - backend/node_modules/ — generated (2026-08-05) — installed package code; rebuild with npm install → [[dependencies]]
