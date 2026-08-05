@@ -26,6 +26,7 @@ app.get('/api/sessions', (req, res) => {
 // a route that receives a new session via POST
 app.post('/api/sessions', (req, res) => {
   // TODO(you): add the new session (req.body) to the sessions array
+  sessions.push(req.body)
   res.status(201).json(req.body) // 201 = "Created"; send the saved session back
 })
 

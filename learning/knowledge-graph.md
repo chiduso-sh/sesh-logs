@@ -66,6 +66,13 @@
 - last-reviewed: —
 - evidence: —
 
+## in-memory-storage
+- status: practicing
+- depends-on: array-state
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: built a module-level sessions array (GET reads, POST pushes); tested that restarting the server wipes it back to the seeds — motivating a real database
+
 ## api
 - status: practicing
 - depends-on: frontend-backend-separation

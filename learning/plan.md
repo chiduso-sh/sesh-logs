@@ -38,14 +38,14 @@
 - [x] 3.3 Add your first route and see its response in the browser
 - [x] 3.4 Add a route that returns JSON (a placeholder sessions list)
 
-### 4. Frontend talks to backend (the API)  [ ] not started
+### 4. Frontend talks to backend (the API)  [x] DONE
 **Deliverable:** submitting the form sends data to the server and you see the server receive it.
 **Concepts:** api, fetch, json, http-from-react, cors, async-await
 
 - [x] 4.1 Fetch the sessions from the backend and display them (fetch + async/await), fixing the CORS error that appears
 - [x] 4.2 Auto-load the sessions when the page opens (useEffect)
 - [x] 4.3 Send a new session to the backend with a POST request
-- [ ] 4.4 Backend receives the POST and stores it (in-memory); frontend shows it
+- [x] 4.4 Backend receives the POST and stores it (in-memory); frontend shows it
 
 ### 5. Remembering things (database)  [ ] not started
 **Deliverable:** logged sessions are saved to a database and survive a restart; the history list reads from it.
