@@ -7,8 +7,18 @@ function App() {
   const [reflection, setReflection] = useState('')
   const [sessions, setSessions] = useState([])
 
-  function handleAdd() {
+  async function handleAdd() {
     const newSession = { id: crypto.randomUUID(), workout, reflection }
+
+    // send the new session to the backend with a POST request
+    await fetch('http://localhost:3000/api/sessions', {
+      // TODO(you): set method to 'POST';
+      //   add headers: { 'Content-Type': 'application/json' };
+      //   set body to JSON.stringify(newSession)
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify(newSession)
+    })
 
     setWorkout('')
     setReflection('')

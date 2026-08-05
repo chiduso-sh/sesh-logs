@@ -337,7 +337,14 @@
 - depends-on: routes
 - introduced: 2026-08-05
 - last-reviewed: 2026-08-05
-- evidence: explained a browser visiting a URL sends a GET request, matched by app.get
+- evidence: GET (read) vs POST (write): added an app.post route and POSTed from React; saw the server log the received session
+
+## request-body
+- status: practicing
+- depends-on: http-methods
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: sent a session in the POST body via JSON.stringify + Content-Type header; server read it with express.json() → req.body
 
 ## request-response
 - status: practicing
@@ -389,11 +396,11 @@
 - evidence: wrote an async function with two awaits (await fetch, await res.json)
 
 ## middleware
-- status: introduced
+- status: practicing
 - depends-on: express
 - introduced: 2026-08-05
 - last-reviewed: 2026-08-05
-- evidence: added app.use(cors()) — code that runs on every request before the routes
+- evidence: added app.use(cors()) and app.use(express.json()) — saw express.json() populate req.body from the POST
 
 ## tables
 - status: seed

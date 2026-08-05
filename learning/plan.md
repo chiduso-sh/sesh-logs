@@ -44,7 +44,7 @@
 
 - [x] 4.1 Fetch the sessions from the backend and display them (fetch + async/await), fixing the CORS error that appears
 - [x] 4.2 Auto-load the sessions when the page opens (useEffect)
-- [ ] 4.3 Send a new session to the backend with a POST request
+- [x] 4.3 Send a new session to the backend with a POST request
 - [ ] 4.4 Backend receives the POST and stores it (in-memory); frontend shows it
 
 ### 5. Remembering things (database)  [ ] not started
