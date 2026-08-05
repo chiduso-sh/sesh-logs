@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import SessionItem from './SessionItem'
 
@@ -23,9 +23,13 @@ function App() {
   async function loadSessions() {
     const res = await fetch('http://localhost:3000/api/sessions')
     const data = await res.json()
-    // TODO(you): put the fetched `data` into state so the list renders it
-    //            (use your sessions setter)
+    setSessions(data)
   }
+
+  // run once, right after the page first loads: fetch the sessions
+  useEffect(() => {
+    loadSessions()
+  }, [])
 
   return (
     <main>

@@ -1,7 +1,8 @@
 import express from 'express'
+import cors from 'cors'
 // create the server application
 const app = express()
-
+app.use(cors())
 // the port this server listens on
 const PORT = 3000
 
@@ -13,8 +14,6 @@ app.get('/', (req, res) => {
 // a route that returns a list of sessions as JSON data
 app.get('/api/sessions', (req, res) => {
   const sessions = [
-    // TODO(you): put 2 session objects here, each with
-    // an id, a workout, and a reflection (like the ones in your React app)
     {
         id: crypto.randomUUID(),
         workout: 'Pull ups',

@@ -11,8 +11,8 @@
 - learning/file-map.md — known (2026-07-31) — this file: why every file in the repo exists
 
 ## backend/  (the Node/Express server — the other separate program → [[frontend-backend-separation]] [[nodejs]])
-- backend/server.js — known (2026-08-05) — your Express server; GET / (text) + GET /api/sessions (JSON data) → [[express]] [[server]] [[port]] [[routes]] [[request-response]] [[json]] [[api]]
-- backend/package.json — known (2026-08-05) — the backend's ID card; lists express, set "type":"module" for import syntax → [[package-json]] [[express]] [[module-systems]]
+- backend/server.js — known (2026-08-05) — Express server; GET / + GET /api/sessions (JSON), cors enabled → [[express]] [[server]] [[routes]] [[json]] [[api]] [[cors]] [[middleware]]
+- backend/package.json — known (2026-08-05) — the backend's ID card; lists express + cors, "type":"module" → [[package-json]] [[express]] [[module-systems]]
 - backend/.gitignore — known (2026-08-05) — keeps the backend's node_modules out of git → [[gitignore]]
 - backend/node_modules/ — generated (2026-08-05) — installed package code; rebuild with npm install → [[dependencies]]
 - backend/package-lock.json — generated (2026-08-05) — exact locked versions for the backend
@@ -25,7 +25,7 @@
 - frontend/package-lock.json — generated (2026-08-01) — exact locked versions of every package
 - frontend/src/ — known (2026-08-01) — where your React code lives
 - frontend/src/main.jsx — known (2026-08-01) — entry point: mounts React into index.html
-- frontend/src/App.jsx — known (2026-08-01) — your main component; form + click-to-add sessions list, renders SessionItem per session → [[react-state]] [[controlled-inputs]] [[event-handling]] [[array-state]] [[immutability]] [[list-rendering]] [[props]]
+- frontend/src/App.jsx — known (2026-08-05) — main component; form + list, auto-loads sessions from the API on mount → [[react-state]] [[controlled-inputs]] [[event-handling]] [[array-state]] [[list-rendering]] [[props]] [[fetch]] [[async-await]] [[http-from-react]] [[useEffect]]
 - frontend/src/SessionItem.jsx — known (2026-08-01) — displays one session; receives it via props → [[props]] [[module-imports]]
 - frontend/src/App.css — known (2026-08-01) — your styles for the form (you wrote input/textarea/button rules) → [[css]] [[flexbox]]
 - frontend/src/index.css — parked (base styles) — Vite's global base: color variables, dark-mode, #root centering (not yet reviewed line-by-line)

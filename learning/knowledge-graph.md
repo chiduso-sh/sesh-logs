@@ -67,11 +67,11 @@
 - evidence: —
 
 ## api
-- status: introduced
+- status: practicing
 - depends-on: frontend-backend-separation
 - introduced: 2026-08-05
 - last-reviewed: 2026-08-05
-- evidence: built the server side of an API — a GET /api/sessions endpoint returning JSON data (frontend will consume it in section 4)
+- evidence: built the server side (GET /api/sessions) AND consumed it from React via fetch — full round trip across the two programs
 
 ## local-vs-deployed
 - status: seed
@@ -234,6 +234,13 @@
 - last-reviewed: 2026-08-01
 - evidence: explained a plain variable won't trigger a re-render; authored a second useState for reflection
 
+## useEffect
+- status: practicing
+- depends-on: react-state
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: added useEffect(() => loadSessions(), []) to auto-load on mount; explained that no dependency array = runs every render → infinite loop
+
 ## event-handling
 - status: practicing
 - depends-on: react-component
@@ -347,11 +354,11 @@
 - evidence: —
 
 ## fetch
-- status: seed
+- status: practicing
 - depends-on: api
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: used fetch() to call /api/sessions from React; used console.log to inspect the fetched data while debugging
 
 ## json
 - status: practicing
@@ -361,25 +368,32 @@
 - evidence: built a res.json route returning an array of session objects; saw JSON vs plain text; fixed a missing-comma syntax error and a not-called crypto.randomUUID
 
 ## http-from-react
-- status: seed
+- status: practicing
 - depends-on: fetch, react-component
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: wired a "load from server" button to fetch API data and setSessions(data); debugged a setSessions([data]) double-nesting bug
 
 ## cors
-- status: seed
+- status: practicing
 - depends-on: api
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: hit a real CORS block (5173→3000), explained cross-origin, fixed it with app.use(cors()) after npm install cors
 
 ## async-await
-- status: seed
+- status: practicing
 - depends-on: javascript
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: wrote an async function with two awaits (await fetch, await res.json)
+
+## middleware
+- status: introduced
+- depends-on: express
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: added app.use(cors()) — code that runs on every request before the routes
 
 ## tables
 - status: seed

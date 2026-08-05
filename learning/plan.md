@@ -42,8 +42,8 @@
 **Deliverable:** submitting the form sends data to the server and you see the server receive it.
 **Concepts:** api, fetch, json, http-from-react, cors, async-await
 
-- [ ] 4.1 Fetch the sessions from the backend and display them (fetch + async/await), fixing the CORS error that appears
-- [ ] 4.2 Auto-load the sessions when the page opens (useEffect)
+- [x] 4.1 Fetch the sessions from the backend and display them (fetch + async/await), fixing the CORS error that appears
+- [x] 4.2 Auto-load the sessions when the page opens (useEffect)
 - [ ] 4.3 Send a new session to the backend with a POST request
 - [ ] 4.4 Backend receives the POST and stores it (in-memory); frontend shows it
 
