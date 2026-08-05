@@ -19,6 +19,14 @@ function App() {
     setSessions([])
   }
 
+  // fetch the sessions from the backend API
+  async function loadSessions() {
+    const res = await fetch('http://localhost:3000/api/sessions')
+    const data = await res.json()
+    // TODO(you): put the fetched `data` into state so the list renders it
+    //            (use your sessions setter)
+  }
+
   return (
     <main>
       <h1>Sesh logs</h1>
@@ -56,6 +64,7 @@ function App() {
       </ul>
 
       <button type='button' onClick={() => clearList()}>clear</button>
+      <button type='button' onClick={() => loadSessions()}>load from server</button>
     </main>
   )
 }

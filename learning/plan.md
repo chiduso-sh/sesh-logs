@@ -29,18 +29,23 @@
 - [x] 2.4 Handle the click — add the typed session to an on-screen list
 - [x] 2.5 Split a session item into its own component that receives props
 
-### 3. A backend server that responds  [ ] not started
+### 3. A backend server that responds  [x] DONE
 **Deliverable:** a Node/Express server running locally that answers a test request in the browser.
 **Concepts:** nodejs, express, server, routes, http-methods, request-response, ports
 
 - [x] 3.1 Create the backend/ folder, initialize a Node project, install Express
 - [x] 3.2 Write a minimal Express server that starts and listens on a port
 - [x] 3.3 Add your first route and see its response in the browser
-- [ ] 3.4 Add a route that returns JSON (a placeholder sessions list)
+- [x] 3.4 Add a route that returns JSON (a placeholder sessions list)
 
 ### 4. Frontend talks to backend (the API)  [ ] not started
 **Deliverable:** submitting the form sends data to the server and you see the server receive it.
 **Concepts:** api, fetch, json, http-from-react, cors, async-await
+
+- [ ] 4.1 Fetch the sessions from the backend and display them (fetch + async/await), fixing the CORS error that appears
+- [ ] 4.2 Auto-load the sessions when the page opens (useEffect)
+- [ ] 4.3 Send a new session to the backend with a POST request
+- [ ] 4.4 Backend receives the POST and stores it (in-memory); frontend shows it
 
 ### 5. Remembering things (database)  [ ] not started
 **Deliverable:** logged sessions are saved to a database and survive a restart; the history list reads from it.

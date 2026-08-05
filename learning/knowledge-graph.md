@@ -67,11 +67,11 @@
 - evidence: —
 
 ## api
-- status: seed
+- status: introduced
 - depends-on: frontend-backend-separation
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: built the server side of an API — a GET /api/sessions endpoint returning JSON data (frontend will consume it in section 4)
 
 ## local-vs-deployed
 - status: seed
@@ -354,11 +354,11 @@
 - evidence: —
 
 ## json
-- status: seed
+- status: practicing
 - depends-on: api
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: built a res.json route returning an array of session objects; saw JSON vs plain text; fixed a missing-comma syntax error and a not-called crypto.randomUUID
 
 ## http-from-react
 - status: seed
