@@ -34,7 +34,7 @@
 **Concepts:** nodejs, express, server, routes, http-methods, request-response, ports
 
 - [x] 3.1 Create the backend/ folder, initialize a Node project, install Express
-- [ ] 3.2 Write a minimal Express server that starts and listens on a port
+- [x] 3.2 Write a minimal Express server that starts and listens on a port
 - [ ] 3.3 Add your first route and see its response in the browser
 - [ ] 3.4 Add a route that returns JSON (a placeholder sessions list)
 

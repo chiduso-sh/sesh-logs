@@ -158,11 +158,11 @@
 - evidence: got npm run dev serving the app and observed live output
 
 ## port
-- status: introduced
+- status: practicing
 - depends-on: localhost
 - introduced: 2026-08-01
-- last-reviewed: 2026-08-01
-- evidence: saw the app on port 5173; port explained as which running program the browser talks to
+- last-reviewed: 2026-08-05
+- evidence: set const PORT = 3000 and had the server listen on it; reinforced port = which program the browser reaches
 
 ## react-component
 - status: practicing
@@ -284,25 +284,39 @@
 - evidence: added `export default SessionItem` and imported it into App with `import SessionItem from './SessionItem'`
 
 ## nodejs
-- status: introduced
+- status: practicing
 - depends-on: javascript
 - introduced: 2026-08-05
 - last-reviewed: 2026-08-05
-- evidence: scaffolded a separate Node project in backend/ (npm init); understands Node runs JS outside the browser (not yet run Node code)
+- evidence: ran `node server.js`; hit and fixed a MODULE_NOT_FOUND from running in the wrong folder
 
 ## express
-- status: introduced
+- status: practicing
 - depends-on: nodejs
 - introduced: 2026-08-05
 - last-reviewed: 2026-08-05
-- evidence: installed express ^5 as the backend's first dependency; recalled npm install adds to dependencies + node_modules
+- evidence: wrote a minimal server: import express, const app = express(), app.listen(PORT, callback)
+
+## working-directory
+- status: practicing
+- depends-on: nodejs
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: learned commands run relative to the current folder — cd backend fixed "Cannot find module ...\server.js"
+
+## module-systems
+- status: introduced
+- depends-on: module-imports
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: set "type": "module" so the backend uses import (ES modules) instead of require (CommonJS)
 
 ## server
-- status: seed
+- status: practicing
 - depends-on: backend
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: started an Express server and saw it hold the terminal open — explained a server never "finishes", it listens
 
 ## routes
 - status: seed
