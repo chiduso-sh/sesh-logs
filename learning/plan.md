@@ -52,7 +52,7 @@
 **Concepts:** sql, tables, schema, sqlite-postgres, crud, db-to-server, environment-variables
 
 - [x] 5.1 Add SQLite and create the sessions table (install + connect + schema)
-- [ ] 5.2 Make GET read the sessions from the database (SELECT)
+- [x] 5.2 Make GET read the sessions from the database (SELECT)
 - [ ] 5.3 Make POST insert a new session into the database (INSERT)
 - [ ] 5.4 Confirm data survives a restart; remove the old in-memory array
 

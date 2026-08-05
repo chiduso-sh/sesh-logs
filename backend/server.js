@@ -21,7 +21,8 @@ app.get('/', (req, res) => {
 
 // a route that returns the current list of sessions as JSON data
 app.get('/api/sessions', (req, res) => {
-  res.json(sessions)
+  const rows = db.prepare('SELECT * FROM sessions').all()
+  res.json(rows)
 })
 
 // a route that receives a new session via POST

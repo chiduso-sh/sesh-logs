@@ -36,7 +36,7 @@
 - depends-on: database
 - introduced: 2026-07-31
 - last-reviewed: 2026-08-05
-- evidence: read and understood a CREATE TABLE statement; ran it (via import) to create the sessions table
+- evidence: wrote SELECT * FROM sessions with db.prepare(...).all(); understood empty table = empty result
 
 ## postgresql
 - status: introduced
@@ -431,11 +431,11 @@
 - evidence: using SQLite locally (a single .db file); same SQL that transfers to Postgres at deploy
 
 ## crud
-- status: seed
+- status: introduced
 - depends-on: sql
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-05
+- last-reviewed: 2026-08-05
+- evidence: did the R (Read) of CRUD — a SELECT query feeding the GET route (Create/Update/Delete still to come)
 
 ## db-to-server
 - status: practicing
