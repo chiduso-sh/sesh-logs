@@ -458,26 +458,26 @@
 - last-reviewed: 2026-08-05
 - evidence: wired db.js into server via import; predicted importing runs db.js and creates sessions.db
 
-## environment-variables
-- status: seed
-- depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
-
 ## password-hashing-bcrypt
 - status: practicing
 - depends-on: authentication
 - introduced: 2026-08-06
 - last-reviewed: 2026-08-06
-- evidence: wrote a signup route using await bcrypt.hash(password, 10) + INSERT; verified the stored value is a $2b$10$ hash, not the plain password; debugged await placement and empty VALUES()
+- evidence: hash on signup + await bcrypt.compare on login; verified stored value is a $2b$10$ hash; wrong password / unknown user both give 401
+
+## environment-variables
+- status: introduced
+- depends-on: none
+- introduced: 2026-08-06
+- last-reviewed: 2026-08-06
+- evidence: read the JWT secret from process.env.JWT_SECRET (with a dev fallback); understands secrets shouldn't be hardcoded/committed — real value set at deploy
 
 ## jwt
-- status: seed
+- status: practicing
 - depends-on: authentication
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-06
+- last-reviewed: 2026-08-06
+- evidence: issued a token with jwt.sign({id}, secret) on login; saw the 3 parts (header.payload.signature) and understood payload is signed-not-encrypted (readable, not forgeable)
 
 ## protected-routes
 - status: seed
