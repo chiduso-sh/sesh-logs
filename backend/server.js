@@ -13,6 +13,23 @@ const PORT = 3000
 // secret used to sign JWTs — from an env var in production, dev fallback for now
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-me'
 
+// middleware: allow the request through only if it carries a valid JWT
+function requireAuth(req, res, next) {
+  const authHeader = req.headers.authorization || ''
+  const token = authHeader.replace('Bearer ', '') // strip the "Bearer " prefix // strip the "Bearer " prefix
+  
+  if (!token) return res.status(401).json({ error: 'No token' })
+
+  try {
+    // TODO(you): verify the token — jwt.verify(token, JWT_SECRET) returns the decoded payload
+     const decoded = jwt.verify(token, JWT_SECRET)
+    req.userId = decoded.id // remember who the user is, for the route to use
+    next() // valid — let the request proceed to the route
+  } catch {
+    return res.status(401).json({ error: 'Invalid token' })
+  }
+}
+
 
 // a route: for a GET request to "/", send a response back
 app.get('/', (req, res) => {
@@ -20,13 +37,13 @@ app.get('/', (req, res) => {
 })
 
 // a route that returns the current list of sessions as JSON data
-app.get('/api/sessions', (req, res) => {
+app.get('/api/sessions', requireAuth, (req, res) => {
   const rows = db.prepare('SELECT * FROM sessions').all()
   res.json(rows)
 })
 
 // a route that receives a new session via POST
-app.post('/api/sessions', (req, res) => {
+app.post('/api/sessions', requireAuth, (req, res) => {
   const { id, workout, reflection } = req.body
   db.prepare('INSERT INTO sessions (id, workout, reflection) VALUES (?, ?, ?)').run(id, workout, reflection)
   res.status(201).json(req.body) // 201 = "Created"; send the saved session back

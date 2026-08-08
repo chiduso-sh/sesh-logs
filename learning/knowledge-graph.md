@@ -413,8 +413,8 @@
 - status: practicing
 - depends-on: express
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: added app.use(cors()) and app.use(express.json()) — saw express.json() populate req.body from the POST
+- last-reviewed: 2026-08-06
+- evidence: used built-in middleware (cors, express.json) and wrote a custom one (requireAuth) using next() to pass or 401 to block
 
 ## tables
 - status: practicing
@@ -480,11 +480,11 @@
 - evidence: issued a token with jwt.sign({id}, secret) on login; saw the 3 parts (header.payload.signature) and understood payload is signed-not-encrypted (readable, not forgeable)
 
 ## protected-routes
-- status: seed
+- status: practicing
 - depends-on: routes, jwt
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-06
+- last-reviewed: 2026-08-06
+- evidence: wrote requireAuth middleware (read Bearer token, jwt.verify, next() or 401); applied it to both sessions routes; verified no-token→401, valid-token→200
 
 ## users-sessions-relationship
 - status: seed
