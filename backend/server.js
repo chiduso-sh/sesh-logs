@@ -8,11 +8,6 @@ app.use(express.json()) // parse incoming JSON request bodies onto req.body
 // the port this server listens on
 const PORT = 3000
 
-// our in-memory store of sessions (lives as long as the server runs)
-let sessions = [
-  { id: crypto.randomUUID(), workout: 'Pull ups', reflection: 'Was aiit' },
-  { id: crypto.randomUUID(), workout: 'Push ups', reflection: 'Was aiit' },
-]
 
 // a route: for a GET request to "/", send a response back
 app.get('/', (req, res) => {
@@ -28,8 +23,6 @@ app.get('/api/sessions', (req, res) => {
 // a route that receives a new session via POST
 app.post('/api/sessions', (req, res) => {
   const { id, workout, reflection } = req.body
-  // TODO(you): insert a row into the sessions table using
-  //   
   db.prepare('INSERT INTO sessions (id, workout, reflection) VALUES (?, ?, ?)').run(id, workout, reflection)
   res.status(201).json(req.body) // 201 = "Created"; send the saved session back
 })

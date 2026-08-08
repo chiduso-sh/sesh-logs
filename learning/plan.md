@@ -47,14 +47,14 @@
 - [x] 4.3 Send a new session to the backend with a POST request
 - [x] 4.4 Backend receives the POST and stores it (in-memory); frontend shows it
 
-### 5. Remembering things (database)  [ ] not started
+### 5. Remembering things (database)  [x] DONE
 **Deliverable:** logged sessions are saved to a database and survive a restart; the history list reads from it.
 **Concepts:** sql, tables, schema, sqlite-postgres, crud, db-to-server, environment-variables
 
 - [x] 5.1 Add SQLite and create the sessions table (install + connect + schema)
 - [x] 5.2 Make GET read the sessions from the database (SELECT)
 - [x] 5.3 Make POST insert a new session into the database (INSERT)
-- [ ] 5.4 Confirm data survives a restart; remove the old in-memory array
+- [x] 5.4 Confirm data survives a restart; remove the old in-memory array
 
 ### 6. Accounts + private data (auth)  [ ] not started
 **Deliverable:** you can sign up, log in, and only see your own sessions.

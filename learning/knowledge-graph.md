@@ -70,8 +70,15 @@
 - status: practicing
 - depends-on: array-state
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: built a module-level sessions array (GET reads, POST pushes); tested that restarting the server wipes it back to the seeds — motivating a real database
+- last-reviewed: 2026-08-06
+- evidence: built it, then replaced it with the database and deleted it; contrasted "lost on restart" (memory) vs "survives" (disk/db)
+
+## dead-code-removal
+- status: practicing
+- depends-on: db-to-server
+- introduced: 2026-08-06
+- last-reviewed: 2026-08-06
+- evidence: identified the unused in-memory array as dead code, reasoned it was safe to delete (grep the identifier; table name ≠ variable), removed it, and verified nothing broke
 
 ## api
 - status: practicing

@@ -12,9 +12,6 @@ function App() {
 
     // send the new session to the backend with a POST request
     await fetch('http://localhost:3000/api/sessions', {
-      // TODO(you): set method to 'POST';
-      //   add headers: { 'Content-Type': 'application/json' };
-      //   set body to JSON.stringify(newSession)
       method : 'POST',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify(newSession)
