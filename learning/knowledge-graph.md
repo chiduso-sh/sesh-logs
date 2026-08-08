@@ -466,11 +466,11 @@
 - evidence: —
 
 ## password-hashing-bcrypt
-- status: introduced
+- status: practicing
 - depends-on: authentication
 - introduced: 2026-08-06
 - last-reviewed: 2026-08-06
-- evidence: installed bcrypt; understands it one-way hashes passwords (store the hash, never the plain password) — not yet used in code
+- evidence: wrote a signup route using await bcrypt.hash(password, 10) + INSERT; verified the stored value is a $2b$10$ hash, not the plain password; debugged await placement and empty VALUES()
 
 ## jwt
 - status: seed
