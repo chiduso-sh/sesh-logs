@@ -60,6 +60,13 @@
 **Deliverable:** you can sign up, log in, and only see your own sessions.
 **Concepts:** password-hashing-bcrypt, jwt, protected-routes, users-sessions-relationship, login-state
 
+- [x] 6.1 Add a users table and install bcrypt + jsonwebtoken
+- [ ] 6.2 Signup route — hash the password with bcrypt and store the user
+- [ ] 6.3 Login route — verify the password and issue a JWT
+- [ ] 6.4 Auth middleware — protect the sessions routes by checking the JWT
+- [ ] 6.5 Scope sessions to the logged-in user (user_id column + filter)
+- [ ] 6.6 Frontend — signup/login forms, store the token, send it with requests
+
 ### 7. The core feature: reflection + consistency view  [ ] not started
 **Deliverable:** each session saves a reflection prompt, and a streak/calendar shows your consistency.
 **Concepts:** data-modeling-feature, dates, streak-computation, derived-data-rendering

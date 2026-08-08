@@ -424,11 +424,11 @@
 - evidence: created a sessions table with columns id/workout/reflection
 
 ## schema
-- status: introduced
+- status: practicing
 - depends-on: tables
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: understood schema = columns + types; PRIMARY KEY explained as a unique per-row id
+- last-reviewed: 2026-08-06
+- evidence: authored a users table schema (id PRIMARY KEY, username UNIQUE, password_hash); learned one .db file holds many tables after mistakenly overwriting sessions
 
 ## sqlite-postgres
 - status: introduced
@@ -466,11 +466,11 @@
 - evidence: —
 
 ## password-hashing-bcrypt
-- status: seed
+- status: introduced
 - depends-on: authentication
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-06
+- last-reviewed: 2026-08-06
+- evidence: installed bcrypt; understands it one-way hashes passwords (store the hash, never the plain password) — not yet used in code
 
 ## jwt
 - status: seed
