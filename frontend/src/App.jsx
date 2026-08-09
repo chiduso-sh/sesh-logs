@@ -7,13 +7,34 @@ function App() {
   const [reflection, setReflection] = useState('')
   const [sessions, setSessions] = useState([])
 
+  // the JWT — start from localStorage so a refresh keeps you logged in
+  const [token, setToken] = useState(localStorage.getItem('token') || '')
+  const [loginUsername, setLoginUsername] = useState('')
+  const [loginPassword, setLoginPassword] = useState('')
+
+  async function handleLogin(e) {
+    e.preventDefault() // stop the form from reloading the page
+    const res = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: loginUsername, password: loginPassword }),
+    })
+    const data = await res.json()
+    // TODO(you): if we got a token (data.token), save it two places:
+    //   into state with setToken(...), AND into localStorage.setItem('token', ...)
+    if(data.token){
+      setToken(data.token)
+      localStorage.setItem('token', data.token)
+    }
+  }
+
   async function handleAdd() {
     const newSession = { id: crypto.randomUUID(), workout, reflection }
 
     // send the new session to the backend with a POST request
     await fetch('http://localhost:3000/api/sessions', {
       method : 'POST',
-      headers: { 'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token},
       body: JSON.stringify(newSession)
     })
 
@@ -26,22 +47,46 @@ function App() {
     setSessions([])
   }
 
-  // fetch the sessions from the backend API
-  async function loadSessions() {
-    const res = await fetch('http://localhost:3000/api/sessions')
-    const data = await res.json()
-    setSessions(data)
+  function handleLogout() {
+    // TODO(you): log out — clear the token from state (setToken('')) AND
+    //   remove it from localStorage (localStorage.removeItem('token'))
   }
 
-  // run once, right after the page first loads: fetch the sessions
+  // fetch the sessions from the backend API
+  async function loadSessions() {
+    if (!token) return // not logged in yet — nothing to load
+    const res = await fetch('http://localhost:3000/api/sessions', {
+      headers : { 'Authorization': 'Bearer ' + token}
+    })
+    const data = await res.json() 
+    if (Array.isArray(data)) setSessions(data)
+  }
+
+  // load whenever the token changes (already-logged-in on first load, and right after logging in)
   useEffect(() => {
     loadSessions()
-  }, [])
+  }, [token])
 
   return (
     <main>
       <h1>Sesh logs</h1>
       <p>After session thoughts</p>
+
+      <form onSubmit={handleLogin}>
+        <input
+          type="text"
+          placeholder="username"
+          value={loginUsername}
+          onChange={(e) => setLoginUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="password"
+          value={loginPassword}
+          onChange={(e) => setLoginPassword(e.target.value)}
+        />
+        <button type="submit">log in</button>
+      </form>
 
       <form>
         <label>

@@ -211,7 +211,7 @@
 - depends-on: none
 - introduced: 2026-08-01
 - last-reviewed: 2026-08-01
-- evidence: read the error overlay calmly, identified cause, and predicted the fix during a deliberate break
+- evidence: read the error overlay calmly, identified cause, and predicted the fix during a deliberate break; later traced a 401→object→.map-crash chain in the console back to stale localStorage
 
 ## localhost
 - status: practicing
@@ -463,7 +463,7 @@
 - depends-on: authentication
 - introduced: 2026-08-06
 - last-reviewed: 2026-08-06
-- evidence: hash on signup + await bcrypt.compare on login; verified stored value is a $2b$10$ hash; wrong password / unknown user both give 401
+- evidence: hash on signup + bcrypt.compare on login; after the walkthrough can explain compare re-hashes the attempt with the stored salt rather than reversing the hash
 
 ## environment-variables
 - status: introduced
@@ -477,14 +477,14 @@
 - depends-on: authentication
 - introduced: 2026-08-06
 - last-reviewed: 2026-08-06
-- evidence: issued a token with jwt.sign({id}, secret) on login; saw the 3 parts (header.payload.signature) and understood payload is signed-not-encrypted (readable, not forgeable)
+- evidence: issued jwt.sign({id}, secret) on login; in the flow walkthrough explained why a tampered payload is rejected (no secret → wrong signature)
 
 ## protected-routes
 - status: practicing
 - depends-on: routes, jwt
 - introduced: 2026-08-06
 - last-reviewed: 2026-08-06
-- evidence: wrote requireAuth middleware (read Bearer token, jwt.verify, next() or 401); applied it to both sessions routes; verified no-token→401, valid-token→200
+- evidence: wrote requireAuth middleware (read Bearer token, jwt.verify, next() or 401); applied to sessions routes; in walkthrough explained next() and that a missing next() (no response) hangs the request
 
 ## users-sessions-relationship
 - status: practicing
@@ -501,11 +501,18 @@
 - evidence: discovered CREATE TABLE IF NOT EXISTS does NOT alter an existing table; fixed by recreating the dev db (noted: production uses ALTER TABLE migrations)
 
 ## login-state
-- status: seed
+- status: introduced
 - depends-on: jwt, react-state
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-06
+- last-reviewed: 2026-08-06
+- evidence: built a login form that stores the JWT in state + localStorage and sends it as `Authorization: Bearer <token>` (full logged-in/out gating comes in 6.7)
+
+## localStorage
+- status: practicing
+- depends-on: login-state
+- introduced: 2026-08-06
+- last-reviewed: 2026-08-06
+- evidence: persisted the token across refreshes; debugged a poisoned "undefined" string that defeated the !token guard and 401-crashed the app
 
 ## data-modeling-feature
 - status: seed

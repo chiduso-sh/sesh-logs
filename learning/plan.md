@@ -65,7 +65,8 @@
 - [x] 6.3 Login route — verify the password and issue a JWT
 - [x] 6.4 Auth middleware — protect the sessions routes by checking the JWT
 - [x] 6.5 Scope sessions to the logged-in user (user_id column + filter)
-- [ ] 6.6 Frontend — signup/login forms, store the token, send it with requests
+- [x] 6.6 Frontend login — a login form that stores the token and sends it on sessions requests
+- [ ] 6.7 Frontend polish — signup form, logout, and show/hide the app based on login state
 
 ### 7. The core feature: reflection + consistency view  [ ] not started
 **Deliverable:** each session saves a reflection prompt, and a streak/calendar shows your consistency.
