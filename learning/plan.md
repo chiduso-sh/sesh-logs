@@ -56,7 +56,7 @@
 - [x] 5.3 Make POST insert a new session into the database (INSERT)
 - [x] 5.4 Confirm data survives a restart; remove the old in-memory array
 
-### 6. Accounts + private data (auth)  [ ] not started
+### 6. Accounts + private data (auth)  [x] DONE
 **Deliverable:** you can sign up, log in, and only see your own sessions.
 **Concepts:** password-hashing-bcrypt, jwt, protected-routes, users-sessions-relationship, login-state
 
@@ -66,7 +66,7 @@
 - [x] 6.4 Auth middleware — protect the sessions routes by checking the JWT
 - [x] 6.5 Scope sessions to the logged-in user (user_id column + filter)
 - [x] 6.6 Frontend login — a login form that stores the token and sends it on sessions requests
-- [ ] 6.7 Frontend polish — signup form, logout, and show/hide the app based on login state
+- [x] 6.7 Frontend polish — signup form, logout, and show/hide the app based on login state
 
 ### 7. The core feature: reflection + consistency view  [ ] not started
 **Deliverable:** each session saves a reflection prompt, and a streak/calendar shows your consistency.

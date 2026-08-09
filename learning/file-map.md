@@ -27,7 +27,7 @@
 - frontend/package-lock.json — generated (2026-08-01) — exact locked versions of every package
 - frontend/src/ — known (2026-08-01) — where your React code lives
 - frontend/src/main.jsx — known (2026-08-01) — entry point: mounts React into index.html
-- frontend/src/App.jsx — known (2026-08-06) — main component; login form + token auth on all sessions requests → [[react-state]] [[list-rendering]] [[fetch]] [[async-await]] [[http-from-react]] [[useEffect]] [[login-state]] [[localStorage]]
+- frontend/src/App.jsx — known (2026-08-06) — main component; auth screen (login/signup) vs app, gated by token; logout → [[react-state]] [[list-rendering]] [[fetch]] [[http-from-react]] [[useEffect]] [[login-state]] [[localStorage]] [[conditional-rendering]]
 - frontend/src/SessionItem.jsx — known (2026-08-01) — displays one session; receives it via props → [[props]] [[module-imports]]
 - frontend/src/App.css — known (2026-08-01) — your styles for the form (you wrote input/textarea/button rules) → [[css]] [[flexbox]]
 - frontend/src/index.css — parked (base styles) — Vite's global base: color variables, dark-mode, #root centering (not yet reviewed line-by-line)

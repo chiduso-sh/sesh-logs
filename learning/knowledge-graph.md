@@ -501,11 +501,18 @@
 - evidence: discovered CREATE TABLE IF NOT EXISTS does NOT alter an existing table; fixed by recreating the dev db (noted: production uses ALTER TABLE migrations)
 
 ## login-state
-- status: introduced
+- status: practicing
 - depends-on: jwt, react-state
 - introduced: 2026-08-06
 - last-reviewed: 2026-08-06
-- evidence: built a login form that stores the JWT in state + localStorage and sends it as `Authorization: Bearer <token>` (full logged-in/out gating comes in 6.7)
+- evidence: full login/signup/logout with show-hide gating; token in state+localStorage drives which screen renders (verified sign up → app → log out → login)
+
+## conditional-rendering
+- status: practicing
+- depends-on: jsx, login-state
+- introduced: 2026-08-06
+- last-reviewed: 2026-08-06
+- evidence: wrote `{ !token ? <login/> : <app/> }` to show the auth screen when logged out and the app when logged in (untangled it from an inverted first attempt)
 
 ## localStorage
 - status: practicing

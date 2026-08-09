@@ -50,6 +50,28 @@ function App() {
   function handleLogout() {
     // TODO(you): log out — clear the token from state (setToken('')) AND
     //   remove it from localStorage (localStorage.removeItem('token'))
+    setToken('')
+    localStorage.removeItem('token')
+  }
+
+  async function handleSignup() {
+    // create the account...
+    await fetch('http://localhost:3000/api/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: loginUsername, password: loginPassword }),
+    })
+    // ...then log in right away to get a token
+    const res = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: loginUsername, password: loginPassword }),
+    })
+    const data = await res.json()
+    if (data.token) {
+      setToken(data.token)
+      localStorage.setItem('token', data.token)
+    }
   }
 
   // fetch the sessions from the backend API
@@ -71,7 +93,7 @@ function App() {
     <main>
       <h1>Sesh logs</h1>
       <p>After session thoughts</p>
-
+      { !token ? 
       <form onSubmit={handleLogin}>
         <input
           type="text"
@@ -86,8 +108,12 @@ function App() {
           onChange={(e) => setLoginPassword(e.target.value)}
         />
         <button type="submit">log in</button>
+        <button type="button" onClick={handleSignup}>sign up</button>
       </form>
-
+      
+      :
+      <section>
+        
       <form>
         <label>
           Workout
@@ -121,6 +147,10 @@ function App() {
 
       <button type='button' onClick={() => clearList()}>clear</button>
       <button type='button' onClick={() => loadSessions()}>load from server</button>
+      <button type="button" onClick={handleLogout}>log out</button>
+      </section>
+      }
+
     </main>
   )
 }
