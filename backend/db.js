@@ -8,7 +8,8 @@ db.exec(`
   CREATE TABLE IF NOT EXISTS sessions (
     id TEXT PRIMARY KEY,
     workout TEXT,
-    reflection TEXT
+    reflection TEXT,
+    user_id TEXT
   )
 `)
 

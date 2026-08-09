@@ -38,14 +38,14 @@ app.get('/', (req, res) => {
 
 // a route that returns the current list of sessions as JSON data
 app.get('/api/sessions', requireAuth, (req, res) => {
-  const rows = db.prepare('SELECT * FROM sessions').all()
+  const rows = db.prepare('SELECT * FROM sessions WHERE user_id = ?').all(req.userId)
   res.json(rows)
 })
 
 // a route that receives a new session via POST
 app.post('/api/sessions', requireAuth, (req, res) => {
   const { id, workout, reflection } = req.body
-  db.prepare('INSERT INTO sessions (id, workout, reflection) VALUES (?, ?, ?)').run(id, workout, reflection)
+  db.prepare('INSERT INTO sessions (id, workout, reflection, user_id) VALUES (?, ?, ?, ?)').run(id, workout, reflection, req.userId)
   res.status(201).json(req.body) // 201 = "Created"; send the saved session back
 })
 
@@ -53,12 +53,8 @@ app.post('/api/sessions', requireAuth, (req, res) => {
 app.post('/api/signup', async (req, res) => {
   const { username, password } = req.body
 
-  // TODO(you): hash the password. Use bcrypt.hash(password, 10) and AWAIT it.
     const password_hash = await bcrypt.hash(password, 10)
-  // TODO(you): INSERT a new user into the users table.
-  //   columns: id (use crypto.randomUUID()), username, password_hash
-
-  db.prepare(`INSERT INTO users (id, username, password_hash) VALUES (?, ?, ?)`).run( crypto.randomUUID(), username, password_hash )
+     db.prepare(`INSERT INTO users (id, username, password_hash) VALUES (?, ?, ?)`).run( crypto.randomUUID(), username, password_hash )
 
   res.status(201).json({ username }) // send back the username (never the hash)
 })

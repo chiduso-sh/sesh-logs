@@ -487,11 +487,18 @@
 - evidence: wrote requireAuth middleware (read Bearer token, jwt.verify, next() or 401); applied it to both sessions routes; verified no-token→401, valid-token→200
 
 ## users-sessions-relationship
-- status: seed
+- status: practicing
 - depends-on: tables
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-06
+- last-reviewed: 2026-08-06
+- evidence: added user_id to sessions; POST tags req.userId, GET filters WHERE user_id = ?; proved alice/bob see only their own rows
+
+## schema-migration
+- status: introduced
+- depends-on: schema
+- introduced: 2026-08-06
+- last-reviewed: 2026-08-06
+- evidence: discovered CREATE TABLE IF NOT EXISTS does NOT alter an existing table; fixed by recreating the dev db (noted: production uses ALTER TABLE migrations)
 
 ## login-state
 - status: seed
