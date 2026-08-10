@@ -543,11 +543,11 @@
 - evidence: —
 
 ## derived-data-rendering
-- status: seed
+- status: practicing
 - depends-on: react-state
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-10
+- last-reviewed: 2026-08-10
+- evidence: rendered a readable date from the stored ISO string with new Date(...).toLocaleDateString(); learned JSX can't render a Date object directly (needs a string)
 
 ## automated-test
 - status: seed

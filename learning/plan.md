@@ -27,7 +27,7 @@
 - [x] 2.2 Style the page with CSS so it looks like a real form
 - [x] 2.3 Wire up state — capture what you type (useState + controlled inputs)
 - [x] 2.4 Handle the click — add the typed session to an on-screen list
-- [x] 2.5 Split a session item into its own component that receives props
+- [x] 2 .5 Split a session item into its own component that receives props
 
 ### 3. A backend server that responds  [x] DONE
 **Deliverable:** a Node/Express server running locally that answers a test request in the browser.
@@ -73,7 +73,7 @@
 **Concepts:** data-modeling-feature, dates, streak-computation, derived-data-rendering
 
 - [x] 7.1 Give each session a date (created_at column + server sets it on insert)
-- [ ] 7.2 Show each session's date (and reflection) in the list
+- [x] 7.2 Show each session's date (and reflection) in the list
 - [ ] 7.3 Compute and display a consistency streak (days in a row)
 
 ### 8. Tests + safety rails  [ ] not started
