@@ -536,11 +536,11 @@
 - evidence: added a created_at column to model the consistency feature (what a streak needs to exist)
 
 ## streak-computation
-- status: seed
+- status: practicing
 - depends-on: dates
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-10
+- last-reviewed: 2026-08-10
+- evidence: wrote a while-loop counting consecutive days back from today over a Set of toDateString() days; verified 3-streak with a gap correctly ignored; debugged an accidental nested loop and a missing getDate()/- 1
 
 ## derived-data-rendering
 - status: practicing

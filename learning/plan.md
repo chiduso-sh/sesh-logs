@@ -68,13 +68,13 @@
 - [x] 6.6 Frontend login — a login form that stores the token and sends it on sessions requests
 - [x] 6.7 Frontend polish — signup form, logout, and show/hide the app based on login state
 
-### 7. The core feature: reflection + consistency view  [ ] not started
+### 7. The core feature: reflection + consistency view  [x] DONE
 **Deliverable:** each session saves a reflection prompt, and a streak/calendar shows your consistency.
 **Concepts:** data-modeling-feature, dates, streak-computation, derived-data-rendering
 
 - [x] 7.1 Give each session a date (created_at column + server sets it on insert)
 - [x] 7.2 Show each session's date (and reflection) in the list
-- [ ] 7.3 Compute and display a consistency streak (days in a row)
+- [x] 7.3 Compute and display a consistency streak (days in a row)
 
 ### 8. Tests + safety rails  [ ] not started
 **Deliverable:** a few automated tests that catch breakage, plus basic input validation.

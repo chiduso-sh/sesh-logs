@@ -2,6 +2,26 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import SessionItem from './SessionItem'
 
+// count consecutive days (ending today) that have at least one session
+function computeStreak(sessions) {
+  // a Set of unique day-labels like "Fri Aug 10 2026"
+  const days = new Set(
+    sessions
+      .filter((s) => s.created_at)
+      .map((s) => new Date(s.created_at).toDateString())
+  )
+
+  let streak = 0
+  let day = new Date() // start from today
+  while (days.has(day.toDateString())) {
+    streak++
+    // TODO(you): step `day` back by one calendar day
+    //   hint: day.setDate(day.getDate() - 1)
+    day.setDate(day.getDate() - 1)
+  }
+  return streak
+}
+
 function App() {
   const [workout, setWorkout] = useState('')
   const [reflection, setReflection] = useState('')
@@ -20,8 +40,6 @@ function App() {
       body: JSON.stringify({ username: loginUsername, password: loginPassword }),
     })
     const data = await res.json()
-    // TODO(you): if we got a token (data.token), save it two places:
-    //   into state with setToken(...), AND into localStorage.setItem('token', ...)
     if(data.token){
       setToken(data.token)
       localStorage.setItem('token', data.token)
@@ -48,8 +66,6 @@ function App() {
   }
 
   function handleLogout() {
-    // TODO(you): log out — clear the token from state (setToken('')) AND
-    //   remove it from localStorage (localStorage.removeItem('token'))
     setToken('')
     localStorage.removeItem('token')
   }
@@ -89,6 +105,8 @@ function App() {
     loadSessions()
   }, [token])
 
+  const streak = computeStreak(sessions)
+
   return (
     <main>
       <h1>Sesh logs</h1>
@@ -113,7 +131,7 @@ function App() {
       
       :
       <section>
-        
+        <p>{streak}-day streak</p>
       <form>
         <label>
           Workout
