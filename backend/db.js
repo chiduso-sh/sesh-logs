@@ -9,7 +9,8 @@ db.exec(`
     id TEXT PRIMARY KEY,
     workout TEXT,
     reflection TEXT,
-    user_id TEXT
+    user_id TEXT,
+    created_at TEXT
   )
 `)
 

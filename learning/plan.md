@@ -72,6 +72,10 @@
 **Deliverable:** each session saves a reflection prompt, and a streak/calendar shows your consistency.
 **Concepts:** data-modeling-feature, dates, streak-computation, derived-data-rendering
 
+- [x] 7.1 Give each session a date (created_at column + server sets it on insert)
+- [ ] 7.2 Show each session's date (and reflection) in the list
+- [ ] 7.3 Compute and display a consistency streak (days in a row)
+
 ### 8. Tests + safety rails  [ ] not started
 **Deliverable:** a few automated tests that catch breakage, plus basic input validation.
 **Concepts:** automated-test, testing-a-route, validation, error-handling

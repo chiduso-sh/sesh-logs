@@ -521,19 +521,19 @@
 - last-reviewed: 2026-08-06
 - evidence: persisted the token across refreshes; debugged a poisoned "undefined" string that defeated the !token guard and 401-crashed the app
 
-## data-modeling-feature
-- status: seed
-- depends-on: schema
-- introduced: —
-- last-reviewed: —
-- evidence: —
-
 ## dates
-- status: seed
+- status: practicing
 - depends-on: javascript
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-10
+- last-reviewed: 2026-08-10
+- evidence: stamped sessions with new Date().toISOString() server-side; understands ISO strings sort/store cleanly; debugged a null created_at caused by a stale (un-restarted) server
+
+## data-modeling-feature
+- status: introduced
+- depends-on: schema
+- introduced: 2026-08-10
+- last-reviewed: 2026-08-10
+- evidence: added a created_at column to model the consistency feature (what a streak needs to exist)
 
 ## streak-computation
 - status: seed

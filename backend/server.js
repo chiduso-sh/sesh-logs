@@ -45,7 +45,7 @@ app.get('/api/sessions', requireAuth, (req, res) => {
 // a route that receives a new session via POST
 app.post('/api/sessions', requireAuth, (req, res) => {
   const { id, workout, reflection } = req.body
-  db.prepare('INSERT INTO sessions (id, workout, reflection, user_id) VALUES (?, ?, ?, ?)').run(id, workout, reflection, req.userId)
+  db.prepare('INSERT INTO sessions (id, workout, reflection, user_id, created_at) VALUES (?, ?, ?, ?, ?)').run(id, workout, reflection, req.userId, new Date().toISOString())
   res.status(201).json(req.body) // 201 = "Created"; send the saved session back
 })
 
@@ -67,11 +67,9 @@ app.post('/api/login', async (req, res) => {
   const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username)
   if (!user) return res.status(401).json({ error: 'Invalid credentials' })
 
-  // TODO(you): compare `password` to `user.password_hash` with bcrypt.compare(...), and AWAIT it
   const match = await bcrypt.compare(password, user.password_hash)
   if (!match) return res.status(401).json({ error: 'Invalid credentials' })
 
-  // TODO(you): create a token with jwt.sign({ id: user.id }, JWT_SECRET)
   const token = await jwt.sign({id:user.id}, JWT_SECRET)
   res.json({ token })
 })
