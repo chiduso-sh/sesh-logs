@@ -77,7 +77,7 @@ function App() {
     const res = await fetch('http://localhost:3000/api/sessions', {
       headers : { 'Authorization': 'Bearer ' + token}
     })
-    const data = await res.json() 
+    const data = await res.json()
     if (Array.isArray(data)) setSessions(data)
   }
 
@@ -89,34 +89,40 @@ function App() {
   const streak = computeStreak(sessions)
 
   return (
-    <main>
-      <h1>Sesh logs</h1>
-      <p>After session thoughts</p>
-      { !token ? 
-      <form onSubmit={handleLogin}>
+    <main className="app-shell">
+      <h1 className="brand">Sesh logs</h1>
+      <p className="tagline">After session thoughts</p>
+      { !token ?
+      <form className="auth-form card" onSubmit={handleLogin}>
         <input
+          className="field"
           type="text"
           placeholder="username"
           value={loginUsername}
           onChange={(e) => setLoginUsername(e.target.value)}
         />
         <input
+          className="field"
           type="password"
           placeholder="password"
           value={loginPassword}
           onChange={(e) => setLoginPassword(e.target.value)}
         />
-        <button type="submit">log in</button>
-        <button type="button" onClick={handleSignup}>sign up</button>
+        <button className="btn btn-primary" type="submit">log in</button>
+        <button className="btn btn-secondary" type="button" onClick={handleSignup}>sign up</button>
       </form>
-      
+
       :
-      <section>
-        <p>{streak}-day streak</p>
-      <form>
-        <label>
+      <section className="app">
+        <p className="streak">
+          <span className="streak-num">{streak}</span>
+          <span className="streak-label">day streak</span>
+        </p>
+      <form className="sesh-form">
+        <label className="field-label">
           Workout
           <input
+            className="field"
             type="text"
             placeholder="e.g. Pull day — 5x5 pull-ups"
             value={workout}
@@ -124,29 +130,32 @@ function App() {
           />
         </label>
 
-        <label>
+        <label className="field-label">
           Reflection
-  
+
           <textarea
+            className="field textarea"
             value={reflection} onChange={(e) => setReflection(e.target.value)}
             placeholder="e.g. Felt strong today, but my grip was weak"
           />
         </label>
 
-        <button type="button" onClick={() => handleAdd()}>add sesh</button>
+        <button className="btn btn-primary btn-block" type="button" onClick={() => handleAdd()}>add sesh</button>
       </form>
 
 
-      <ul>
+      <ul className="sesh-list">
         List
         {sessions.map((session) => (
           <SessionItem key={session.id} session={session}/>
         ))}
       </ul>
 
-      <button type='button' onClick={() => clearList()}>clear</button>
-      <button type='button' onClick={() => loadSessions()}>load from server</button>
-      <button type="button" onClick={handleLogout}>log out</button>
+      <div className="util-row">
+        <button className="btn btn-quiet" type='button' onClick={() => clearList()}>clear</button>
+        <button className="btn btn-quiet" type='button' onClick={() => loadSessions()}>load from server</button>
+        <button className="btn btn-quiet" type="button" onClick={handleLogout}>log out</button>
+      </div>
       </section>
       }
 

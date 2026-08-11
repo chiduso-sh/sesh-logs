@@ -1,111 +1,116 @@
+/* ============================================================
+   Sesh Logs — Design system  (black & silver)
+   ------------------------------------------------------------
+   Everything reads from these variables, so tweaking one value
+   (e.g. --accent) restyles the whole app at once.
+   Aesthetic: brushed-metal fitness app at night — near-black
+   ground, silver text, hairline borders, faint metallic glows.
+   ============================================================ */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* --- core colors ------------------------------------------ */
+  --bg: #0b0b0e;          /* near-black page */
+  --surface: #16161b;     /* cards / raised panels */
+  --surface-2: #1e1e25;   /* inputs, hovers */
+  --border: #2b2b33;      /* hairline borders */
+  --text: #c8c8d2;        /* silver body text */
+  --text-strong: #f2f2f6; /* headings, emphasis */
+  --muted: #83838f;       /* secondary / metadata text */
+  --accent: #d9d9e3;      /* silver accent (buttons, streak) */
+  --accent-ink: #0b0b0e;  /* dark text that sits ON a silver fill */
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* --- metallic depth --------------------------------------- *
+     Brushed-metal effects come from these gradients rather than
+     flat fills. Reference them instead of writing raw gradients. */
+  --metal-text:  linear-gradient(180deg, #ffffff 0%, #d4d4de 42%, #85858f 100%); /* silver text sheen */
+  --metal-fill:  linear-gradient(180deg, #f5f5f9 0%, #d6d6e0 46%, #b3b3bf 100%); /* silver button face */
+  --metal-panel: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0) 55%); /* top sheen on panels */
+  --sheen: rgba(255, 255, 255, 0.08); /* hairline top highlight */
+  --glow: rgba(212, 212, 222, 0.14);  /* soft silver glow */
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  /* --- focus ------------------------------------------------- */
+  --ring: rgba(217, 217, 227, 0.65);  /* silver focus ring */
+
+  /* --- spacing scale (consistent rhythm, no random pixels) --- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --space-6: 64px;
+
+  --radius: 12px;
+  --radius-lg: 18px;
+  --sans: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  color-scheme: dark;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
   color: var(--text);
   background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  text-rendering: optimizeLegibility;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  min-height: 100dvh;
+  color: var(--text);
+  /* two faint silver glows top-centre + bottom for metallic depth */
+  background:
+    radial-gradient(1100px 520px at 50% -12%, var(--glow), transparent 60%),
+    radial-gradient(900px 500px at 50% 118%, rgba(255, 255, 255, 0.04), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
+/* --- typographic defaults (element-level; components extend) - */
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+  margin: 0;
+  color: var(--text-strong);
+  font-size: clamp(26px, 4vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
+
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+  margin: 0;
+  color: var(--text-strong);
+  font-size: 20px;
+  font-weight: 600;
 }
+
 p {
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--text-strong);
+  text-decoration: underline;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* --- global accessible focus ------------------------------- *
+   Keyboard-only (:focus-visible) so mouse clicks stay clean.
+   Components may layer a richer ring on top of this baseline. */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
 }

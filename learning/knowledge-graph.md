@@ -224,8 +224,15 @@
 - status: practicing
 - depends-on: none
 - introduced: 2026-08-01
-- last-reviewed: 2026-08-01
-- evidence: wrote real input/textarea/button rules; learned comma (this-and-that) vs space (descendant) selectors after a live bug
+- last-reviewed: 2026-08-11
+- evidence: wrote real input/textarea/button rules; learned comma vs descendant selectors
+
+## css-variables
+- status: practicing
+- depends-on: css
+- introduced: 2026-08-11
+- last-reviewed: 2026-08-11
+- evidence: set up the initial black/silver variable + spacing system; can explain "change one --var, restyle everything"; toured the imported design (metallic text via background-clip:text, beveled button via inset shadows, card ::before sheen)
 
 ## flexbox
 - status: introduced

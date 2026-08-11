@@ -32,8 +32,8 @@
 - frontend/src/SessionItem.jsx — known (2026-08-10) — displays one session: formatted date + workout + reflection → [[props]] [[derived-data-rendering]] [[dates]]
 - frontend/src/streak.js — known (2026-08-10) — pure computeStreak logic, extracted from App so it's testable → [[streak-computation]]
 - frontend/src/streak.test.js — known (2026-08-10) — node:test unit tests for computeStreak → [[automated-test]]
-- frontend/src/App.css — known (2026-08-01) — your styles for the form (you wrote input/textarea/button rules) → [[css]] [[flexbox]]
-- frontend/src/index.css — parked (base styles) — Vite's global base: color variables, dark-mode, #root centering (not yet reviewed line-by-line)
+- frontend/src/App.css — known (2026-08-11) — black/silver component styles (cards, buttons, streak hero, session cards); designed in claude.ai/design, toured → [[css]] [[css-variables]]
+- frontend/src/index.css — known (2026-08-11) — the design system: color + spacing variables, metallic gradients, base typography → [[css-variables]]
 - frontend/src/assets/ — parked (section 2) — images/static assets used by components
 - frontend/public/ — parked (section 2) — static files served as-is
 - frontend/vite.config.js — parked (section 4) — Vite's settings

@@ -1,46 +1,310 @@
-/* Layout: center the page content and give it room */
-main {
-  max-width: 500px;
+/* ============================================================
+   Sesh Logs — Component styles
+   Consumes the design-system variables from index.css.
+   Every color / space value references a variable, never a raw
+   hex or pixel literal.
+   ============================================================ */
+
+/* ---- Page shell -------------------------------------------- */
+/* Single centered column. Brand + streak read as centered
+   "hero" elements; content below stays comfortably narrow. */
+.app-shell {
+  width: 100%;
+  max-width: 460px;
   margin: 0 auto;
-  padding: 24px;
+  padding: var(--space-6) var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+/* ---- Brand lockup ------------------------------------------ */
+.brand {
+  /* brushed-metal wordmark: silver gradient clipped to the text */
+  background: var(--metal-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.03em;
+}
+
+.tagline {
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---- Card (shared raised surface) -------------------------- */
+/* Hairline border + soft shadow + a faint sheen along the top
+   edge (::before) reads as light catching brushed metal. */
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--metal-panel);
+  pointer-events: none;
+}
+
+/* ============================================================
+   AUTH SCREEN
+   ============================================================ */
+.auth-form {
+  /* .card + form: a centered sign-in panel */
+  padding: var(--space-5) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
   text-align: left;
 }
 
-/* Stack the form's children vertically with even gaps */
+/* ============================================================
+   APP SCREEN
+   ============================================================ */
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  text-align: left;
+}
+
+/* ---- Streak hero ------------------------------------------- */
+/* The centerpiece: a metallic badge with an oversized silver
+   number that catches the eye immediately. */
+.streak {
+  align-self: center;
+  min-width: 220px;
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  text-align: center;
+
+  background:
+    radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,0.06), transparent 60%),
+    var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  /* soft silver glow so the hero lifts off the near-black ground */
+  box-shadow: var(--shadow), 0 0 40px -12px var(--glow);
+}
+
+.streak-num {
+  /* the number that pops — brushed-silver, tabular so it never jitters */
+  font-size: clamp(64px, 18vw, 92px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  background: var(--metal-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.6));
+}
+
+.streak-label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+/* ---- Forms ------------------------------------------------- */
 form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
-/* Each label stacks its text above its input */
-label {
+.field-label {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-2);
+  color: var(--text-strong);
+  font-size: 13px;
   font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
-/* TODO(you): style `input` and `textarea` together.
-   Give them padding, a readable font-size, a border, and rounded corners. */
-input, textarea{
-  padding: 8px;
+/* Inputs + textarea share one recessed, dark treatment */
+.field {
+  width: 100%;
+  padding: var(--space-3);
+  font: inherit;
+  font-size: 16px; /* >=16px avoids iOS zoom-on-focus */
+  color: var(--text-strong);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.field::placeholder {
+  color: var(--muted);
+}
+.field:hover {
+  border-color: var(--muted);
+}
+/* Silver focus ring — visible for both mouse and keyboard on fields */
+.field:focus,
+.field:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.textarea {
+  min-height: 96px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* ---- Buttons ----------------------------------------------- */
+.btn {
+  padding: var(--space-3) var(--space-4);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: transform 0.06s ease, box-shadow 0.15s ease,
+              background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* Primary — the one silver, brushed-metal call to action */
+.btn-primary {
+  color: var(--accent-ink);
+  background: var(--metal-fill);
+  /* thin bright top edge + dark bottom edge = beveled metal */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    0 6px 18px -8px rgba(0, 0, 0, 0.8);
+}
+.btn-primary:hover {
+  filter: brightness(1.06);
+}
+
+/* Secondary — outlined ghost, silver text on dark */
+.btn-secondary {
+  color: var(--text-strong);
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+.btn-secondary:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+/* Quiet — near-invisible utility actions (clear / load / log out) */
+.btn-quiet {
+  padding: var(--space-2) var(--space-3);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  background: transparent;
+  border-color: transparent;
+}
+.btn-quiet:hover {
+  color: var(--text-strong);
+  background: var(--surface-2);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* Bottom row of quiet utility actions */
+.util-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+}
+
+/* ---- Session list ------------------------------------------ */
+.sesh-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  /* the stray "List" text node from the markup, kept as a quiet label */
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Each session = a card row: muted date, prominent workout, quiet reflection */
+.session-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--accent); /* thin silver spine */
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 15px;
+  letter-spacing: normal;
+  text-transform: none;
+  transition: border-color 0.15s ease, transform 0.06s ease;
+}
+.session-card:hover {
+  border-color: var(--muted);
+  border-left-color: var(--accent);
+}
+
+.session-date {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+.session-workout {
+  color: var(--text-strong);
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  font-weight: 700;
+}
+.session-reflection {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.5;
+  text-wrap: pretty;
 }
 
-
-
-/* TODO(you): style the `button`.
-   Padding, no border, rounded corners, a background color,
-   readable text color, and cursor: pointer. */
-   button{
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007BFF;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-   }
+/* ---- Responsive -------------------------------------------- */
+@media (max-width: 480px) {
+  .app-shell {
+    padding: var(--space-5) var(--space-3) var(--space-4);
+  }
+  .auth-form {
+    padding: var(--space-4) var(--space-3);
+  }
+}

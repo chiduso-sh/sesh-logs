@@ -84,6 +84,15 @@
 - [x] 8.2 Validate input on the write routes — reject missing fields with a 400
 - [x] 8.3 Handle errors gracefully + write a test for a route
 
-### 9. Going live (deployment)  [ ] not started
+### 9. A design pass — make it look intentional  [x] DONE
+**Deliverable:** the app looks clean and cohesive (a color + spacing system, a styled auth screen, and a proper app layout) in both logged-out and logged-in states.
+**Concepts:** css-variables, layout, visual-hierarchy, responsive-basics
+Note: implemented a black/silver design the learner created in claude.ai/design (imported via DesignSync), then toured the CSS techniques.
+
+- [x] 9.1 A color + spacing system (CSS variables) + base typography
+- [x] 9.2 Style the auth screen as a centered card
+- [x] 9.3 Style the app: header + logout, streak badge, form, session cards
+
+### 10. Going live (deployment)  [ ] not started
 **Deliverable:** a real URL you can send to anyone — frontend on Vercel, backend + DB on Render.
 **Concepts:** deployment, hosting, prod-env-variables, build-step, connecting-deployed-pieces
