@@ -21,7 +21,6 @@ function requireAuth(req, res, next) {
   if (!token) return res.status(401).json({ error: 'No token' })
 
   try {
-    // TODO(you): verify the token — jwt.verify(token, JWT_SECRET) returns the decoded payload
      const decoded = jwt.verify(token, JWT_SECRET)
     req.userId = decoded.id // remember who the user is, for the route to use
     next() // valid — let the request proceed to the route
@@ -60,9 +59,12 @@ app.post('/api/signup', async (req, res) => {
     if(password.length < 8) return res.status(400).json({error: 'Password must be at least 8 characters'})
 
     const password_hash = await bcrypt.hash(password, 10)
-     db.prepare(`INSERT INTO users (id, username, password_hash) VALUES (?, ?, ?)`).run( crypto.randomUUID(), username, password_hash )
-
-  res.status(201).json({ username }) // send back the username (never the hash)
+    try {
+        db.prepare(`INSERT INTO users (id, username, password_hash) VALUES (?, ?, ?)`).run( crypto.randomUUID(), username, password_hash )
+        res.status(201).json({ username }) // send back the username (never the hash)
+    } catch (error) {
+        return res.status(409).json({ error: 'Username already taken' })
+    }
 })
 
 // log in: verify the password and issue a JWT

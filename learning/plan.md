@@ -76,13 +76,13 @@
 - [x] 7.2 Show each session's date (and reflection) in the list
 - [x] 7.3 Compute and display a consistency streak (days in a row)
 
-### 8. Tests + safety rails  [ ] not started
+### 8. Tests + safety rails  [x] DONE
 **Deliverable:** a few automated tests that catch breakage, plus basic input validation.
 **Concepts:** automated-test, testing-a-route, validation, error-handling
 
 - [x] 8.1 Write your first automated test — extract computeStreak to a module and test it (node:test)
 - [x] 8.2 Validate input on the write routes — reject missing fields with a 400
-- [ ] 8.3 Handle errors gracefully + write a test for a route
+- [x] 8.3 Handle errors gracefully + write a test for a route
 
 ### 9. Going live (deployment)  [ ] not started
 **Deliverable:** a real URL you can send to anyone — frontend on Vercel, backend + DB on Render.

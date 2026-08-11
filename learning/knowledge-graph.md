@@ -557,11 +557,11 @@
 - evidence: extracted computeStreak into a pure module and wrote node:test + assert.strictEqual tests; watched them pass, then catch a deliberate off-by-one bug (clear actual/expected message), then pass again
 
 ## testing-a-route
-- status: seed
+- status: practicing
 - depends-on: automated-test, routes
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-10
+- last-reviewed: 2026-08-10
+- evidence: wrote an integration test that fetches the live /api/signup route twice and asserts 201 then 409; distinguished unit (pure fn) vs integration (hits running server)
 
 ## validation
 - status: practicing
@@ -571,11 +571,11 @@
 - evidence: added presence + length guards (return 400 before the DB write) on session/signup routes; debugged `password < 8` vs `password.length < 8` (string-vs-number coercion) after a test caught a short password slipping through
 
 ## error-handling
-- status: seed
+- status: practicing
 - depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-10
+- last-reviewed: 2026-08-10
+- evidence: wrapped the signup INSERT in try/catch so a duplicate username returns a clean 409 instead of a 500 that leaked the SqliteError + file path
 
 ## hosting
 - status: seed
