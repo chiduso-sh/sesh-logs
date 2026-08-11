@@ -564,11 +564,11 @@
 - evidence: —
 
 ## validation
-- status: seed
+- status: practicing
 - depends-on: request-response
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-10
+- last-reviewed: 2026-08-10
+- evidence: added presence + length guards (return 400 before the DB write) on session/signup routes; debugged `password < 8` vs `password.length < 8` (string-vs-number coercion) after a test caught a short password slipping through
 
 ## error-handling
 - status: seed

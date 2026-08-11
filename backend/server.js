@@ -45,6 +45,8 @@ app.get('/api/sessions', requireAuth, (req, res) => {
 // a route that receives a new session via POST
 app.post('/api/sessions', requireAuth, (req, res) => {
   const { id, workout, reflection } = req.body
+
+  if(!workout) return res.status(400).json({error: 'Log your workout sesh twin'})
   db.prepare('INSERT INTO sessions (id, workout, reflection, user_id, created_at) VALUES (?, ?, ?, ?, ?)').run(id, workout, reflection, req.userId, new Date().toISOString())
   res.status(201).json(req.body) // 201 = "Created"; send the saved session back
 })
@@ -52,6 +54,10 @@ app.post('/api/sessions', requireAuth, (req, res) => {
 // sign up: create a new user with a hashed password
 app.post('/api/signup', async (req, res) => {
   const { username, password } = req.body
+
+    if(!username || !password) return res.status(400).json({error: 'Input your crendentials'})
+    if(username.length < 3) return res.status(400).json({error: 'Username must be at least 3 characters'})
+    if(password.length < 8) return res.status(400).json({error: 'Password must be at least 8 characters'})
 
     const password_hash = await bcrypt.hash(password, 10)
      db.prepare(`INSERT INTO users (id, username, password_hash) VALUES (?, ?, ?)`).run( crypto.randomUUID(), username, password_hash )

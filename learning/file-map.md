@@ -11,7 +11,7 @@
 - learning/file-map.md — known (2026-07-31) — this file: why every file in the repo exists
 
 ## backend/  (the Node/Express server — the other separate program → [[frontend-backend-separation]] [[nodejs]])
-- backend/server.js — known (2026-08-10) — Express server; auth + per-user sessions, POST stamps created_at → [[express]] [[routes]] [[api]] [[crud]] [[password-hashing-bcrypt]] [[jwt]] [[protected-routes]] [[middleware]] [[users-sessions-relationship]] [[dates]]
+- backend/server.js — known (2026-08-10) — Express server; auth + per-user sessions + input validation (400s) → [[express]] [[routes]] [[api]] [[crud]] [[password-hashing-bcrypt]] [[jwt]] [[protected-routes]] [[middleware]] [[users-sessions-relationship]] [[dates]] [[validation]]
 - backend/package.json — known (2026-08-06) — backend deps: express, cors, better-sqlite3, bcrypt, jsonwebtoken; "type":"module" → [[package-json]] [[module-systems]]
 - backend/db.js — known (2026-08-10) — opens sessions.db; sessions (user_id + created_at) and users → [[sql]] [[tables]] [[schema]] [[users-sessions-relationship]] [[dates]]
 - backend/sessions.db — generated (2026-08-05) — the actual SQLite database file (your data lives here); gitignored
