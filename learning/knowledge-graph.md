@@ -550,11 +550,11 @@
 - evidence: rendered a readable date from the stored ISO string with new Date(...).toLocaleDateString(); learned JSX can't render a Date object directly (needs a string)
 
 ## automated-test
-- status: seed
+- status: practicing
 - depends-on: none
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-10
+- last-reviewed: 2026-08-10
+- evidence: extracted computeStreak into a pure module and wrote node:test + assert.strictEqual tests; watched them pass, then catch a deliberate off-by-one bug (clear actual/expected message), then pass again
 
 ## testing-a-route
 - status: seed

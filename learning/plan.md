@@ -80,6 +80,10 @@
 **Deliverable:** a few automated tests that catch breakage, plus basic input validation.
 **Concepts:** automated-test, testing-a-route, validation, error-handling
 
+- [x] 8.1 Write your first automated test — extract computeStreak to a module and test it (node:test)
+- [ ] 8.2 Validate input on the write routes — reject missing fields with a 400
+- [ ] 8.3 Handle errors gracefully + write a test for a route
+
 ### 9. Going live (deployment)  [ ] not started
 **Deliverable:** a real URL you can send to anyone — frontend on Vercel, backend + DB on Render.
 **Concepts:** deployment, hosting, prod-env-variables, build-step, connecting-deployed-pieces

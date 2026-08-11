@@ -29,6 +29,8 @@
 - frontend/src/main.jsx — known (2026-08-01) — entry point: mounts React into index.html
 - frontend/src/App.jsx — known (2026-08-10) — main component; auth gating, sessions CRUD, and a consistency streak → [[react-state]] [[list-rendering]] [[fetch]] [[useEffect]] [[login-state]] [[localStorage]] [[conditional-rendering]] [[streak-computation]] [[dates]]
 - frontend/src/SessionItem.jsx — known (2026-08-10) — displays one session: formatted date + workout + reflection → [[props]] [[derived-data-rendering]] [[dates]]
+- frontend/src/streak.js — known (2026-08-10) — pure computeStreak logic, extracted from App so it's testable → [[streak-computation]]
+- frontend/src/streak.test.js — known (2026-08-10) — node:test unit tests for computeStreak → [[automated-test]]
 - frontend/src/App.css — known (2026-08-01) — your styles for the form (you wrote input/textarea/button rules) → [[css]] [[flexbox]]
 - frontend/src/index.css — parked (base styles) — Vite's global base: color variables, dark-mode, #root centering (not yet reviewed line-by-line)
 - frontend/src/assets/ — parked (section 2) — images/static assets used by components
