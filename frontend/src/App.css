@@ -277,6 +277,8 @@ form {
   font-size: 15px;
   letter-spacing: normal;
   text-transform: none;
+  /* slide in from the right as items are added */
+  animation: slide-in-right 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
   transition: border-color 0.15s ease, transform 0.06s ease;
 }
 .session-card:hover {
@@ -323,6 +325,42 @@ form {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+/* On/off switch for the ambient model — a calm, soft-silver pill.
+   Muted silver tint + hairline silver border reads metallic but quiet,
+   never competing with the streak hero. */
+.model-toggle {
+  position: fixed;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 4;
+  padding: var(--space-2) var(--space-3);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text); /* soft silver, not full-strength white */
+  background: linear-gradient(180deg, rgba(217, 217, 227, 0.12), rgba(217, 217, 227, 0.04));
+  border: 1px solid rgba(217, 217, 227, 0.22);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08); /* gentle top sheen */
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+.model-toggle:hover {
+  color: var(--text-strong);
+  border-color: rgba(217, 217, 227, 0.4);
+  background: linear-gradient(180deg, rgba(217, 217, 227, 0.18), rgba(217, 217, 227, 0.07));
+}
+.model-toggle[aria-pressed="false"] {
+  color: var(--muted); /* reads as "off" */
+  border-color: rgba(217, 217, 227, 0.14);
+  background: rgba(217, 217, 227, 0.04);
+}
+.model-toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
 }
 
 /* Tablet & down: move it to a faded ambient strip at the bottom */

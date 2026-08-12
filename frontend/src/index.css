@@ -114,3 +114,15 @@ a:hover {
     animation: none !important;
   }
 }
+
+/* New session cards slide in from the right */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
