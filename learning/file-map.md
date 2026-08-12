@@ -32,6 +32,8 @@
 - frontend/src/main.jsx — known (2026-08-01) — entry point: mounts React into index.html
 - frontend/src/App.jsx — known (2026-08-11) — main component; auth gating, sessions CRUD, streak, config-driven API base (VITE_API_URL) → [[react-state]] [[fetch]] [[useEffect]] [[login-state]] [[conditional-rendering]] [[streak-computation]] [[prod-env-variables]]
 - frontend/src/SessionItem.jsx — known (2026-08-10) — displays one session: formatted date + workout + reflection → [[props]] [[derived-data-rendering]] [[dates]]
+- frontend/src/ModelViewer.jsx — known (2026-08-11) — decorative 3D accent; mounts the parallettes scene, loads three.js from a CDN at runtime (no npm dep)
+- frontend/src/parallettes.js — known (2026-08-11) — builds/animates the ambient 3D parallettes with three.js (injected); pure scene logic
 - frontend/src/streak.js — known (2026-08-10) — pure computeStreak logic, extracted from App so it's testable → [[streak-computation]]
 - frontend/src/streak.test.js — known (2026-08-10) — node:test unit tests for computeStreak → [[automated-test]]
 - frontend/src/App.css — known (2026-08-11) — black/silver component styles (cards, buttons, streak hero, session cards) + the fixed .model-stage accent → [[css]] [[css-variables]]
