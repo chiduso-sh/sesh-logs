@@ -53,11 +53,25 @@
 - evidence: explained why rolling own auth serves the "understand + impress recruiters" goal
 
 ## deployment
-- status: introduced
+- status: practicing
 - depends-on: frontend-backend-separation
 - introduced: 2026-07-31
-- last-reviewed: 2026-07-31
-- evidence: explained separate build → separate deploy
+- last-reviewed: 2026-08-12
+- evidence: deployed the backend to Render (root dir backend, build npm install, start npm start), set JWT_SECRET + DATABASE_URL as dashboard env vars, verified live signup/login/session; saw first-request-after-deploy flakiness
+
+## hosting
+- status: practicing
+- depends-on: deployment
+- introduced: 2026-08-12
+- last-reviewed: 2026-08-12
+- evidence: understands free-tier realities (spin-down/cold start, no persistent disk — which is why data lives in Postgres, not on the server)
+
+## build-step
+- status: introduced
+- depends-on: vite
+- introduced: 2026-08-12
+- last-reviewed: 2026-08-12
+- evidence: set Render's build command (npm install) and start command (npm start via a package.json start script) — the host needs explicit build + run instructions
 
 ## database
 - status: seed
@@ -584,26 +598,12 @@
 - last-reviewed: 2026-08-10
 - evidence: wrapped the signup INSERT in try/catch so a duplicate username returns a clean 409 instead of a 500 that leaked the SqliteError + file path
 
-## hosting
-- status: seed
-- depends-on: deployment
-- introduced: —
-- last-reviewed: —
-- evidence: —
-
 ## prod-env-variables
 - status: practicing
 - depends-on: environment-variables, deployment
 - introduced: 2026-08-11
 - last-reviewed: 2026-08-11
 - evidence: made the frontend API base (import.meta.env.VITE_API_URL) and backend PORT (process.env.PORT) env-driven with local fallbacks; understands VITE_ prefix vs process.env
-
-## build-step
-- status: seed
-- depends-on: vite
-- introduced: —
-- last-reviewed: —
-- evidence: —
 
 ## connecting-deployed-pieces
 - status: seed
