@@ -101,5 +101,5 @@ Note: implemented a black/silver design the learner created in claude.ai/design 
 - [x] 10.2 Move the database to Postgres so data survives on the host (migrate db.js + queries)
 - [x] 10.3 Push the latest code to GitHub
 - [x] 10.4 Deploy the backend + a Postgres database to Render (set JWT_SECRET, DATABASE_URL) — live at https://workoutjournal-8zgp.onrender.com
-- [ ] 10.5 Deploy the frontend to Vercel (point VITE_API_URL at the Render backend)
+- [x] 10.5 Deploy the frontend to Vercel (point VITE_API_URL at the Render backend) — live at https://workoutjournal.vercel.app
 - [ ] 10.6 Connect + go live: allow the Vercel origin in CORS, then test the live app end to end

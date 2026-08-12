@@ -606,11 +606,11 @@
 - evidence: made the frontend API base (import.meta.env.VITE_API_URL) and backend PORT (process.env.PORT) env-driven with local fallbacks; understands VITE_ prefix vs process.env
 
 ## connecting-deployed-pieces
-- status: seed
+- status: practicing
 - depends-on: deployment, api
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-12
+- last-reviewed: 2026-08-12
+- evidence: deployed the frontend to Vercel (root dir frontend) with VITE_API_URL pointing at the Render backend; verified a live signup + add-session + reload-persists across Vercel → Render → Postgres
 
 ## writing-a-plan
 - status: introduced
