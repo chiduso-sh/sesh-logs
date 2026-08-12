@@ -28,7 +28,7 @@
 - frontend/package-lock.json — generated (2026-08-01) — exact locked versions of every package
 - frontend/src/ — known (2026-08-01) — where your React code lives
 - frontend/src/main.jsx — known (2026-08-01) — entry point: mounts React into index.html
-- frontend/src/App.jsx — known (2026-08-10) — main component; auth gating, sessions CRUD, and a consistency streak → [[react-state]] [[list-rendering]] [[fetch]] [[useEffect]] [[login-state]] [[localStorage]] [[conditional-rendering]] [[streak-computation]] [[dates]]
+- frontend/src/App.jsx — known (2026-08-11) — main component; auth gating, sessions CRUD, streak, config-driven API base (VITE_API_URL) → [[react-state]] [[fetch]] [[useEffect]] [[login-state]] [[conditional-rendering]] [[streak-computation]] [[prod-env-variables]]
 - frontend/src/SessionItem.jsx — known (2026-08-10) — displays one session: formatted date + workout + reflection → [[props]] [[derived-data-rendering]] [[dates]]
 - frontend/src/streak.js — known (2026-08-10) — pure computeStreak logic, extracted from App so it's testable → [[streak-computation]]
 - frontend/src/streak.test.js — known (2026-08-10) — node:test unit tests for computeStreak → [[automated-test]]

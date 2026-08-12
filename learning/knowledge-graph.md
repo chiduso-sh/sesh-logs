@@ -592,11 +592,11 @@
 - evidence: —
 
 ## prod-env-variables
-- status: seed
+- status: practicing
 - depends-on: environment-variables, deployment
-- introduced: —
-- last-reviewed: —
-- evidence: —
+- introduced: 2026-08-11
+- last-reviewed: 2026-08-11
+- evidence: made the frontend API base (import.meta.env.VITE_API_URL) and backend PORT (process.env.PORT) env-driven with local fallbacks; understands VITE_ prefix vs process.env
 
 ## build-step
 - status: seed

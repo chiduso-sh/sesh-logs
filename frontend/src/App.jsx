@@ -9,6 +9,8 @@ function App() {
   const [reflection, setReflection] = useState('')
   const [sessions, setSessions] = useState([])
 
+  const API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+
   // the JWT — start from localStorage so a refresh keeps you logged in
   const [token, setToken] = useState(localStorage.getItem('token') || '')
   const [loginUsername, setLoginUsername] = useState('')
@@ -16,7 +18,7 @@ function App() {
 
   async function handleLogin(e) {
     e.preventDefault() // stop the form from reloading the page
-    const res = await fetch('http://localhost:3000/api/login', {
+    const res = await fetch(`${API}/api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: loginUsername, password: loginPassword }),
@@ -32,7 +34,7 @@ function App() {
     const newSession = { id: crypto.randomUUID(), workout, reflection }
 
     // send the new session to the backend with a POST request
-    await fetch('http://localhost:3000/api/sessions', {
+    await fetch(`${API}/api/sessions`, {
       method : 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token},
       body: JSON.stringify(newSession)
@@ -54,13 +56,13 @@ function App() {
 
   async function handleSignup() {
     // create the account...
-    await fetch('http://localhost:3000/api/signup', {
+    await fetch(`${API}/api/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: loginUsername, password: loginPassword }),
     })
     // ...then log in right away to get a token
-    const res = await fetch('http://localhost:3000/api/login', {
+    const res = await fetch(`${API}/api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: loginUsername, password: loginPassword }),
@@ -75,7 +77,7 @@ function App() {
   // fetch the sessions from the backend API
   async function loadSessions() {
     if (!token) return // not logged in yet — nothing to load
-    const res = await fetch('http://localhost:3000/api/sessions', {
+    const res = await fetch(`${API}/api/sessions`, {
       headers : { 'Authorization': 'Bearer ' + token}
     })
     const data = await res.json()
