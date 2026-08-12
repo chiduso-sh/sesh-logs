@@ -1,10 +1,16 @@
-import Database from 'better-sqlite3'
+import pg from 'pg'
 
-// open the database file (creates sessions.db if it doesn't exist yet)
-const db = new Database('sessions.db')
+// A connection pool to the Postgres database.
+// Reads the connection string from the DATABASE_URL environment variable.
+// A "pool" reuses a set of open connections instead of opening a new one
+// per query — faster, and how you're meant to talk to Postgres.
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }, // managed Postgres (Render/Neon) requires SSL
+})
 
-// define the sessions table if it isn't already there
-db.exec(`
+// Create the tables once, when the app starts (same SQL, Postgres runs it).
+await pool.query(`
   CREATE TABLE IF NOT EXISTS sessions (
     id TEXT PRIMARY KEY,
     workout TEXT,
@@ -14,13 +20,12 @@ db.exec(`
   )
 `)
 
-db.exec(`
+await pool.query(`
   CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY,
     username TEXT UNIQUE,
     password_hash TEXT
   )
-`
-)
+`)
 
-export default db
+export default pool

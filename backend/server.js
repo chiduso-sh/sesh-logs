@@ -36,17 +36,17 @@ app.get('/', (req, res) => {
 })
 
 // a route that returns the current list of sessions as JSON data
-app.get('/api/sessions', requireAuth, (req, res) => {
-  const rows = db.prepare('SELECT * FROM sessions WHERE user_id = ?').all(req.userId)
-  res.json(rows)
+app.get('/api/sessions', requireAuth, async (req, res) => {
+  const result = await db.query('SELECT * FROM sessions WHERE user_id = $1', [req.userId])
+  res.json(result.rows)
 })
 
 // a route that receives a new session via POST
-app.post('/api/sessions', requireAuth, (req, res) => {
+app.post('/api/sessions', requireAuth, async (req, res) => {
   const { id, workout, reflection } = req.body
 
   if(!workout) return res.status(400).json({error: 'Log your workout sesh twin'})
-  db.prepare('INSERT INTO sessions (id, workout, reflection, user_id, created_at) VALUES (?, ?, ?, ?, ?)').run(id, workout, reflection, req.userId, new Date().toISOString())
+  await db.query('INSERT INTO sessions (id, workout, reflection, user_id, created_at) VALUES ($1, $2, $3, $4, $5)', [id, workout, reflection, req.userId, new Date().toISOString()])
   res.status(201).json(req.body) // 201 = "Created"; send the saved session back
 })
 
@@ -60,7 +60,7 @@ app.post('/api/signup', async (req, res) => {
 
     const password_hash = await bcrypt.hash(password, 10)
     try {
-        db.prepare(`INSERT INTO users (id, username, password_hash) VALUES (?, ?, ?)`).run( crypto.randomUUID(), username, password_hash )
+        await db.query('INSERT INTO users (id, username, password_hash) VALUES ($1, $2, $3)', [crypto.randomUUID(), username, password_hash])
         res.status(201).json({ username }) // send back the username (never the hash)
     } catch (error) {
         return res.status(409).json({ error: 'Username already taken' })
@@ -71,8 +71,9 @@ app.post('/api/signup', async (req, res) => {
 app.post('/api/login', async (req, res) => {
   const { username, password } = req.body
 
-  // find the user by username (.get returns ONE row, or undefined)
-  const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username)
+  // find the user by username (result.rows[0] is the first row, or undefined)
+  const result = await db.query('SELECT * FROM users WHERE username = $1', [username])
+  const user = result.rows[0]
   if (!user) return res.status(401).json({ error: 'Invalid credentials' })
 
   const match = await bcrypt.compare(password, user.password_hash)

@@ -438,11 +438,11 @@
 - evidence: authored a users table schema (id PRIMARY KEY, username UNIQUE, password_hash); learned one .db file holds many tables after mistakenly overwriting sessions
 
 ## sqlite-postgres
-- status: introduced
+- status: practicing
 - depends-on: postgresql
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: using SQLite locally (a single .db file); same SQL that transfers to Postgres at deploy
+- last-reviewed: 2026-08-12
+- evidence: migrated SQLite→Postgres (pg): connection Pool from DATABASE_URL, sync→async/await, ? → $1 placeholders, results via result.rows; verified full CRUD against a cloud Render Postgres
 
 ## crud
 - status: practicing

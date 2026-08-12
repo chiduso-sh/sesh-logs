@@ -98,7 +98,7 @@ Note: implemented a black/silver design the learner created in claude.ai/design 
 **Concepts:** deployment, hosting, prod-env-variables, build-step, connecting-deployed-pieces
 
 - [x] 10.1 Make the app config-driven: API base URL from an env var (frontend) + PORT from env (backend)
-- [ ] 10.2 Move the database to Postgres so data survives on the host (migrate db.js + queries)
+- [x] 10.2 Move the database to Postgres so data survives on the host (migrate db.js + queries)
 - [ ] 10.3 Push the latest code to GitHub
 - [ ] 10.4 Deploy the backend + a Postgres database to Render (set JWT_SECRET, DATABASE_URL)
 - [ ] 10.5 Deploy the frontend to Vercel (point VITE_API_URL at the Render backend)

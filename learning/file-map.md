@@ -14,7 +14,9 @@
 - backend/server.js — known (2026-08-10) — Express server; auth, per-user sessions, validation (400s) + try/catch (409) → [[express]] [[routes]] [[api]] [[crud]] [[jwt]] [[protected-routes]] [[middleware]] [[users-sessions-relationship]] [[dates]] [[validation]] [[error-handling]]
 - backend/signup.test.js — known (2026-08-10) — integration test: hits the live /api/signup route (201 then 409) → [[testing-a-route]] [[automated-test]]
 - backend/package.json — known (2026-08-06) — backend deps: express, cors, better-sqlite3, bcrypt, jsonwebtoken; "type":"module" → [[package-json]] [[module-systems]]
-- backend/db.js — known (2026-08-10) — opens sessions.db; sessions (user_id + created_at) and users → [[sql]] [[tables]] [[schema]] [[users-sessions-relationship]] [[dates]]
+- backend/db.js — known (2026-08-12) — Postgres connection Pool from DATABASE_URL; creates sessions + users tables → [[sql]] [[tables]] [[sqlite-postgres]] [[db-to-server]]
+- backend/.env — known (2026-08-12, GITIGNORED) — holds the secret DATABASE_URL (Postgres connection string); never committed
+- backend/sessions.db — generated (obsolete) — old local SQLite file, no longer used after the Postgres move
 - backend/sessions.db — generated (2026-08-05) — the actual SQLite database file (your data lives here); gitignored
 - backend/.gitignore — known (2026-08-05) — keeps node_modules and sessions.db out of git → [[gitignore]]
 - backend/node_modules/ — generated (2026-08-05) — installed package code; rebuild with npm install → [[dependencies]]
