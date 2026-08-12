@@ -93,7 +93,7 @@ Note: implemented a black/silver design the learner created in claude.ai/design 
 - [x] 9.2 Style the auth screen as a centered card
 - [x] 9.3 Style the app: header + logout, streak badge, form, session cards
 
-### 10. Going live (deployment)  [ ] not started
+### 10. Going live (deployment)  [x] DONE
 **Deliverable:** a real URL you can send to anyone — frontend on Vercel, backend + DB on Render.
 **Concepts:** deployment, hosting, prod-env-variables, build-step, connecting-deployed-pieces
 
@@ -102,4 +102,4 @@ Note: implemented a black/silver design the learner created in claude.ai/design 
 - [x] 10.3 Push the latest code to GitHub
 - [x] 10.4 Deploy the backend + a Postgres database to Render (set JWT_SECRET, DATABASE_URL) — live at https://workoutjournal-8zgp.onrender.com
 - [x] 10.5 Deploy the frontend to Vercel (point VITE_API_URL at the Render backend) — live at https://workoutjournal.vercel.app
-- [ ] 10.6 Connect + go live: allow the Vercel origin in CORS, then test the live app end to end
+- [x] 10.6 Connect + go live: allow the Vercel origin in CORS, then test the live app end to end

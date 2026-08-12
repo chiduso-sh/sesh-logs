@@ -420,8 +420,8 @@
 - status: practicing
 - depends-on: api
 - introduced: 2026-08-05
-- last-reviewed: 2026-08-05
-- evidence: hit a real CORS block (5173→3000), explained cross-origin, fixed it with app.use(cors()) after npm install cors
+- last-reviewed: 2026-08-12
+- evidence: restricted cors to an env-driven origin (FRONTEND_URL); understands the browser enforces by matching the fixed Access-Control-Allow-Origin against the requesting page's origin (so evil.com gets a non-matching value → blocked)
 
 ## async-await
 - status: practicing

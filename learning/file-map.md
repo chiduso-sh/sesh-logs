@@ -11,7 +11,7 @@
 - learning/file-map.md — known (2026-07-31) — this file: why every file in the repo exists
 
 ## backend/  (the Node/Express server — the other separate program → [[frontend-backend-separation]] [[nodejs]])
-- backend/server.js — known (2026-08-10) — Express server; auth, per-user sessions, validation (400s) + try/catch (409) → [[express]] [[routes]] [[api]] [[crud]] [[jwt]] [[protected-routes]] [[middleware]] [[users-sessions-relationship]] [[dates]] [[validation]] [[error-handling]]
+- backend/server.js — known (2026-08-12) — Express server; auth, per-user Postgres CRUD, validation, error-handling, origin-locked CORS → [[express]] [[routes]] [[api]] [[crud]] [[jwt]] [[protected-routes]] [[middleware]] [[validation]] [[error-handling]] [[cors]] [[prod-env-variables]]
 - backend/signup.test.js — known (2026-08-10) — integration test: hits the live /api/signup route (201 then 409) → [[testing-a-route]] [[automated-test]]
 - backend/package.json — known (2026-08-12) — backend deps (express, cors, pg, bcrypt, jsonwebtoken) + a "start" script Render runs → [[package-json]] [[build-step]]
 - backend/db.js — known (2026-08-12) — Postgres connection Pool from DATABASE_URL; creates sessions + users tables → [[sql]] [[tables]] [[sqlite-postgres]] [[db-to-server]]
