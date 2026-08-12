@@ -31,7 +31,7 @@ function App() {
   }
 
   async function handleAdd() {
-    const newSession = { id: crypto.randomUUID(), workout, reflection }
+   const newSession = { id: crypto.randomUUID(), workout, reflection, created_at: new Date().toISOString() }
 
     // send the new session to the backend with a POST request
     await fetch(`${API}/api/sessions`, {
@@ -45,9 +45,6 @@ function App() {
     setSessions([...sessions, newSession])
   }
 
-  function clearList(){
-    setSessions([])
-  }
 
   function handleLogout() {
     setToken('')
@@ -155,7 +152,6 @@ function App() {
       </ul>
 
       <div className="util-row">
-        <button className="btn btn-quiet" type='button' onClick={() => clearList()}>clear</button>
         <button className="btn btn-quiet" type='button' onClick={() => loadSessions()}>load from server</button>
         <button className="btn btn-quiet" type="button" onClick={handleLogout}>log out</button>
       </div>
