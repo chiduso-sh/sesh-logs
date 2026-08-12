@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import SessionItem from './SessionItem'
+import ModelViewer from './ModelViewer'
 import { computeStreak } from './streak'
 
 function App() {
@@ -159,6 +160,7 @@ function App() {
       </section>
       }
 
+      <ModelViewer />
     </main>
   )
 }

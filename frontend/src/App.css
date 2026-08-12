@@ -9,6 +9,8 @@
 /* Single centered column. Brand + streak read as centered
    "hero" elements; content below stays comfortably narrow. */
 .app-shell {
+  position: relative;
+  z-index: 1; /* sits above the ambient 3D accent */
   width: 100%;
   max-width: 460px;
   margin: 0 auto;
@@ -299,10 +301,57 @@ form {
   text-wrap: pretty;
 }
 
+/* ---- Ambient 3D accent (rotating parallettes) -------------- *
+   A subtle, non-interactive metal object that sits BEHIND the
+   content (z-index 0). Transparent canvas so the page glows show
+   through. Desktop: parked at the side. Mobile/tablet: a faded
+   strip along the bottom. Never draws focus from the streak. */
+.model-stage {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none; /* purely decorative — never blocks taps */
+  opacity: 0.6;
+  top: 50%;
+  right: clamp(var(--space-3), 5vw, 96px);
+  transform: translateY(-50%);
+  width: min(320px, 26vw);
+  height: 60vh;
+  max-height: 480px;
+  filter: drop-shadow(0 24px 44px rgba(0, 0, 0, 0.6));
+}
+.model-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Tablet & down: move it to a faded ambient strip at the bottom */
+@media (max-width: 1024px) {
+  .model-stage {
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    transform: none;
+    width: 100%;
+    height: 200px;
+    max-height: 30vh;
+    opacity: 0.45;
+    /* fade the top edge so it reads as ambient, not a hard band */
+    -webkit-mask-image: linear-gradient(to top, #000 18%, transparent);
+    mask-image: linear-gradient(to top, #000 18%, transparent);
+  }
+  .app-shell {
+    /* keep content clear of the bottom accent */
+    padding-bottom: 220px;
+  }
+}
+
 /* ---- Responsive -------------------------------------------- */
 @media (max-width: 480px) {
   .app-shell {
-    padding: var(--space-5) var(--space-3) var(--space-4);
+    padding: var(--space-5) var(--space-3) var(--space-5);
+    padding-bottom: 200px;
   }
   .auth-form {
     padding: var(--space-4) var(--space-3);

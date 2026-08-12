@@ -32,7 +32,9 @@
 - frontend/src/SessionItem.jsx — known (2026-08-10) — displays one session: formatted date + workout + reflection → [[props]] [[derived-data-rendering]] [[dates]]
 - frontend/src/streak.js — known (2026-08-10) — pure computeStreak logic, extracted from App so it's testable → [[streak-computation]]
 - frontend/src/streak.test.js — known (2026-08-10) — node:test unit tests for computeStreak → [[automated-test]]
-- frontend/src/App.css — known (2026-08-11) — black/silver component styles (cards, buttons, streak hero, session cards); designed in claude.ai/design, toured → [[css]] [[css-variables]]
+- frontend/src/App.css — known (2026-08-11) — black/silver component styles (cards, buttons, streak hero, session cards) + the fixed .model-stage accent → [[css]] [[css-variables]]
+- frontend/src/ModelViewer.jsx — known (2026-08-11) — React wrapper: mounts the decorative 3D accent on a canvas via useEffect/useRef, loads three from a CDN → [[useEffect]]
+- frontend/src/parallettes.js — parked (deep-dive on request) — Three.js/WebGL scene for the rotating parallettes; imported from your design, decorative, not yet authored/explained line-by-line
 - frontend/src/index.css — known (2026-08-11) — the design system: color + spacing variables, metallic gradients, base typography → [[css-variables]]
 - frontend/src/assets/ — parked (section 2) — images/static assets used by components
 - frontend/public/ — parked (section 2) — static files served as-is
