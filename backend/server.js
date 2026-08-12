@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import db from './db.js'
 // create the server application
 const app = express()
-app.use(cors())
+app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173' }))
 app.use(express.json()) // parse incoming JSON request bodies onto req.body
 // the port this server listens on
 const PORT = process.env.PORT || 3000
