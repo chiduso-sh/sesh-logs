@@ -16,17 +16,27 @@ function App() {
   const [loginUsername, setLoginUsername] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
 
+  // true while a login/signup request is in flight — drives the spinner overlay
+  const [authLoading, setAuthLoading] = useState(false)
+
   async function handleLogin(e) {
     e.preventDefault() // stop the form from reloading the page
-    const res = await fetch(`${API}/api/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: loginUsername, password: loginPassword }),
-    })
-    const data = await res.json()
-    if(data.token){
-      setToken(data.token)
-      localStorage.setItem('token', data.token)
+    // TODO(you): flip the spinner ON — should this line sit here (before the try) or inside it?
+    setAuthLoading(true)
+    try {
+      const res = await fetch(`${API}/api/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: loginUsername, password: loginPassword }),
+      })
+      const data = await res.json()
+      if(data.token){
+        setToken(data.token)
+        localStorage.setItem('token', data.token)
+      }
+    } finally {
+      // TODO(you): flip the spinner OFF — this block always runs, even if the fetch threw
+      setAuthLoading(false)
     }
   }
 
@@ -53,21 +63,26 @@ function App() {
 
   async function handleSignup() {
     // create the account...
-    await fetch(`${API}/api/signup`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: loginUsername, password: loginPassword }),
-    })
-    // ...then log in right away to get a token
-    const res = await fetch(`${API}/api/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: loginUsername, password: loginPassword }),
-    })
-    const data = await res.json()
-    if (data.token) {
-      setToken(data.token)
-      localStorage.setItem('token', data.token)
+    setAuthLoading(true)
+    try {
+      await fetch(`${API}/api/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: loginUsername, password: loginPassword }),
+      })
+      // ...then log in right away to get a token
+      const res = await fetch(`${API}/api/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: loginUsername, password: loginPassword }),
+      })
+      const data = await res.json()
+      if (data.token) {
+        setToken(data.token)
+        localStorage.setItem('token', data.token)
+      }
+    } finally{
+      setAuthLoading(false)
     }
   }
 
@@ -92,6 +107,13 @@ function App() {
     <main className="app-shell">
       <h1 className="brand">Sesh logs</h1>
       <p className="tagline">After session thoughts</p>
+
+      {authLoading && (
+        <div className="auth-overlay" role="status">
+          <span className="spinner" aria-hidden="true"></span>
+          <span className="auth-overlay-label">Signing you in…</span>
+        </div>
+      )}
       { !token ?
       <form className="auth-form card" onSubmit={handleLogin}>
         <input
@@ -108,8 +130,8 @@ function App() {
           value={loginPassword}
           onChange={(e) => setLoginPassword(e.target.value)}
         />
-        <button className="btn btn-primary" type="submit">log in</button>
-        <button className="btn btn-secondary" type="button" onClick={handleSignup}>sign up</button>
+        <button className="btn btn-primary" type="submit" disabled={authLoading}>log in</button>
+        <button className="btn btn-secondary" type="button" onClick={handleSignup} disabled={authLoading}>sign up</button>
       </form>
 
       :
