@@ -18,11 +18,13 @@ function App() {
 
   // true while a login/signup request is in flight — drives the spinner overlay
   const [authLoading, setAuthLoading] = useState(false)
+  // holds an auth error message ('' = no error) — drives the error toast
+  const [authError, setAuthError] = useState('')
 
   async function handleLogin(e) {
     e.preventDefault() // stop the form from reloading the page
-    // TODO(you): flip the spinner ON — should this line sit here (before the try) or inside it?
     setAuthLoading(true)
+    setAuthError('') // clear any stale error at the start of a fresh attempt
     try {
       const res = await fetch(`${API}/api/login`, {
         method: 'POST',
@@ -30,12 +32,19 @@ function App() {
         body: JSON.stringify({ username: loginUsername, password: loginPassword }),
       })
       const data = await res.json()
-      if(data.token){
+      if (data.token) {
         setToken(data.token)
         localStorage.setItem('token', data.token)
+      } else {
+        // TODO(you): "server said no" — a 401 came back with no token.
+        // The backend sends { error: '...' }. Show it, with a fallback message if it's missing.
+        setAuthError(data.error || 'Invalid details, Please try again')
       }
+    } catch {
+      // TODO(you): "couldn't reach the server" — the fetch itself threw.
+      // Show a friendly message telling the user to try again.
+      setAuthError('Could not reach the server, Please try again')
     } finally {
-      // TODO(you): flip the spinner OFF — this block always runs, even if the fetch threw
       setAuthLoading(false)
     }
   }
@@ -64,6 +73,7 @@ function App() {
   async function handleSignup() {
     // create the account...
     setAuthLoading(true)
+    setAuthError('')
     try {
       await fetch(`${API}/api/signup`, {
         method: 'POST',
@@ -81,6 +91,11 @@ function App() {
         setToken(data.token)
         localStorage.setItem('token', data.token)
       }
+      else{
+        setAuthError(data.error || 'Username taken twin')
+      }
+    }catch{
+      setAuthError('Could not reach the server, Please try again')
     } finally{
       setAuthLoading(false)
     }
@@ -112,6 +127,18 @@ function App() {
         <div className="auth-overlay" role="status">
           <span className="spinner" aria-hidden="true"></span>
           <span className="auth-overlay-label">Signing you in…</span>
+        </div>
+      )}
+
+      {authError && (
+        <div className="toast" role="alert">
+          <span className="toast-msg">{authError}</span>
+          <button
+            className="toast-close"
+            type="button"
+            aria-label="Dismiss"
+            onClick={() => setAuthError('')}
+          >×</button>
         </div>
       )}
       { !token ?
