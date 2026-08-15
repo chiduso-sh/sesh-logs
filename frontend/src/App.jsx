@@ -75,11 +75,17 @@ function App() {
     setAuthLoading(true)
     setAuthError('')
     try {
-      await fetch(`${API}/api/signup`, {
+      const signUpRes = await fetch(`${API}/api/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: loginUsername, password: loginPassword }),
       })
+    if(!signUpRes.ok){
+      const signUpData = await signUpRes.json()
+      setAuthError(signUpData.error || 'Username taken twin')
+      return
+    }
+      
       // ...then log in right away to get a token
       const res = await fetch(`${API}/api/login`, {
         method: 'POST',
@@ -92,7 +98,7 @@ function App() {
         localStorage.setItem('token', data.token)
       }
       else{
-        setAuthError(data.error || 'Username taken twin')
+        setAuthError(data.error || 'Signed up, but sign-in failed — try logging inv')
       }
     }catch{
       setAuthError('Could not reach the server, Please try again')
