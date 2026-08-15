@@ -115,6 +115,23 @@ a:hover {
   }
 }
 
+/* Auth spinner rotation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Overlay fade-in */
+@keyframes overlay-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Error toast drop-in from the top */
+@keyframes toast-drop {
+  from { opacity: 0; transform: translate(-50%, -12px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
 /* New session cards slide in from the right */
 @keyframes slide-in-right {
   from {

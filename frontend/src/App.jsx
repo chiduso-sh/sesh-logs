@@ -16,17 +16,33 @@ function App() {
   const [loginUsername, setLoginUsername] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
 
+  // true while a login/signup request is in flight — drives the spinner overlay
+  const [authLoading, setAuthLoading] = useState(false)
+  // holds an auth error message ('' = no error) — drives the error toast
+  const [authError, setAuthError] = useState('')
+
   async function handleLogin(e) {
     e.preventDefault() // stop the form from reloading the page
-    const res = await fetch(`${API}/api/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: loginUsername, password: loginPassword }),
-    })
-    const data = await res.json()
-    if(data.token){
-      setToken(data.token)
-      localStorage.setItem('token', data.token)
+    setAuthLoading(true)
+    setAuthError('') // clear any stale error at the start of a fresh attempt
+    try {
+      const res = await fetch(`${API}/api/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: loginUsername, password: loginPassword }),
+      })
+      const data = await res.json()
+      if (data.token) {
+        setToken(data.token)
+        localStorage.setItem('token', data.token)
+      } else {
+        //HTTP error that try won't throw
+        setAuthError(data.error || 'Invalid details, Please try again')
+      }
+    } catch {
+      setAuthError('Could not reach the server, Please try again')
+    } finally {
+      setAuthLoading(false)
     }
   }
 
@@ -53,21 +69,38 @@ function App() {
 
   async function handleSignup() {
     // create the account...
-    await fetch(`${API}/api/signup`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: loginUsername, password: loginPassword }),
-    })
-    // ...then log in right away to get a token
-    const res = await fetch(`${API}/api/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: loginUsername, password: loginPassword }),
-    })
-    const data = await res.json()
-    if (data.token) {
-      setToken(data.token)
-      localStorage.setItem('token', data.token)
+    setAuthLoading(true)
+    setAuthError('')
+    try {
+      const signUpRes = await fetch(`${API}/api/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: loginUsername, password: loginPassword }),
+      })
+    if(!signUpRes.ok){
+      const signUpData = await signUpRes.json()
+      setAuthError(signUpData.error || 'Username taken twin')
+      return
+    }
+      
+      // ...then log in right away to get a token
+      const res = await fetch(`${API}/api/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: loginUsername, password: loginPassword }),
+      })
+      const data = await res.json()
+      if (data.token) {
+        setToken(data.token)
+        localStorage.setItem('token', data.token)
+      }
+      else{
+        setAuthError(data.error || 'Signed up, but sign-in failed — try logging in')
+      }
+    } catch {
+      setAuthError('Could not reach the server, Please try again')
+    } finally {
+      setAuthLoading(false)
     }
   }
 
@@ -86,12 +119,40 @@ function App() {
     loadSessions()
   }, [token])
 
+  // auto-dismiss the error toast a few seconds after it appears
+  useEffect(() => {
+    if (!authError) return // no error showing → nothing to schedule
+    const timer = setTimeout(() => setAuthError(''), 4500) // clear the toast after 4.5s
+    return () => clearTimeout(timer)
+  }, [authError])
+
+  
+
   const streak = computeStreak(sessions)
 
   return (
     <main className="app-shell">
       <h1 className="brand">Sesh logs</h1>
       <p className="tagline">After session thoughts</p>
+
+      {authLoading && (
+        <div className="auth-overlay" role="status">
+          <span className="spinner" aria-hidden="true"></span>
+          <span className="auth-overlay-label">Signing you in…</span>
+        </div>
+      )}
+
+      {authError && (
+        <div className="toast" role="alert">
+          <span className="toast-msg">{authError}</span>
+          <button
+            className="toast-close"
+            type="button"
+            aria-label="Dismiss"
+            onClick={() => setAuthError('')}
+          >×</button>
+        </div>
+      )}
       { !token ?
       <form className="auth-form card" onSubmit={handleLogin}>
         <input
@@ -108,8 +169,8 @@ function App() {
           value={loginPassword}
           onChange={(e) => setLoginPassword(e.target.value)}
         />
-        <button className="btn btn-primary" type="submit">log in</button>
-        <button className="btn btn-secondary" type="button" onClick={handleSignup}>sign up</button>
+        <button className="btn btn-primary" type="submit" disabled={authLoading}>log in</button>
+        <button className="btn btn-secondary" type="button" onClick={handleSignup} disabled={authLoading}>sign up</button>
       </form>
 
       :
