@@ -122,6 +122,15 @@ function App() {
     loadSessions()
   }, [token])
 
+  // auto-dismiss the error toast a few seconds after it appears
+  useEffect(() => {
+    if (!authError) return // no error showing → nothing to schedule
+    const timer = setTimeout(() => setAuthError(''), 4500) // clear the toast after 4.5s
+    return () =>clearTimeout(timer)
+  }, [authError])
+
+  
+
   const streak = computeStreak(sessions)
 
   return (
