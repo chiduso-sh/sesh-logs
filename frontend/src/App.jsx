@@ -36,13 +36,10 @@ function App() {
         setToken(data.token)
         localStorage.setItem('token', data.token)
       } else {
-        // TODO(you): "server said no" — a 401 came back with no token.
-        // The backend sends { error: '...' }. Show it, with a fallback message if it's missing.
+        //HTTP error that try won't throw
         setAuthError(data.error || 'Invalid details, Please try again')
       }
     } catch {
-      // TODO(you): "couldn't reach the server" — the fetch itself threw.
-      // Show a friendly message telling the user to try again.
       setAuthError('Could not reach the server, Please try again')
     } finally {
       setAuthLoading(false)
@@ -98,11 +95,11 @@ function App() {
         localStorage.setItem('token', data.token)
       }
       else{
-        setAuthError(data.error || 'Signed up, but sign-in failed — try logging inv')
+        setAuthError(data.error || 'Signed up, but sign-in failed — try logging in')
       }
-    }catch{
+    } catch {
       setAuthError('Could not reach the server, Please try again')
-    } finally{
+    } finally {
       setAuthLoading(false)
     }
   }
@@ -126,7 +123,7 @@ function App() {
   useEffect(() => {
     if (!authError) return // no error showing → nothing to schedule
     const timer = setTimeout(() => setAuthError(''), 4500) // clear the toast after 4.5s
-    return () =>clearTimeout(timer)
+    return () => clearTimeout(timer)
   }, [authError])
 
   
