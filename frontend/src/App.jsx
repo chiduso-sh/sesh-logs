@@ -21,6 +21,11 @@ function App() {
   // holds an auth error message ('' = no error) — drives the error toast
   const [authError, setAuthError] = useState('')
 
+  // TODO(you): which auth view is showing — 'login' or 'signup'?
+  // Add a piece of state called authMode that STARTS on 'login'.
+  // Reminder of the shape: const [thing, setThing] = useState(initialValue)
+  const [authMode, setAuthMode] = useState('login')
+
   async function handleLogin(e) {
     e.preventDefault() // stop the form from reloading the page
     setAuthLoading(true)
@@ -153,27 +158,78 @@ function App() {
           >×</button>
         </div>
       )}
-      { !token ?
-      <form className="auth-form card" onSubmit={handleLogin}>
-        <input
-          className="field"
-          type="text"
-          placeholder="username"
-          value={loginUsername}
-          onChange={(e) => setLoginUsername(e.target.value)}
-        />
-        <input
-          className="field"
-          type="password"
-          placeholder="password"
-          value={loginPassword}
-          onChange={(e) => setLoginPassword(e.target.value)}
-        />
-        <button className="btn btn-primary" type="submit" disabled={authLoading}>log in</button>
-        <button className="btn btn-secondary" type="button" onClick={handleSignup} disabled={authLoading}>sign up</button>
-      </form>
-
-      :
+      { !token ? (
+      authMode === 'signup' ? (
+        /* ---- Sign-up view (the designed panel) ---- */
+        <section className="signup-screen auth-view">
+          <div className="signup-panel">
+            <span className="signup-eyebrow">New here</span>
+            <div className="signup-head">
+              <h2 className="signup-title">Create your account</h2>
+              <p className="signup-sub">Set a username and password to start logging sessions.</p>
+            </div>
+            <form className="signup-form">
+              <label className="signup-field-label">
+                Username
+                <input
+                  className="signup-field"
+                  type="text"
+                  placeholder="choose a username"
+                  value={loginUsername}
+                  onChange={(e) => setLoginUsername(e.target.value)}
+                />
+              </label>
+              <label className="signup-field-label">
+                Password
+                <input
+                  className="signup-field"
+                  type="password"
+                  placeholder="choose a password"
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                />
+              </label>
+              {/* wired to handleSignup in task 13.2 — for now it just sits there */}
+              <button className="btn signup-cta" type="button" disabled={authLoading}>Create account</button>
+            </form>
+          </div>
+          <p className="auth-switch">
+            Already have an account?{' '}
+            {/* TODO(you): make this flip back to the LOGIN view.
+                Replace the empty arrow body {} with the setter call.
+                Shape: onClick={() => setAuthMode('login')} */}
+            <button className="auth-switch-link" type="button" onClick={() => setAuthMode('login')}>Log in</button>
+          </p>
+        </section>
+      ) : (
+        /* ---- Login view ---- */
+        <div className="auth-view">
+          <form className="auth-form card" onSubmit={handleLogin}>
+            <input
+              className="field"
+              type="text"
+              placeholder="username"
+              value={loginUsername}
+              onChange={(e) => setLoginUsername(e.target.value)}
+            />
+            <input
+              className="field"
+              type="password"
+              placeholder="password"
+              value={loginPassword}
+              onChange={(e) => setLoginPassword(e.target.value)}
+            />
+            <button className="btn btn-primary" type="submit" disabled={authLoading}>log in</button>
+          </form>
+          <p className="auth-switch" style={{ marginTop: 'var(--space-3)' }}>
+            Don&rsquo;t have an account?{' '}
+            {/* TODO(you): make this flip to the SIGN-UP view.
+                Same shape, different value than the other one. */}
+            <button className="auth-switch-link" type="button" onClick={() => setAuthMode('signup')}>Create an account &rarr;</button>
+          </p>
+        </div>
+      )
+      ) : (
       <section className="app">
         <p className="streak">
           <span className="streak-num">{streak}</span>
@@ -217,7 +273,7 @@ function App() {
         <button className="btn btn-quiet" type="button" onClick={handleLogout}>log out</button>
       </div>
       </section>
-      }
+      ) }
 
       <ModelViewer />
     </main>
