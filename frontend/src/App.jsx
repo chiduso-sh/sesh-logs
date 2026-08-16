@@ -70,10 +70,14 @@ function App() {
   function handleLogout() {
     setToken('')
     localStorage.removeItem('token')
+    setAuthMode('login')
   }
 
-  async function handleSignup() {
-    // create the account...
+  async function handleSignup(e) {
+    // TODO(you): handleSignup now runs on form SUBMIT — so stop the browser's
+    // default page-reload FIRST (same first line as handleLogin, using the e
+    // parameter I just added to the signature).
+    e.preventDefault()
     setAuthLoading(true)
     setAuthError('')
     try {
@@ -168,7 +172,9 @@ function App() {
               <h2 className="signup-title">Create your account</h2>
               <p className="signup-sub">Set a username and password to start logging sessions.</p>
             </div>
-            <form className="signup-form">
+            {/* TODO(you): run handleSignup when this form is submitted
+                — the login view does onSubmit={handleLogin}; same idea here */}
+            <form className="signup-form" onSubmit={handleSignup}>
               <label className="signup-field-label">
                 Username
                 <input
@@ -189,15 +195,13 @@ function App() {
                   onChange={(e) => setLoginPassword(e.target.value)}
                 />
               </label>
-              {/* wired to handleSignup in task 13.2 — for now it just sits there */}
-              <button className="btn signup-cta" type="button" disabled={authLoading}>Create account</button>
+              {/* TODO(you): make this a SUBMIT button so the form's onSubmit fires
+                  (type="button" → type="submit") */}
+              <button className="btn signup-cta" type="submit" disabled={authLoading} >Create account</button>
             </form>
           </div>
           <p className="auth-switch">
             Already have an account?{' '}
-            {/* TODO(you): make this flip back to the LOGIN view.
-                Replace the empty arrow body {} with the setter call.
-                Shape: onClick={() => setAuthMode('login')} */}
             <button className="auth-switch-link" type="button" onClick={() => setAuthMode('login')}>Log in</button>
           </p>
         </section>
