@@ -163,6 +163,139 @@
   text-align: left;
 }
 
+/* Switch line between login <-> signup */
+.auth-switch {
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+.auth-switch-link {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.auth-switch-link:hover {
+  color: var(--text-strong);
+  text-decoration: underline;
+}
+.auth-switch-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring);
+  border-radius: var(--radius);
+}
+
+/* ---- Sign-up screen ---------------------------------------- *
+   Calm, minimal, soft-contrast (no bright silver): a quiet dark
+   panel with a clear mid-weight Oswald headline. Just username +
+   password. Distinct from login by its framing, not by loudness. */
+.signup-screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-align: left;
+}
+.signup-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-4);
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 50px -26px rgba(0, 0, 0, 0.7);
+}
+.signup-eyebrow {
+  align-self: flex-start;
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.signup-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.signup-title {
+  font-family: var(--display);
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: 0.01em;
+  color: var(--text-strong);
+}
+.signup-sub {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+.signup-form {
+  gap: var(--space-3);
+}
+.signup-field-label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.signup-field {
+  width: 100%;
+  padding: var(--space-3);
+  font: inherit;
+  font-size: 16px;
+  color: var(--text-strong);
+  background: #14141a;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.signup-field::placeholder {
+  color: var(--muted);
+}
+.signup-field:hover {
+  border-color: #4a4a56;
+}
+.signup-field:focus,
+.signup-field:focus-visible {
+  outline: none;
+  border-color: #4a4a56;
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(217, 217, 227, 0.12);
+}
+/* CTA: soft matte — never the bright metal fill */
+.signup-cta {
+  margin-top: var(--space-1);
+  width: 100%;
+  color: var(--text-strong);
+  background: #26262e;
+  border: 1px solid #3a3a46;
+}
+.signup-cta:hover {
+  background: #2e2e37;
+  border-color: #4a4a56;
+}
+
+/* Cross-fade between login and sign-up views */
+.auth-view {
+  animation: auth-fade 0.34s ease both;
+}
+
 /* ============================================================
    APP SCREEN
    ============================================================ */
