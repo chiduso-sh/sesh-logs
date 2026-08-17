@@ -21,9 +21,6 @@ function App() {
   // holds an auth error message ('' = no error) — drives the error toast
   const [authError, setAuthError] = useState('')
 
-  // TODO(you): which auth view is showing — 'login' or 'signup'?
-  // Add a piece of state called authMode that STARTS on 'login'.
-  // Reminder of the shape: const [thing, setThing] = useState(initialValue)
   const [authMode, setAuthMode] = useState('login')
 
   async function handleLogin(e) {
@@ -74,9 +71,6 @@ function App() {
   }
 
   async function handleSignup(e) {
-    // TODO(you): handleSignup now runs on form SUBMIT — so stop the browser's
-    // default page-reload FIRST (same first line as handleLogin, using the e
-    // parameter I just added to the signature).
     e.preventDefault()
     setAuthLoading(true)
     setAuthError('')
@@ -172,8 +166,7 @@ function App() {
               <h2 className="signup-title">Create your account</h2>
               <p className="signup-sub">Set a username and password to start logging sessions.</p>
             </div>
-            {/* TODO(you): run handleSignup when this form is submitted
-                — the login view does onSubmit={handleLogin}; same idea here */}
+
             <form className="signup-form" onSubmit={handleSignup}>
               <label className="signup-field-label">
                 Username
@@ -195,8 +188,7 @@ function App() {
                   onChange={(e) => setLoginPassword(e.target.value)}
                 />
               </label>
-              {/* TODO(you): make this a SUBMIT button so the form's onSubmit fires
-                  (type="button" → type="submit") */}
+
               <button className="btn signup-cta" type="submit" disabled={authLoading} >Create account</button>
             </form>
           </div>
@@ -227,8 +219,6 @@ function App() {
           </form>
           <p className="auth-switch" style={{ marginTop: 'var(--space-3)' }}>
             Don&rsquo;t have an account?{' '}
-            {/* TODO(you): make this flip to the SIGN-UP view.
-                Same shape, different value than the other one. */}
             <button className="auth-switch-link" type="button" onClick={() => setAuthMode('signup')}>Create an account &rarr;</button>
           </p>
         </div>
