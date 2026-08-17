@@ -6,6 +6,12 @@
    Aesthetic: brushed-metal fitness app at night — near-black
    ground, silver text, hairline borders, faint metallic glows.
    ============================================================ */
+
+/* Oswald (condensed display) — loaded ONLY for the signup panel's
+   eyebrow + title, via var(--display). The rest of the app keeps its
+   system font; the app-wide type swap is a separate, later v1.1 task. */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap');
+
 :root {
   /* --- core colors ------------------------------------------ */
   --bg: #0b0b0e;          /* near-black page */
@@ -42,6 +48,7 @@
   --radius: 12px;
   --radius-lg: 18px;
   --sans: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --display: 'Oswald', 'Segoe UI', system-ui, sans-serif; /* signup panel only */
 
   color-scheme: dark;
   font-family: var(--sans);
@@ -130,6 +137,12 @@ a:hover {
 @keyframes toast-drop {
   from { opacity: 0; transform: translate(-50%, -12px); }
   to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Cross-fade between the login and sign-up views */
+@keyframes auth-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* New session cards slide in from the right */
