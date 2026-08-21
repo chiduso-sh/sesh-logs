@@ -26,14 +26,14 @@ export default function ModelViewer() {
 
   return (
     <>
-      <button
+       {/* <button
         type="button"
         className="model-toggle"
         aria-pressed={on}
         onClick={() => setOn((v) => !v)}
       >
       {on ? 'You can turn it off 5ive ✌️' : '👀👀👀👀'}
-      </button>
+      </button>  */}
       {on && (
         <div className="model-stage" aria-hidden="true">
           <canvas ref={canvasRef} className="model-canvas"></canvas>
