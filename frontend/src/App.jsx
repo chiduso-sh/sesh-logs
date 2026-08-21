@@ -224,49 +224,37 @@ function App() {
         </div>
       )
       ) : (
-      <section className="app">
-        <p className="streak">
-          <span className="streak-num">{streak}</span>
-          <span className="streak-label">day streak</span>
-        </p>
-      <form className="sesh-form">
-        <label className="field-label">
-          Workout
-          <input
-            className="field"
-            type="text"
-            placeholder="e.g. Pull day — 5x5 pull-ups"
-            value={workout}
-            onChange={(e) => setWorkout(e.target.value)}
-          />
-        </label>
+      <div className="win-body">
+        {/* ---- slim icon rail ---- */}
+        <div className="icons">
+          <div className="icons-logo">S</div>
 
-        <label className="field-label">
-          Reflection
+          {/* History — the active view (inert for now, no routing yet) */}
+          <button className="icons-btn is-on" type="button" title="History">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4h12v12H4z" stroke="currentColor" strokeWidth="1.5"/><path d="M4 8h12M8 8v8" stroke="currentColor" strokeWidth="1.5"/></svg>
+          </button>
 
-          <textarea
-            className="field textarea"
-            value={reflection} onChange={(e) => setReflection(e.target.value)}
-            placeholder="e.g. Felt strong today, but my grip was weak"
-          />
-        </label>
+          <div className="icons-spacer"></div>
 
-        <button className="btn btn-primary btn-block" type="button" onClick={() => handleAdd()}>add sesh</button>
-      </form>
+          <button className="icons-btn" type="button" title="Log out" onClick={handleLogout}>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><path d="M12 7l3 3-3 3M15 10H8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </button>
+        </div>
 
-
-      <ul className="sesh-list">
-        List
-        {sessions.map((session) => (
-          <SessionItem key={session.id} session={session}/>
-        ))}
-      </ul>
-
-      <div className="util-row">
-        <button className="btn btn-quiet" type='button' onClick={() => loadSessions()}>load from server</button>
-        <button className="btn btn-quiet" type="button" onClick={handleLogout}>log out</button>
+        {/* ---- list column (the feed lives here) ---- */}
+        <section className="list-col">
+          <div className="list-top">
+            <span className="list-h">History<small>{sessions.length} sessions</small></span>
+            <button className="btn-new" type="button">
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
+              New session
+            </button>
+          </div>
+          <div className="list-scroll">
+            {/* 14.2 — the month-grouped session feed will render here */}
+          </div>
+        </section>
       </div>
-      </section>
       ) }
 
       <ModelViewer />

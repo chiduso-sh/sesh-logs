@@ -10,7 +10,7 @@
 /* Oswald (condensed display) — loaded ONLY for the signup panel's
    eyebrow + title, via var(--display). The rest of the app keeps its
    system font; the app-wide type swap is a separate, later v1.1 task. */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
 
 :root {
   /* --- core colors ------------------------------------------ */
