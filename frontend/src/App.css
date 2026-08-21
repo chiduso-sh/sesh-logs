@@ -621,3 +621,124 @@ form {
     padding: var(--space-4) var(--space-3);
   }
 }
+
+/* ============================================================
+   DESKTOP APP SHELL  (v1.2, task 14.1)
+   ------------------------------------------------------------
+   2-pane layout: a slim icon rail on the left + a wide list
+   column on the right. Fixed to the viewport so, when logged in,
+   the app owns the whole screen (it covers the brand + 3D accent
+   that sit behind it). Later tasks fill the list column with the
+   streak card, the feed, a slide-in detail, and a modal.
+   ============================================================ */
+.win-body {
+  position: fixed;
+  inset: 0;            /* pin to all four edges = full viewport */
+  z-index: 2;          /* above the ambient 3D accent (z-index 0) */
+  display: flex;       /* rail + list column sit side by side */
+  background: var(--bg);
+}
+
+/* ---- slim icon rail ---------------------------------------- */
+.icons {
+  flex: 0 0 auto;      /* fixed width — never grows or shrinks */
+  width: 62px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
+.icons-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--metal-fill);
+  color: var(--accent-ink);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: var(--space-2);
+}
+.icons-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: none;
+  border: 1px solid transparent;
+  color: var(--muted);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.icons-btn:hover {
+  color: var(--text-strong);
+  background: var(--bg);
+}
+.icons-btn.is-on {            /* the currently-active view */
+  color: var(--text-strong);
+  background: var(--bg);
+  border-color: var(--border);
+}
+.icons-spacer {
+  flex: 1;                    /* eats the middle gap → pushes Log out to the bottom */
+}
+
+/* ---- list column (the wide pane) --------------------------- */
+.list-col {
+  flex: 1;                    /* takes all the width the rail leaves */
+  display: flex;
+  flex-direction: column;
+  min-height: 0;             /* lets the scroll area below actually scroll */
+  min-width: 0;
+}
+.list-top {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 26px 18px;
+}
+.list-h {
+  font-family: var(--display);
+  font-size: 23px;
+  font-weight: 600;
+  color: var(--text-strong);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.list-h small {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 8px;
+}
+.btn-new {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 11px 18px;
+  border-radius: var(--radius);
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--accent-ink);
+  background: var(--metal-fill);
+  border: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
+              0 10px 24px -12px rgba(217, 217, 227, 0.5);
+}
+.list-scroll {
+  flex: 1;                    /* fills the rest of the column height */
+  overflow-y: auto;          /* only THIS area scrolls, not the whole page */
+  padding: 4px 12% 34px;     /* wide side gutters keep the feed centered */
+}

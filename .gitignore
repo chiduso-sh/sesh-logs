@@ -3,3 +3,6 @@ learning/
 
 # Personal agent instructions — kept local
 CLAUDE.md
+
+# Design reference bundle — sliced from locally, not part of the app
+design_handoff_sesh_logs/
