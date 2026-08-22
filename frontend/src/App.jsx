@@ -148,6 +148,20 @@ function App() {
     byMonth[label].push(session)
   }
 
+  const trainedDays =  sessions.map((session) => (
+    new Date(session.created_at).toDateString()
+  ))
+
+  const last7 = []
+
+  // walk the last 7 days: 6 days ago (i=6) up to today (i=0)
+  for (let i = 6; i >= 0; i--) {
+    const day = new Date()          // start from right now
+    day.setDate(day.getDate() - i)  // step the date back i days
+    last7.push(trainedDays.includes(day.toDateString()))
+  }
+  
+
   return (
     <main className="app-shell">
       <h1 className="brand">Sesh logs</h1>
@@ -266,6 +280,21 @@ function App() {
             </button>
           </div>
           <div className="list-scroll">
+            <div className="home-streak">
+              <span className="streak-flame">
+                <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M10 2c.6 2.4-.7 3.6-1.9 4.8C6.7 8.1 5.5 9.4 5.5 12a4.5 4.5 0 0 0 9 0c0-1.6-.7-2.8-1.5-3.8-.3 1-.9 1.6-1.7 1.9.4-2.3-.4-4.6-1.8-8.1z" fill="currentColor"/></svg>
+              </span>
+              <div className="streak-main">
+                <div className="streak-num"><b>{streak}</b><span>day streak</span></div>
+              </div>
+              <div className="streak-dots">
+                {/* 7 last-days dots — wired to real data in the next step */}
+                {last7.map((last, i) => (
+                  <i className={last ? 'on' : ''} key={i}></i>
+                ))}
+              </div>
+            </div>
+
             {Object.entries(byMonth).map(([label, sessions]) => (
               <div className="feed-month" key={label}>
                 <div className='month-head'>
