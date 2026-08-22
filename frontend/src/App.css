@@ -306,48 +306,70 @@
   text-align: left;
 }
 
-/* ---- Streak hero ------------------------------------------- */
-/* The centerpiece: a metallic badge with an oversized silver
-   number that catches the eye immediately. */
-.streak {
-  align-self: center;
-  min-width: 220px;
-  padding: var(--space-4) var(--space-5);
+/* ---- streak card (v1.2, task 14.3) ------------------------- *
+   Daily streak + a 7-dot "last 7 days" row. Sits at the top of
+   the feed column. (Replaces the old centered .streak hero, whose
+   JSX was removed in 14.1 — these class names are reused.) */
+.home-streak {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--space-1);
-  text-align: center;
-
-  background:
-    radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,0.06), transparent 60%),
-    var(--surface);
+  gap: 16px;
+  margin: 6px 0 20px;
+  padding: 16px 20px;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  /* soft silver glow so the hero lifts off the near-black ground */
-  box-shadow: var(--shadow), 0 0 40px -12px var(--glow);
 }
-
-.streak-num {
-  /* the number that pops — brushed-silver, tabular so it never jitters */
-  font-size: clamp(64px, 18vw, 92px);
-  font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  font-variant-numeric: tabular-nums;
-  background: var(--metal-text);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.6));
+.streak-flame {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-ink);
+  background: var(--metal-fill);
 }
-
-.streak-label {
-  color: var(--muted);
-  font-size: 12px;
+.streak-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.streak-num {                 /* row: big number + its label */
+  font-family: var(--display);
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+.streak-num b {
+  font-size: 24px;
   font-weight: 600;
-  letter-spacing: 0.28em;
+  color: var(--text-strong);
+  letter-spacing: 0.01em;
+}
+.streak-num span {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+.streak-dots {                /* the last-7-days row */
+  flex: 0 0 auto;
+  display: flex;
+  gap: 6px;
+}
+.streak-dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #33333d;        /* off = an untrained day */
+}
+.streak-dots i.on {
+  background: var(--accent);  /* on = you trained that day */
 }
 
 /* ---- Forms ------------------------------------------------- */
