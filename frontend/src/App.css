@@ -742,3 +742,85 @@ form {
   overflow-y: auto;          /* only THIS area scrolls, not the whole page */
   padding: 4px 12% 34px;     /* wide side gutters keep the feed centered */
 }
+
+/* ============================================================
+   MONTH-GROUPED FEED  (v1.2, task 14.2)
+   ------------------------------------------------------------
+   Note: the design calls this card ".card", but we already own
+   ".card" (the auth panel). Renamed to ".feed-card" so the two
+   never collide — a surgical slice, not a wholesale sync.
+   ============================================================ */
+.feed-month {
+  margin-bottom: var(--space-4);
+}
+.month-head {
+  position: sticky;          /* pins to the top of the scroll area... */
+  top: 0;                    /* ...while its cards scroll underneath */
+  z-index: 1;
+  background: var(--bg);     /* opaque so cards don't bleed through */
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 16px 2px 14px;
+}
+.feed-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;           /* opens the detail panel in task 14.4 */
+  padding: 26px 28px;
+  margin-bottom: 22px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.feed-card:hover {
+  border-color: #3a3a46;
+  transform: translateY(-2px);
+}
+.card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+.sesh-name {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text-strong);
+  letter-spacing: 0.01em;
+}
+.sesh-date {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.card-reflect {
+  display: flex;
+  gap: 12px;
+}
+.card-reflect::before {   /* the thin left rule beside the reflection */
+  content: '';
+  flex: 0 0 auto;
+  width: 2px;
+  border-radius: 2px;
+  background: #3a3a46;
+}
+.card-reflect p {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.55;
+  text-wrap: pretty;
+  /* clamp to 2 lines here — the full reflection shows in the detail panel (14.4) */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
