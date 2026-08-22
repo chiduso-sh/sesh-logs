@@ -133,6 +133,21 @@ function App() {
 
   const streak = computeStreak(sessions)
 
+  // ---- group sessions into month buckets, newest month first ----
+  // 1) copy the array, then sort newest-first. We copy with [...sessions] because
+  //    .sort() rearranges the array IN PLACE — sorting state directly would mutate it.
+  const ordered = [...sessions].sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+
+  // 2) walk the ordered list and drop each session into a bucket named by its month.
+  const byMonth = {}
+  for (const session of ordered) {
+    const label = new Date(session.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+    if(!byMonth[label]){
+      byMonth[label] = []
+    }
+    byMonth[label].push(session)
+  }
+
   return (
     <main className="app-shell">
       <h1 className="brand">Sesh logs</h1>
@@ -251,7 +266,25 @@ function App() {
             </button>
           </div>
           <div className="list-scroll">
-            {/* 14.2 — the month-grouped session feed will render here */}
+            {Object.entries(byMonth).map(([label, sessions]) => (
+              <div className="feed-month" key={label}>
+                <div className='month-head'>
+                  {label}
+                </div>
+                {sessions.map((session) => (
+                  <div className="feed-card" key={session.id}>
+                    <div className="card-top">
+                      <span className="sesh-name">{session.workout}</span>
+                      
+                      <span className="sesh-date">{new Date(session.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
+                    </div>
+                    <div className="card-reflect">
+                      <p>{session.reflection}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
         </section>
       </div>
