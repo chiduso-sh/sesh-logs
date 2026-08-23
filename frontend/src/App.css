@@ -846,3 +846,103 @@ form {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* ---- 14.4 slide-in detail panel ---------------------------- */
+/* Anchored to the fixed .win-body; starts off-screen right (translateX 100%)
+   and slides to translateX(0) when .is-open is added. */
+.slidein {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 460px;
+  max-width: calc(100% - 62px);
+  z-index: 9;
+  transform: translateX(100%);   /* parked off-screen to the right */
+  transition: transform 0.3s cubic-bezier(.4, 0, .2, 1);
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  box-shadow: -30px 0 70px -20px rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+}
+.slidein.is-open {
+  transform: translateX(0);      /* slid into view */
+}
+.detail-top {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 26px 16px;
+}
+.detail-eyebrow {
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.feed-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.detail-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 26px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  scrollbar-width: none;
+}
+.detail-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.detail-date {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.detail-name {
+  font-family: var(--display);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text-strong);
+  line-height: 1.03;
+  letter-spacing: 0.01em;
+}
+.detail-block-label {
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.reflect-read {
+  padding: 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.reflect-read p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+}

@@ -23,6 +23,8 @@ function App() {
 
   const [authMode, setAuthMode] = useState('login')
 
+  const [selectedSessionId, setSelectedSessionId] = useState(null)
+
   async function handleLogin(e) {
     e.preventDefault() // stop the form from reloading the page
     setAuthLoading(true)
@@ -160,6 +162,8 @@ function App() {
     day.setDate(day.getDate() - i)  // step the date back i days
     last7.push(trainedDays.includes(day.toDateString()))
   }
+
+  const selectedSession = sessions.find((session) => session.id === selectedSessionId )
   
 
   return (
@@ -301,8 +305,8 @@ function App() {
                   {label}
                 </div>
                 {sessions.map((session) => (
-                  <div className="feed-card" key={session.id}>
-                    <div className="card-top">
+                  <div className="feed-card" key={session.id} onClick={() => {setSelectedSessionId(session.id)}}>
+                    <div className="card-top" >
                       <span className="sesh-name">{session.workout}</span>
                       
                       <span className="sesh-date">{new Date(session.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
@@ -316,6 +320,38 @@ function App() {
             ))}
           </div>
         </section>
+
+        {/* ---- slide-in detail panel (14.4) ---- */}
+        {/* TODO(you): make this className toggle — 'slidein is-open' when a
+            session is selected, else just 'slidein'. Same ternary shape as
+            the streak dots. Right now it's stuck static, so it stays hidden. */}
+        <aside className={ selectedSession ? 'slidein is-open' : 'slidein'}>
+          <div className="detail-top">
+            <span className="detail-eyebrow">Session</span>
+            <button className="feed-close" type="button" onClick={() => setSelectedSessionId(null)}>
+              <svg width="15" height="15" viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
+            </button>
+          </div>
+          <div className="detail-scroll">
+            {selectedSession &&  
+            <>
+            <div className="detail-hero">
+              <span className="detail-date">
+                {new Date(selectedSession.created_at).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}
+              </span>
+              <span className="detail-name">{selectedSession.workout}</span>
+            </div>
+            <div>
+              <span className="detail-block-label">Reflection</span>
+              <div className="reflect-read" style={{ marginTop: 12 }}>
+                <p>{selectedSession.reflection}</p>
+              </div>
+            </div>
+            </>
+            }
+           
+          </div>
+        </aside>
       </div>
       ) }
 
