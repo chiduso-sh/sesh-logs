@@ -1156,4 +1156,33 @@ form {
     width: 40px;
     height: 40px;
   }
+
+  /* 6) detail panel: desktop's a 460px right-hand panel; on a phone it
+        should cover the WHOLE screen. Override just its width. */
+  .slidein {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* 7) full-screen detail reads as a top-bar: back arrow on the left,
+        drop the "Session" eyebrow, swap the × SVG for a ← glyph. */
+  .detail-top {
+    justify-content: flex-start;   /* push the (only) control to the left */
+    padding: 22px 20px ;
+  }
+  .detail-eyebrow {
+    display: none;                 /* no room for the label in a back-bar */
+  }
+  .feed-close {
+    width:  44px;
+    height: 44px ;
+  }
+  .feed-close svg {
+    display: none;                 /* hide the × icon... */
+  }
+  .feed-close::before {
+    content: '←';
+    font-size: 20px;               /* ...and draw a back arrow in its place */
+    line-height: 1;
+  }
 }
