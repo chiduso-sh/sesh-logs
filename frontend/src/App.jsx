@@ -297,7 +297,6 @@ function App() {
                 <div className="streak-num"><b>{streak}</b><span>day streak</span></div>
               </div>
               <div className="streak-dots">
-                {/* 7 last-days dots — wired to real data in the next step */}
                 {last7.map((last, i) => (
                   <i className={last ? 'on' : ''} key={i}></i>
                 ))}
