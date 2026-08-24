@@ -759,6 +759,13 @@ form {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
               0 10px 24px -12px rgba(217, 217, 227, 0.5);
 }
+/* the right-side action cluster: New-session button (+ the mobile
+   account menu, which is display:none on desktop) */
+.list-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .list-scroll {
   flex: 1;                    /* fills the rest of the column height */
   overflow-y: auto;          /* only THIS area scrolls, not the whole page */
@@ -1023,4 +1030,108 @@ form {
 .feed-empty-sub {
   font-size: 14px;
   color: var(--muted);
+}
+
+/* ============================================================
+   MOBILE — phone shell  (v1.3, task 15.1)
+   ------------------------------------------------------------
+   Everything inside this @media block ONLY applies when the
+   screen is 768px wide or narrower (phones + small tablets).
+   The desktop rules above stay untouched on wider screens.
+   Step 1: hide the slim icon rail so the feed gets the whole
+   width. (Log out lived on that rail — we rebuild it as a
+   mobile top bar next.)
+   ============================================================ */
+/* The account menu is DESKTOP-HIDDEN — on wide screens Log out
+   still lives on the icon rail, so this mobile-only menu stays out
+   of the way. The @media block below flips it back on for phones. */
+.acct {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* 1) hide the slim icon rail so the feed gets the whole width */
+  .icons {
+    display: none;
+  }
+
+  /* 2) tighten the header + feed gutters for a narrow screen
+        (desktop's 12% side gutters waste a phone's width) */
+  .list-top {
+    padding: 16px 16px 12px;
+    gap: 12px;
+  }
+  /* the "New session" pill becomes an icon-only round "+" (matches
+     the design's mobile top bar); hide its text label, square → circle */
+  .btn-new {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    gap: 0;
+    border-radius: 14px;
+    justify-content: center;
+  }
+  .btn-new-label {
+    display: none;
+  }
+  .list-scroll {
+    padding: 4px 16px 34px;
+  }
+
+  /* 3) the mobile account menu — Log out's home once the rail is gone.
+        .acct is position:relative so the dropdown can hang off it. */
+  .acct {
+    display: block;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  .acct-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .acct-avatar:hover {
+    color: var(--text-strong);
+    border-color: var(--muted);
+  }
+  .acct-menu {
+    position: absolute;         /* floats over the feed, doesn't push it */
+    top: calc(100% + 8px);      /* just below the avatar */
+    right: 0;                   /* right-aligned under the avatar */
+    z-index: 12;
+    min-width: 168px;
+    padding: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.7);
+  }
+  .acct-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 9px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    color: var(--text);
+    background: none;
+    border: none;
+    text-align: left;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .acct-menu-item:hover {
+    background: var(--bg);
+    color: var(--text-strong);
+  }
 }
