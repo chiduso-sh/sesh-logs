@@ -1004,3 +1004,23 @@ form {
 .modal-card .field::placeholder {
   font-size: 13px;
 }
+
+/* ---- 14.6 empty state ------------------------------------- */
+.feed-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  padding: var(--space-6) var(--space-4);
+}
+.feed-empty-title {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+.feed-empty-sub {
+  font-size: 14px;
+  color: var(--muted);
+}
