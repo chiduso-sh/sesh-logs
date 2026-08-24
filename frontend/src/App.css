@@ -1134,4 +1134,26 @@ form {
     background: var(--bg);
     color: var(--text-strong);
   }
+
+
+  .feed-card {
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    gap: 12px;
+  }
+  /* the session title is desktop-sized (24px) — dial it down for phones */
+  .sesh-name {
+    font-size: 22px;
+  }
+
+  .streak-num span {
+    font-size: 11px ;
+  }
+  .streak-num b {
+    font-size: 40px;
+  }
+  .streak-flame {
+    width: 40px;
+    height: 40px;
+  }
 }
