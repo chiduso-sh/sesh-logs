@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import SessionItem from './SessionItem'
 import ModelViewer from './ModelViewer'
 import { computeStreak } from './streak'
 
@@ -8,6 +7,7 @@ function App() {
   const [workout, setWorkout] = useState('')
   const [reflection, setReflection] = useState('')
   const [sessions, setSessions] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
@@ -278,7 +278,7 @@ function App() {
         <section className="list-col">
           <div className="list-top">
             <span className="list-h">History<small>{sessions.length} sessions</small></span>
-            <button className="btn-new" type="button">
+            <button className="btn-new" type="button" onClick={() => setIsModalOpen(true)}>
               <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
               New session
             </button>
@@ -352,6 +352,32 @@ function App() {
            
           </div>
         </aside>
+
+        {/* ---- new-session modal (14.5) ---- */}
+        {/* TODO(you): toggle this scrim's className — 'modal-scrim is-open'
+            when isModalOpen, else just 'modal-scrim'. Same ternary as the panel. */}
+        <div className={isModalOpen ? "modal-scrim is-open" : "modal-scrim"}>
+          <div className="modal-card">
+            <div className="modal-head">
+              <span className="modal-title">New session</span>
+              <button className="modal-close" type="button" onClick={() => setIsModalOpen(false)}>
+                <svg width="15" height="15" viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
+              </button>
+            </div>
+
+            {/* TODO(you) — beat 4: the two controlled inputs go here */}
+            <label className="field-label">
+              Workout
+              <input type="text" className='field' placeholder='workout title' value={workout} onChange={(e) => setWorkout(e.target.value)}/>
+            </label>
+            <label className="field-label">
+              Reflection
+             <textarea className='field textarea' placeholder="how it'd go bud" value={reflection} onChange={(e) => setReflection(e.target.value)}/>
+            </label>
+
+            <button className="btn btn-primary" type="button" onClick={() => {handleAdd(); setIsModalOpen(false)}}>Save session</button>
+          </div>
+        </div>
       </div>
       ) }
 

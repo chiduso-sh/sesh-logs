@@ -946,3 +946,61 @@ form {
   color: var(--text);
   line-height: 1.6;
 }
+
+/* ---- 14.5 new-session modal ------------------------------- */
+/* full-screen dark scrim; hidden (display:none) until .is-open,
+   then flex-centers the slim card. */
+.modal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.62);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+.modal-scrim.is-open {
+  display: flex;
+}
+.modal-card {
+  width: 440px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.95);
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-title {
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+/* smaller placeholder text, scoped to the modal's fields only */
+.modal-card .field::placeholder {
+  font-size: 13px;
+}
