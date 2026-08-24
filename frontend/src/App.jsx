@@ -168,8 +168,13 @@ function App() {
 
   return (
     <main className="app-shell">
-      <h1 className="brand">Sesh logs</h1>
-      <p className="tagline">After session thoughts</p>
+      {!token && (
+        <>
+          <h1 className="brand">Sesh logs</h1>
+          <p className="tagline">After session thoughts</p>
+        </>
+      )}
+
 
       {authLoading && (
         <div className="auth-overlay" role="status">
@@ -299,6 +304,13 @@ function App() {
               </div>
             </div>
 
+
+            {sessions.length === 0 &&  (  <div className="feed-empty">
+              <p className="feed-empty-title">No sessions yet</p>
+              <p className="feed-empty-sub">Log your first one with the “New session” button.</p>
+            </div>)}
+          
+
             {Object.entries(byMonth).map(([label, sessions]) => (
               <div className="feed-month" key={label}>
                 <div className='month-head'>
@@ -322,9 +334,7 @@ function App() {
         </section>
 
         {/* ---- slide-in detail panel (14.4) ---- */}
-        {/* TODO(you): make this className toggle — 'slidein is-open' when a
-            session is selected, else just 'slidein'. Same ternary shape as
-            the streak dots. Right now it's stuck static, so it stays hidden. */}
+
         <aside className={ selectedSession ? 'slidein is-open' : 'slidein'}>
           <div className="detail-top">
             <span className="detail-eyebrow">Session</span>
@@ -354,8 +364,7 @@ function App() {
         </aside>
 
         {/* ---- new-session modal (14.5) ---- */}
-        {/* TODO(you): toggle this scrim's className — 'modal-scrim is-open'
-            when isModalOpen, else just 'modal-scrim'. Same ternary as the panel. */}
+
         <div className={isModalOpen ? "modal-scrim is-open" : "modal-scrim"}>
           <div className="modal-card">
             <div className="modal-head">
@@ -365,7 +374,7 @@ function App() {
               </button>
             </div>
 
-            {/* TODO(you) — beat 4: the two controlled inputs go here */}
+            
             <label className="field-label">
               Workout
               <input type="text" className='field' placeholder='workout title' value={workout} onChange={(e) => setWorkout(e.target.value)}/>
@@ -381,7 +390,8 @@ function App() {
       </div>
       ) }
 
-      <ModelViewer />
+      {!token && <ModelViewer />}
+      
     </main>
   )
 }
