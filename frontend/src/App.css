@@ -1049,6 +1049,12 @@ form {
   display: none;
 }
 
+/* bottom-sheet entrance: start fully below the screen, glide up to place */
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
 @media (max-width: 768px) {
   /* 1) hide the slim icon rail so the feed gets the whole width */
   .icons {
@@ -1197,5 +1203,7 @@ form {
     /* round only the TOP corners so the sheet's bottom sits flush.
        4 values, clockwise from top-left:  TL  TR  BR  BL  */
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    /* slide up on open (the scrim's display:flex mounts it, this plays) */
+    animation: sheet-up 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
