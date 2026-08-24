@@ -1185,4 +1185,17 @@ form {
     font-size: 20px;               /* ...and draw a back arrow in its place */
     line-height: 1;
   }
+
+  /* 8) new-session modal → bottom-sheet: the scrim is a flex container
+        and the card its one item. Anchor the card to the bottom edge
+        instead of centering it, and let it span the full width. */
+  .modal-scrim {
+    align-items: flex-end;
+    padding: 0;                    /* touch the screen edges + bottom, no gutter */
+  }
+  .modal-card {
+    /* round only the TOP corners so the sheet's bottom sits flush.
+       4 values, clockwise from top-left:  TL  TR  BR  BL  */
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
 }
