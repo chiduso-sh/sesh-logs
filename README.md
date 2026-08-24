@@ -7,8 +7,7 @@ A private workout-reflection tracker with a consistency streak. Log a session an
 > Heads-up: the backend runs on a free tier that sleeps after ~15 min idle, so the **first** request after a while can take ~30–50s to wake. After that it's snappy.
 
 <!-- TODO: add a screenshot — drop an image in the repo and reference it here, e.g. ![Sesh logs](./screenshot.png) -->
-![Sesh logs](image.png)
-
+![Sesh-logs](image.png)
 ## Features
 
 - **Accounts** — sign up and log in; each user only ever sees their own sessions.

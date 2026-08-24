@@ -306,48 +306,70 @@
   text-align: left;
 }
 
-/* ---- Streak hero ------------------------------------------- */
-/* The centerpiece: a metallic badge with an oversized silver
-   number that catches the eye immediately. */
-.streak {
-  align-self: center;
-  min-width: 220px;
-  padding: var(--space-4) var(--space-5);
+/* ---- streak card (v1.2, task 14.3) ------------------------- *
+   Daily streak + a 7-dot "last 7 days" row. Sits at the top of
+   the feed column. (Replaces the old centered .streak hero, whose
+   JSX was removed in 14.1 — these class names are reused.) */
+.home-streak {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--space-1);
-  text-align: center;
-
-  background:
-    radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,0.06), transparent 60%),
-    var(--surface);
+  gap: 16px;
+  margin: 6px 0 20px;
+  padding: 16px 20px;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  /* soft silver glow so the hero lifts off the near-black ground */
-  box-shadow: var(--shadow), 0 0 40px -12px var(--glow);
 }
-
-.streak-num {
-  /* the number that pops — brushed-silver, tabular so it never jitters */
-  font-size: clamp(64px, 18vw, 92px);
-  font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
-  font-variant-numeric: tabular-nums;
-  background: var(--metal-text);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.6));
+.streak-flame {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-ink);
+  background: var(--metal-fill);
 }
-
-.streak-label {
-  color: var(--muted);
-  font-size: 12px;
+.streak-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.streak-num {                 /* row: big number + its label */
+  font-family: var(--display);
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+.streak-num b {
+  font-size: 24px;
   font-weight: 600;
-  letter-spacing: 0.28em;
+  color: var(--text-strong);
+  letter-spacing: 0.01em;
+}
+.streak-num span {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+.streak-dots {                /* the last-7-days row */
+  flex: 0 0 auto;
+  display: flex;
+  gap: 6px;
+}
+.streak-dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #33333d;        /* off = an untrained day */
+}
+.streak-dots i.on {
+  background: var(--accent);  /* on = you trained that day */
 }
 
 /* ---- Forms ------------------------------------------------- */
@@ -620,4 +642,385 @@ form {
   .auth-form {
     padding: var(--space-4) var(--space-3);
   }
+}
+
+/* ============================================================
+   DESKTOP APP SHELL  (v1.2, task 14.1)
+   ------------------------------------------------------------
+   2-pane layout: a slim icon rail on the left + a wide list
+   column on the right. Fixed to the viewport so, when logged in,
+   the app owns the whole screen (it covers the brand + 3D accent
+   that sit behind it). Later tasks fill the list column with the
+   streak card, the feed, a slide-in detail, and a modal.
+   ============================================================ */
+.win-body {
+  position: fixed;
+  inset: 0;            /* pin to all four edges = full viewport */
+  z-index: 2;          /* above the ambient 3D accent (z-index 0) */
+  display: flex;       /* rail + list column sit side by side */
+  background: var(--bg);
+}
+
+/* ---- slim icon rail ---------------------------------------- */
+.icons {
+  flex: 0 0 auto;      /* fixed width — never grows or shrinks */
+  width: 62px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
+.icons-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--metal-fill);
+  color: var(--accent-ink);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: var(--space-2);
+}
+.icons-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: none;
+  border: 1px solid transparent;
+  color: var(--muted);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.icons-btn:hover {
+  color: var(--text-strong);
+  background: var(--bg);
+}
+.icons-btn.is-on {            /* the currently-active view */
+  color: var(--text-strong);
+  background: var(--bg);
+  border-color: var(--border);
+}
+.icons-spacer {
+  flex: 1;                    /* eats the middle gap → pushes Log out to the bottom */
+}
+
+/* ---- list column (the wide pane) --------------------------- */
+.list-col {
+  flex: 1;                    /* takes all the width the rail leaves */
+  display: flex;
+  flex-direction: column;
+  min-height: 0;             /* lets the scroll area below actually scroll */
+  min-width: 0;
+}
+.list-top {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 26px 18px;
+}
+.list-h {
+  font-family: var(--display);
+  font-size: 23px;
+  font-weight: 600;
+  color: var(--text-strong);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.list-h small {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 8px;
+}
+.btn-new {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 11px 18px;
+  border-radius: var(--radius);
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--accent-ink);
+  background: var(--metal-fill);
+  border: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
+              0 10px 24px -12px rgba(217, 217, 227, 0.5);
+}
+.list-scroll {
+  flex: 1;                    /* fills the rest of the column height */
+  overflow-y: auto;          /* only THIS area scrolls, not the whole page */
+  padding: 4px 12% 34px;     /* wide side gutters keep the feed centered */
+}
+
+/* ============================================================
+   MONTH-GROUPED FEED  (v1.2, task 14.2)
+   ------------------------------------------------------------
+   Note: the design calls this card ".card", but we already own
+   ".card" (the auth panel). Renamed to ".feed-card" so the two
+   never collide — a surgical slice, not a wholesale sync.
+   ============================================================ */
+.feed-month {
+  margin-bottom: var(--space-4);
+}
+.month-head {
+  position: sticky;          /* pins to the top of the scroll area... */
+  top: 0;                    /* ...while its cards scroll underneath */
+  z-index: 1;
+  background: var(--bg);     /* opaque so cards don't bleed through */
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 16px 2px 14px;
+}
+.feed-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;           /* opens the detail panel in task 14.4 */
+  padding: 26px 28px;
+  margin-bottom: 22px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.feed-card:hover {
+  border-color: #3a3a46;
+  transform: translateY(-2px);
+}
+.card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+.sesh-name {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text-strong);
+  letter-spacing: 0.01em;
+}
+.sesh-date {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.card-reflect {
+  display: flex;
+  gap: 12px;
+}
+.card-reflect::before {   /* the thin left rule beside the reflection */
+  content: '';
+  flex: 0 0 auto;
+  width: 2px;
+  border-radius: 2px;
+  background: #3a3a46;
+}
+.card-reflect p {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.55;
+  text-wrap: pretty;
+  /* clamp to 2 lines here — the full reflection shows in the detail panel (14.4) */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---- 14.4 slide-in detail panel ---------------------------- */
+/* Anchored to the fixed .win-body; starts off-screen right (translateX 100%)
+   and slides to translateX(0) when .is-open is added. */
+.slidein {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 460px;
+  max-width: calc(100% - 62px);
+  z-index: 9;
+  transform: translateX(100%);   /* parked off-screen to the right */
+  transition: transform 0.3s cubic-bezier(.4, 0, .2, 1);
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  box-shadow: -30px 0 70px -20px rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+}
+.slidein.is-open {
+  transform: translateX(0);      /* slid into view */
+}
+.detail-top {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 26px 16px;
+}
+.detail-eyebrow {
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.feed-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.detail-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 26px 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  scrollbar-width: none;
+}
+.detail-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.detail-date {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.detail-name {
+  font-family: var(--display);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--text-strong);
+  line-height: 1.03;
+  letter-spacing: 0.01em;
+}
+.detail-block-label {
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.reflect-read {
+  padding: 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.reflect-read p {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ---- 14.5 new-session modal ------------------------------- */
+/* full-screen dark scrim; hidden (display:none) until .is-open,
+   then flex-centers the slim card. */
+.modal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.62);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+.modal-scrim.is-open {
+  display: flex;
+}
+.modal-card {
+  width: 440px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.95);
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-title {
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+/* smaller placeholder text, scoped to the modal's fields only */
+.modal-card .field::placeholder {
+  font-size: 13px;
+}
+
+/* ---- 14.6 empty state ------------------------------------- */
+.feed-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  padding: var(--space-6) var(--space-4);
+}
+.feed-empty-title {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+.feed-empty-sub {
+  font-size: 14px;
+  color: var(--muted);
 }

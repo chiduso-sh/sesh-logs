@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import SessionItem from './SessionItem'
 import ModelViewer from './ModelViewer'
 import { computeStreak } from './streak'
 
@@ -8,6 +7,7 @@ function App() {
   const [workout, setWorkout] = useState('')
   const [reflection, setReflection] = useState('')
   const [sessions, setSessions] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
@@ -22,6 +22,8 @@ function App() {
   const [authError, setAuthError] = useState('')
 
   const [authMode, setAuthMode] = useState('login')
+
+  const [selectedSessionId, setSelectedSessionId] = useState(null)
 
   async function handleLogin(e) {
     e.preventDefault() // stop the form from reloading the page
@@ -133,10 +135,46 @@ function App() {
 
   const streak = computeStreak(sessions)
 
+  // ---- group sessions into month buckets, newest month first ----
+  // 1) copy the array, then sort newest-first. We copy with [...sessions] because
+  //    .sort() rearranges the array IN PLACE — sorting state directly would mutate it.
+  const ordered = [...sessions].sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+
+  // 2) walk the ordered list and drop each session into a bucket named by its month.
+  const byMonth = {}
+  for (const session of ordered) {
+    const label = new Date(session.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+    if(!byMonth[label]){
+      byMonth[label] = []
+    }
+    byMonth[label].push(session)
+  }
+
+  const trainedDays =  sessions.map((session) => (
+    new Date(session.created_at).toDateString()
+  ))
+
+  const last7 = []
+
+  // walk the last 7 days: 6 days ago (i=6) up to today (i=0)
+  for (let i = 6; i >= 0; i--) {
+    const day = new Date()          // start from right now
+    day.setDate(day.getDate() - i)  // step the date back i days
+    last7.push(trainedDays.includes(day.toDateString()))
+  }
+
+  const selectedSession = sessions.find((session) => session.id === selectedSessionId )
+  
+
   return (
     <main className="app-shell">
-      <h1 className="brand">Sesh logs</h1>
-      <p className="tagline">After session thoughts</p>
+      {!token && (
+        <>
+          <h1 className="brand">Sesh logs</h1>
+          <p className="tagline">After session thoughts</p>
+        </>
+      )}
+
 
       {authLoading && (
         <div className="auth-overlay" role="status">
@@ -224,52 +262,135 @@ function App() {
         </div>
       )
       ) : (
-      <section className="app">
-        <p className="streak">
-          <span className="streak-num">{streak}</span>
-          <span className="streak-label">day streak</span>
-        </p>
-      <form className="sesh-form">
-        <label className="field-label">
-          Workout
-          <input
-            className="field"
-            type="text"
-            placeholder="e.g. Pull day — 5x5 pull-ups"
-            value={workout}
-            onChange={(e) => setWorkout(e.target.value)}
-          />
-        </label>
+      <div className="win-body">
+        {/* ---- slim icon rail ---- */}
+        <div className="icons">
+          <div className="icons-logo">S</div>
 
-        <label className="field-label">
-          Reflection
+          {/* History — the active view (inert for now, no routing yet) */}
+          <button className="icons-btn is-on" type="button" title="History">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4h12v12H4z" stroke="currentColor" strokeWidth="1.5"/><path d="M4 8h12M8 8v8" stroke="currentColor" strokeWidth="1.5"/></svg>
+          </button>
 
-          <textarea
-            className="field textarea"
-            value={reflection} onChange={(e) => setReflection(e.target.value)}
-            placeholder="e.g. Felt strong today, but my grip was weak"
-          />
-        </label>
+          <div className="icons-spacer"></div>
 
-        <button className="btn btn-primary btn-block" type="button" onClick={() => handleAdd()}>add sesh</button>
-      </form>
+          <button className="icons-btn" type="button" title="Log out" onClick={handleLogout}>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><path d="M12 7l3 3-3 3M15 10H8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          </button>
+        </div>
+
+        {/* ---- list column (the feed lives here) ---- */}
+        <section className="list-col">
+          <div className="list-top">
+            <span className="list-h">History<small>{sessions.length} sessions</small></span>
+            <button className="btn-new" type="button" onClick={() => setIsModalOpen(true)}>
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
+              New session
+            </button>
+          </div>
+          <div className="list-scroll">
+            <div className="home-streak">
+              <span className="streak-flame">
+                <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M10 2c.6 2.4-.7 3.6-1.9 4.8C6.7 8.1 5.5 9.4 5.5 12a4.5 4.5 0 0 0 9 0c0-1.6-.7-2.8-1.5-3.8-.3 1-.9 1.6-1.7 1.9.4-2.3-.4-4.6-1.8-8.1z" fill="currentColor"/></svg>
+              </span>
+              <div className="streak-main">
+                <div className="streak-num"><b>{streak}</b><span>day streak</span></div>
+              </div>
+              <div className="streak-dots">
+                {last7.map((last, i) => (
+                  <i className={last ? 'on' : ''} key={i}></i>
+                ))}
+              </div>
+            </div>
 
 
-      <ul className="sesh-list">
-        List
-        {sessions.map((session) => (
-          <SessionItem key={session.id} session={session}/>
-        ))}
-      </ul>
+            {sessions.length === 0 &&  (  <div className="feed-empty">
+              <p className="feed-empty-title">No sessions yet</p>
+              <p className="feed-empty-sub">Log your first one with the “New session” button.</p>
+            </div>)}
+          
 
-      <div className="util-row">
-        <button className="btn btn-quiet" type='button' onClick={() => loadSessions()}>load from server</button>
-        <button className="btn btn-quiet" type="button" onClick={handleLogout}>log out</button>
+            {Object.entries(byMonth).map(([label, sessions]) => (
+              <div className="feed-month" key={label}>
+                <div className='month-head'>
+                  {label}
+                </div>
+                {sessions.map((session) => (
+                  <div className="feed-card" key={session.id} onClick={() => {setSelectedSessionId(session.id)}}>
+                    <div className="card-top" >
+                      <span className="sesh-name">{session.workout}</span>
+                      
+                      <span className="sesh-date">{new Date(session.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
+                    </div>
+                    <div className="card-reflect">
+                      <p>{session.reflection}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ---- slide-in detail panel (14.4) ---- */}
+
+        <aside className={ selectedSession ? 'slidein is-open' : 'slidein'}>
+          <div className="detail-top">
+            <span className="detail-eyebrow">Session</span>
+            <button className="feed-close" type="button" onClick={() => setSelectedSessionId(null)}>
+              <svg width="15" height="15" viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
+            </button>
+          </div>
+          <div className="detail-scroll">
+            {selectedSession &&  
+            <>
+            <div className="detail-hero">
+              <span className="detail-date">
+                {new Date(selectedSession.created_at).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}
+              </span>
+              <span className="detail-name">{selectedSession.workout}</span>
+            </div>
+            <div>
+              <span className="detail-block-label">Reflection</span>
+              <div className="reflect-read" style={{ marginTop: 12 }}>
+                <p>{selectedSession.reflection}</p>
+              </div>
+            </div>
+            </>
+            }
+           
+          </div>
+        </aside>
+
+        {/* ---- new-session modal (14.5) ---- */}
+
+        <div className={isModalOpen ? "modal-scrim is-open" : "modal-scrim"}>
+          <div className="modal-card">
+            <div className="modal-head">
+              <span className="modal-title">New session</span>
+              <button className="modal-close" type="button" onClick={() => setIsModalOpen(false)}>
+                <svg width="15" height="15" viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/></svg>
+              </button>
+            </div>
+
+            
+            <label className="field-label">
+              Workout
+              <input type="text" className='field' placeholder='workout title' value={workout} onChange={(e) => setWorkout(e.target.value)}/>
+            </label>
+            <label className="field-label">
+              Reflection
+             <textarea className='field textarea' placeholder="how it'd go bud" value={reflection} onChange={(e) => setReflection(e.target.value)}/>
+            </label>
+
+            <button className="btn btn-primary" type="button" onClick={() => {handleAdd(); setIsModalOpen(false)}}>Save session</button>
+          </div>
+        </div>
       </div>
-      </section>
       ) }
 
-      <ModelViewer />
+      {!token && <ModelViewer />}
+      
     </main>
   )
 }
