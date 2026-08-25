@@ -8,6 +8,7 @@ function App() {
   const [reflection, setReflection] = useState('')
   const [sessions, setSessions] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isMenuOpen , setIsMenuOpen] = useState(false)
 
   const API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
@@ -283,10 +284,35 @@ function App() {
         <section className="list-col">
           <div className="list-top">
             <span className="list-h">History<small>{sessions.length} sessions</small></span>
-            <button className="btn-new" type="button" onClick={() => setIsModalOpen(true)}>
-              <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
-              New session
-            </button>
+            <div className="list-actions">
+              <button className="btn-new" type="button" onClick={() => setIsModalOpen(true)}>
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
+                <span className="btn-new-label">New session</span>
+              </button>
+
+              {/* ---- mobile account menu (v1.2.1, 15.1) ----
+                 The rail's Log out lost its home on phones, so it lives here.
+                 */}
+              <div className="acct">
+                <button
+                  className="acct-avatar"
+                  type="button"
+                  aria-label="Account"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                  <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="6.5" r="3.2" stroke="currentColor" strokeWidth="1.5"/><path d="M4 16.5c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                </button>
+
+                {isMenuOpen && (
+                  <div className="acct-menu">
+                    <button className="acct-menu-item" type="button" onClick={handleLogout}>
+                      <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M8 4H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><path d="M12 7l3 3-3 3M15 10H8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                      Log out
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
           <div className="list-scroll">
             <div className="home-streak">
