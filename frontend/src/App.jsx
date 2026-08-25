@@ -292,8 +292,7 @@ function App() {
 
               {/* ---- mobile account menu (v1.2.1, 15.1) ----
                  The rail's Log out lost its home on phones, so it lives here.
-                 Same overlay-state trick as the modal: isMenuOpen (a boolean)
-                 decides whether the dropdown shows. */}
+                 */}
               <div className="acct">
                 <button
                   className="acct-avatar"

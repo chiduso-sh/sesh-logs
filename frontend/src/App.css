@@ -1033,14 +1033,11 @@ form {
 }
 
 /* ============================================================
-   MOBILE — phone shell  (v1.3, task 15.1)
+   MOBILE — phone shell  (v1.2.1, task 15.1)
    ------------------------------------------------------------
    Everything inside this @media block ONLY applies when the
    screen is 768px wide or narrower (phones + small tablets).
    The desktop rules above stay untouched on wider screens.
-   Step 1: hide the slim icon rail so the feed gets the whole
-   width. (Log out lived on that rail — we rebuild it as a
-   mobile top bar next.)
    ============================================================ */
 /* The account menu is DESKTOP-HIDDEN — on wide screens Log out
    still lives on the icon rail, so this mobile-only menu stays out
@@ -1164,14 +1161,13 @@ form {
   }
 
   /* 6) detail panel: desktop's a 460px right-hand panel; on a phone it
-        should cover the WHOLE screen. Override just its width. */
+        should cover the WHOLE screen. */
   .slidein {
     width: 100%;
     max-width: none;
   }
 
-  /* 7) full-screen detail reads as a top-bar: back arrow on the left,
-        drop the "Session" eyebrow, swap the × SVG for a ← glyph. */
+  /* 7) full-screen detail reads as a top-bar: back arrow on the left, */
   .detail-top {
     justify-content: flex-start;   /* push the (only) control to the left */
     padding: 22px 20px ;
@@ -1193,15 +1189,12 @@ form {
   }
 
   /* 8) new-session modal → bottom-sheet: the scrim is a flex container
-        and the card its one item. Anchor the card to the bottom edge
-        instead of centering it, and let it span the full width. */
+        and the card its one item.  */
   .modal-scrim {
     align-items: flex-end;
     padding: 0;                    /* touch the screen edges + bottom, no gutter */
   }
   .modal-card {
-    /* round only the TOP corners so the sheet's bottom sits flush.
-       4 values, clockwise from top-left:  TL  TR  BR  BL  */
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     /* slide up on open (the scrim's display:flex mounts it, this plays) */
     animation: sheet-up 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
