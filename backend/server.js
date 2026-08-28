@@ -3,6 +3,7 @@ import cors from 'cors'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import db from './db.js'
+import { saveSession } from './saveSession.js'
 // create the server application
 const app = express()
 app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173' }))
@@ -41,13 +42,18 @@ app.get('/api/sessions', requireAuth, async (req, res) => {
   res.json(result.rows)
 })
 
-// a route that receives a new session via POST
+// a route that receives a new STRUCTURED session via POST and saves the whole tree
 app.post('/api/sessions', requireAuth, async (req, res) => {
-  const { id, workout, reflection } = req.body
+  const { workout } = req.body
 
   if(!workout) return res.status(400).json({error: 'Log your workout sesh twin'})
-  await db.query('INSERT INTO sessions (id, workout, reflection, user_id, created_at) VALUES ($1, $2, $3, $4, $5)', [id, workout, reflection, req.userId, new Date().toISOString()])
-  res.status(201).json(req.body) // 201 = "Created"; send the saved session back
+  try {
+    const id = await saveSession(req.body, req.userId )
+    res.status(201).json({ id }) // 201 = "Created"; send back the new session's id
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Could not save session' })
+  }
 })
 
 // sign up: create a new user with a hashed password
