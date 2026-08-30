@@ -10,6 +10,10 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMenuOpen , setIsMenuOpen] = useState(false)
 
+  // --- v2 builder draft (Section 19) ---
+  // nested-state: the draft holds a LIST of exercise objects (each grows a sets[] in section 20)
+  const [draftExercises, setDraftExercises] = useState([])
+  const [exerciseName, setExerciseName] = useState('')
   const API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
   // the JWT — start from localStorage so a refresh keeps you logged in
@@ -64,6 +68,21 @@ function App() {
     setWorkout('')
     setReflection('')
     setSessions([...sessions, newSession])
+  }
+
+  // add the typed exercise to the draft's exercise list (section 19)
+  function handleAddExercise() {
+    if (!exerciseName) return   // nothing typed → do nothing
+
+    setDraftExercises([...draftExercises, {name: exerciseName}])
+    setExerciseName('')
+  }
+
+  // remove the exercise at the given row position from the draft (section 19.3)
+  function handleRemoveExercise(indexToRemove) {
+    setDraftExercises(
+      draftExercises.filter((ex, index) => index !== indexToRemove)
+    )
   }
 
 
@@ -285,7 +304,11 @@ function App() {
           <div className="list-top">
             <span className="list-h">History<small>{sessions.length} sessions</small></span>
             <div className="list-actions">
-              <button className="btn-new" type="button" onClick={() => setIsModalOpen(true)}>
+              <button className="btn-new" type="button" onClick={() => {               
+                setDraftExercises([]);
+                setExerciseName('')
+                setIsModalOpen(true)
+              }}>
                 <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
                 <span className="btn-new-label">New session</span>
               </button>
@@ -408,6 +431,23 @@ function App() {
               Reflection
              <textarea className='field textarea' placeholder="how it'd go bud" value={reflection} onChange={(e) => setReflection(e.target.value)}/>
             </label>
+
+            {/* --- exercise builder (Section 19) --- */}
+            <label className="field-label">
+              Exercise
+              <input type="text" className='field' placeholder='exercise name' value={exerciseName} onChange={(e) => setExerciseName(e.target.value)}/>
+            </label>
+            <button className="btn" type="button" onClick={handleAddExercise}>Add exercise</button>
+
+            {/* the running list of exercises added to the draft */}
+            <ul className="draft-ex-list">
+              {draftExercises.map((ex, i) => (
+                <li key={i}>
+                  {ex.name}
+                  <button type="button" onClick={() => handleRemoveExercise(i)}>×</button>
+                </li>
+              ))}
+            </ul>
 
             <button className="btn btn-primary" type="button" onClick={() => {handleAdd(); setIsModalOpen(false)}}>Save session</button>
           </div>
