@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import db from './db.js'
 import { saveSession } from './saveSession.js'
+import { getSession } from './getSession.js'
 // create the server application
 const app = express()
 app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:5173' }))
@@ -40,6 +41,16 @@ app.get('/', (req, res) => {
 app.get('/api/sessions', requireAuth, async (req, res) => {
   const result = await db.query('SELECT * FROM sessions WHERE user_id = $1', [req.userId])
   res.json(result.rows)
+})
+
+// a route that returns ONE session with its exercises + sets (nested) — only if it's yours
+app.get('/api/sessions/:id', requireAuth, async (req, res) => {
+  const id = req.params.id
+  const session = await getSession(id, req.userId)
+
+  if(!session) return res.status(404).json({ error: 'Session not found'})
+
+  res.json(session)
 })
 
 // a route that receives a new STRUCTURED session via POST and saves the whole tree
