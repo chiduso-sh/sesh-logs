@@ -200,7 +200,6 @@ function App() {
         headers: {'Authorization': 'Bearer ' + token}
       })
       const data = await res.json()
-      console.log('tree:', data)
       setSelectedTree(data)
     }
     loadTree()
