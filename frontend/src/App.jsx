@@ -38,6 +38,8 @@ function App() {
   const [authMode, setAuthMode] = useState('login')
 
   const [selectedSessionId, setSelectedSessionId] = useState(null)
+  // the fetched nested tree for the open card: { ...session, exercises: [{ name, sets: [...] }] } — or null
+  const [selectedTree, setSelectedTree] = useState(null)
 
   async function handleLogin(e) {
     e.preventDefault() // stop the form from reloading the page
@@ -187,6 +189,23 @@ function App() {
     const timer = setTimeout(() => setAuthError(''), 4500) // clear the toast after 4.5s
     return () => clearTimeout(timer)
   }, [authError])
+
+  // fetch the open card's exercise tree whenever the open card changes (21.1)
+  useEffect(() => {
+    if (!selectedSessionId) { setSelectedTree(null); return } // panel closed → no tree to show
+
+    // effect callbacks can't be async, so define a normal fn and call it below
+    async function loadTree() {
+      // TODO(you): mirror loadSessions (lines ~172-176), but for ONE session:
+      const res = await fetch(`${API}/api/sessions/${selectedSessionId}`, {
+        headers: {'Authorization': 'Bearer ' + token}
+      })
+      const data = await res.json()
+      console.log('tree:', data)
+      setSelectedTree(data)
+    }
+    loadTree()
+  }, [selectedSessionId])
 
   
 
