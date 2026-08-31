@@ -466,7 +466,7 @@ function App() {
                 <div key={i} style={{ marginTop: 12 }}>
                   <strong>{ex.name}</strong>
                   {ex.sets.map((s, index) => (
-                    <div key={index}>{s.reps} x {s.weight}</div>
+                    <div key={index}>{s.reps} {s.weight !== null ? `x ${s.weight}` : ''}</div>
                   ))}
                 </div>
               ))}
