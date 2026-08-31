@@ -14,6 +14,7 @@ function assembleSession(rows) {
 
   const byExercise = {}
   for (const row of rows) {
+    if (row.exercise_id === null) continue // skip the filler row a LEFT JOIN gives a childless session
     if (!byExercise[row.exercise_id]) {
       const ex = { name: row.exercise_name, position: row.ex_pos, sets: [] }
       byExercise[row.exercise_id] = ex
@@ -37,8 +38,8 @@ export async function getSession(id, userId) {
             e.id AS exercise_id, e.name AS exercise_name, e.position AS ex_pos,
             st.reps, st.weight, st.position AS set_pos
      FROM sessions s
-     JOIN exercises e ON e.session_id = s.id
-     JOIN sets st ON st.exercise_id = e.id
+     LEFT JOIN exercises e ON e.session_id = s.id
+     LEFT JOIN sets st ON st.exercise_id = e.id
      WHERE s.id = $1
       AND s.user_id = $2
      ORDER BY e.position, st.position`,
