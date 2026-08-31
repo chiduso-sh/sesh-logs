@@ -3,6 +3,12 @@ import './App.css'
 import ModelViewer from './ModelViewer'
 import { computeStreak } from './streak'
 
+// The fixed exercise catalog the picker offers. A constant, not state:
+// it never changes at runtime, so it lives at module level (built once).
+const EXERCISES = [
+    'Squat', 'Push ups', 'Pull ups', 'Lat Pulldowns', 'Rows', 
+]
+
 function App() {
   const [workout, setWorkout] = useState('')
   const [reflection, setReflection] = useState('')
@@ -10,6 +16,13 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMenuOpen , setIsMenuOpen] = useState(false)
 
+  // --- v2 builder draft (Section 19) ---
+  // nested-state: the draft holds a LIST of exercise objects (each grows a sets[] in section 20)
+  const [draftExercises, setDraftExercises] = useState([])
+  const [currentExercise, setCurrentExercise] = useState('') // the exercise being built ('' = none picked)
+  const [currentSets, setCurrentSets] = useState([])         // the sets accumulated for that exercise
+  const [reps, setReps] = useState('')                       // reps input (a string, like every input)
+  const [weight, setWeight] = useState('')                   // weight input (optional; a string)
   const API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
   // the JWT — start from localStorage so a refresh keeps you logged in
@@ -25,6 +38,8 @@ function App() {
   const [authMode, setAuthMode] = useState('login')
 
   const [selectedSessionId, setSelectedSessionId] = useState(null)
+  // the fetched nested tree for the open card: { ...session, exercises: [{ name, sets: [...] }] } — or null
+  const [selectedTree, setSelectedTree] = useState(null)
 
   async function handleLogin(e) {
     e.preventDefault() // stop the form from reloading the page
@@ -51,19 +66,62 @@ function App() {
     }
   }
 
-  async function handleAdd() {
-   const newSession = { id: crypto.randomUUID(), workout, reflection, created_at: new Date().toISOString() }
+  // save the whole built session (workout + reflection + the exercise tree) as ONE atomic POST (20.4)
+  async function handleSaveSession() {
+    const payload = {
+      workout: workout,
+      reflection: reflection,
+      exercises: draftExercises
+    }
 
-    // send the new session to the backend with a POST request
+    // POST it — the backend writes session + exercises + sets in ONE transaction
     await fetch(`${API}/api/sessions`, {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token},
-      body: JSON.stringify(newSession)
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify(payload),
     })
 
+    // reset the whole draft for next time
     setWorkout('')
     setReflection('')
-    setSessions([...sessions, newSession])
+    setDraftExercises([])
+    setCurrentExercise('')
+    setCurrentSets([])
+
+    await loadSessions()      // refetch so the feed shows the REAL saved session (server-assigned id + date)
+    setIsModalOpen(false)
+  }
+
+
+  // remove the exercise at the given row position from the draft (section 19.3)
+  function handleRemoveExercise(indexToRemove) {
+    setDraftExercises(
+      draftExercises.filter((ex, index) => index !== indexToRemove)
+    )
+  }
+
+  // add one set (reps + optional weight) to the exercise being built (20.2)
+  function handleAddSet() {
+    if (!reps) return   // reps required; weight stays optional
+    const newSet = {
+      reps: Number(reps),                              // input string "5" → the number 5
+      weight: weight === '' ? null : Number(weight),   // blank → null (bodyweight), else a number
+    }
+    setCurrentSets([...currentSets, newSet])   // immutable append, like your other adds
+    setReps('')
+    setWeight('')
+  }
+
+  // commit the built exercise (name + its sets) into the draft, then reset for the next one (20.3)
+  function handleAddExerciseToDraft() {
+    if (!currentExercise) return   // need an exercise picked first
+    const newExercise = {
+      name: currentExercise,
+      sets: currentSets,
+    }
+    setDraftExercises([...draftExercises, newExercise])   // immutable append
+    setCurrentExercise('')   // reset so the next exercise starts clean
+    setCurrentSets([])
   }
 
 
@@ -131,6 +189,21 @@ function App() {
     const timer = setTimeout(() => setAuthError(''), 4500) // clear the toast after 4.5s
     return () => clearTimeout(timer)
   }, [authError])
+
+  // fetch the open card's exercise tree whenever the open card changes (21.1)
+  useEffect(() => {
+    if (!selectedSessionId) { setSelectedTree(null); return } // panel closed → no tree to show
+
+    // effect callbacks can't be async, so define a normal fn and call it below
+    async function loadTree() {
+      const res = await fetch(`${API}/api/sessions/${selectedSessionId}`, {
+        headers: {'Authorization': 'Bearer ' + token}
+      })
+      const data = await res.json()
+      setSelectedTree(data)
+    }
+    loadTree()
+  }, [selectedSessionId])
 
   
 
@@ -285,7 +358,10 @@ function App() {
           <div className="list-top">
             <span className="list-h">History<small>{sessions.length} sessions</small></span>
             <div className="list-actions">
-              <button className="btn-new" type="button" onClick={() => setIsModalOpen(true)}>
+              <button className="btn-new" type="button" onClick={() => {               
+                setDraftExercises([]);
+                setIsModalOpen(true)
+              }}>
                 <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
                 <span className="btn-new-label">New session</span>
               </button>
@@ -382,6 +458,19 @@ function App() {
                 <p>{selectedSession.reflection}</p>
               </div>
             </div>
+            <div>
+              <span className="detail-block-label">Exercises</span>
+              {!selectedTree && (<p>Loading...</p>)}
+              {selectedTree && selectedTree.exercises.length === 0 && (<p>No exercises logged</p>)}
+              {selectedTree && selectedTree.exercises.map((ex, i) => (
+                <div key={i} style={{ marginTop: 12 }}>
+                  <strong>{ex.name}</strong>
+                  {ex.sets.map((s, index) => (
+                    <div key={index}>{s.reps} {s.weight !== null ? `x ${s.weight}` : ''}</div>
+                  ))}
+                </div>
+              ))}
+            </div>
             </>
             }
            
@@ -409,7 +498,60 @@ function App() {
              <textarea className='field textarea' placeholder="how it'd go bud" value={reflection} onChange={(e) => setReflection(e.target.value)}/>
             </label>
 
-            <button className="btn btn-primary" type="button" onClick={() => {handleAdd(); setIsModalOpen(false)}}>Save session</button>
+            {/* --- exercise picker (Section 20.1) --- */}
+            <div className="field-label">
+              Exercise
+              <div className="ex-picker">
+                {EXERCISES.map((name) => (
+                  <button
+                    type="button"
+                    key={name}
+                    className="btn"
+                    onClick={() => setCurrentExercise(name)}
+                  >
+                    {name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* which exercise you're currently building, plus its set-entry (20.2) */}
+            {currentExercise && (
+              <div className="set-entry">
+                <p className="now-adding">Now adding: {currentExercise}</p>
+                <input type="number" className="field" placeholder="reps" value={reps} onChange={(e) => setReps(e.target.value)} />
+                <input type="number" className="field" placeholder="weight (optional)" value={weight} onChange={(e) => setWeight(e.target.value)} />
+                <button type="button" className="btn" onClick={handleAddSet}>Add set</button>
+
+                {/* the sets added so far for this exercise */}
+                <ul className="cur-sets">
+                  {currentSets.map((s, i) => (
+                    <li key={i}>{s.reps} reps{s.weight !== null ? ` × ${s.weight}` : ''}</li>
+                  ))}
+                </ul>
+
+                <button type="button" className="btn btn-primary" onClick={handleAddExerciseToDraft}>Add exercise</button>
+              </div>
+            )}
+
+            {/* the running list of exercises added to the draft */}
+            <ul className="draft-ex-list">
+              {draftExercises.map((ex, i) => (
+                <li key={i}>
+                  {ex.name}
+                  <button type="button" onClick={() => handleRemoveExercise(i)}>×</button>
+
+                  {/* this exercise's sets, nested underneath */}
+                  <ul className="draft-set-list">
+                    {ex.sets.map((s, si) => (
+                      <li key={si}>{s.reps} reps{s.weight !== null ? ` × ${s.weight}` : ''}</li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+
+            <button className="btn btn-primary" type="button" onClick={handleSaveSession}>Save session</button>
           </div>
         </div>
       </div>
