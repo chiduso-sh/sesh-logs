@@ -362,7 +362,6 @@ function App() {
             <div className="list-actions">
               <button className="btn-new" type="button" onClick={() => {               
                 setDraftExercises([]);
-                setExerciseName('')
                 setIsModalOpen(true)
               }}>
                 <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
@@ -460,6 +459,17 @@ function App() {
               <div className="reflect-read" style={{ marginTop: 12 }}>
                 <p>{selectedSession.reflection}</p>
               </div>
+            </div>
+            <div>
+              <span className="detail-block-label">Exercises</span>
+              {selectedTree && selectedTree.exercises.map((ex, i) => (
+                <div key={i} style={{ marginTop: 12 }}>
+                  <strong>{ex.name}</strong>
+                  {ex.sets.map((s, index) => (
+                    <div key={index}>{s.reps} x {s.weight}</div>
+                  ))}
+                </div>
+              ))}
             </div>
             </>
             }
