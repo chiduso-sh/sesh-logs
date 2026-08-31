@@ -196,7 +196,6 @@ function App() {
 
     // effect callbacks can't be async, so define a normal fn and call it below
     async function loadTree() {
-      // TODO(you): mirror loadSessions (lines ~172-176), but for ONE session:
       const res = await fetch(`${API}/api/sessions/${selectedSessionId}`, {
         headers: {'Authorization': 'Bearer ' + token}
       })
@@ -462,6 +461,8 @@ function App() {
             </div>
             <div>
               <span className="detail-block-label">Exercises</span>
+              {!selectedTree && (<p>Loading...</p>)}
+              {selectedTree && selectedTree.exercises.length === 0 && (<p>No exercises logged</p>)}
               {selectedTree && selectedTree.exercises.map((ex, i) => (
                 <div key={i} style={{ marginTop: 12 }}>
                   <strong>{ex.name}</strong>
