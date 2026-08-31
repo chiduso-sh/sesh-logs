@@ -3,6 +3,12 @@ import './App.css'
 import ModelViewer from './ModelViewer'
 import { computeStreak } from './streak'
 
+// The fixed exercise catalog the picker offers. A constant, not state:
+// it never changes at runtime, so it lives at module level (built once).
+const EXERCISES = [
+    'Squat', 'Push ups', 'Pull ups', 'Lat Pulldowns', 'Rows', 
+]
+
 function App() {
   const [workout, setWorkout] = useState('')
   const [reflection, setReflection] = useState('')
@@ -13,7 +19,10 @@ function App() {
   // --- v2 builder draft (Section 19) ---
   // nested-state: the draft holds a LIST of exercise objects (each grows a sets[] in section 20)
   const [draftExercises, setDraftExercises] = useState([])
-  const [exerciseName, setExerciseName] = useState('')
+  const [currentExercise, setCurrentExercise] = useState('') // the exercise being built ('' = none picked)
+  const [currentSets, setCurrentSets] = useState([])         // the sets accumulated for that exercise
+  const [reps, setReps] = useState('')                       // reps input (a string, like every input)
+  const [weight, setWeight] = useState('')                   // weight input (optional; a string)
   const API = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
   // the JWT — start from localStorage so a refresh keeps you logged in
@@ -55,34 +64,62 @@ function App() {
     }
   }
 
-  async function handleAdd() {
-   const newSession = { id: crypto.randomUUID(), workout, reflection, created_at: new Date().toISOString() }
+  // save the whole built session (workout + reflection + the exercise tree) as ONE atomic POST (20.4)
+  async function handleSaveSession() {
+    const payload = {
+      workout: workout,
+      reflection: reflection,
+      exercises: draftExercises
+    }
 
-    // send the new session to the backend with a POST request
+    // POST it — the backend writes session + exercises + sets in ONE transaction
     await fetch(`${API}/api/sessions`, {
-      method : 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token},
-      body: JSON.stringify(newSession)
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify(payload),
     })
 
+    // reset the whole draft for next time
     setWorkout('')
     setReflection('')
-    setSessions([...sessions, newSession])
+    setDraftExercises([])
+    setCurrentExercise('')
+    setCurrentSets([])
+
+    await loadSessions()      // refetch so the feed shows the REAL saved session (server-assigned id + date)
+    setIsModalOpen(false)
   }
 
-  // add the typed exercise to the draft's exercise list (section 19)
-  function handleAddExercise() {
-    if (!exerciseName) return   // nothing typed → do nothing
-
-    setDraftExercises([...draftExercises, {name: exerciseName}])
-    setExerciseName('')
-  }
 
   // remove the exercise at the given row position from the draft (section 19.3)
   function handleRemoveExercise(indexToRemove) {
     setDraftExercises(
       draftExercises.filter((ex, index) => index !== indexToRemove)
     )
+  }
+
+  // add one set (reps + optional weight) to the exercise being built (20.2)
+  function handleAddSet() {
+    if (!reps) return   // reps required; weight stays optional
+    const newSet = {
+      reps: Number(reps),                              // input string "5" → the number 5
+      weight: weight === '' ? null : Number(weight),   // blank → null (bodyweight), else a number
+    }
+    setCurrentSets([...currentSets, newSet])   // immutable append, like your other adds
+    setReps('')
+    setWeight('')
+  }
+
+  // commit the built exercise (name + its sets) into the draft, then reset for the next one (20.3)
+  function handleAddExerciseToDraft() {
+    if (!currentExercise) return   // need an exercise picked first
+    const newExercise = {
+      name: currentExercise,
+      sets: currentSets,
+    }
+    setDraftExercises([...draftExercises, newExercise])   // immutable append
+    setCurrentExercise('')   // reset so the next exercise starts clean
+    setCurrentSets([])
   }
 
 
@@ -432,12 +469,41 @@ function App() {
              <textarea className='field textarea' placeholder="how it'd go bud" value={reflection} onChange={(e) => setReflection(e.target.value)}/>
             </label>
 
-            {/* --- exercise builder (Section 19) --- */}
-            <label className="field-label">
+            {/* --- exercise picker (Section 20.1) --- */}
+            <div className="field-label">
               Exercise
-              <input type="text" className='field' placeholder='exercise name' value={exerciseName} onChange={(e) => setExerciseName(e.target.value)}/>
-            </label>
-            <button className="btn" type="button" onClick={handleAddExercise}>Add exercise</button>
+              <div className="ex-picker">
+                {EXERCISES.map((name) => (
+                  <button
+                    type="button"
+                    key={name}
+                    className="btn"
+                    onClick={() => setCurrentExercise(name)}
+                  >
+                    {name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* which exercise you're currently building, plus its set-entry (20.2) */}
+            {currentExercise && (
+              <div className="set-entry">
+                <p className="now-adding">Now adding: {currentExercise}</p>
+                <input type="number" className="field" placeholder="reps" value={reps} onChange={(e) => setReps(e.target.value)} />
+                <input type="number" className="field" placeholder="weight (optional)" value={weight} onChange={(e) => setWeight(e.target.value)} />
+                <button type="button" className="btn" onClick={handleAddSet}>Add set</button>
+
+                {/* the sets added so far for this exercise */}
+                <ul className="cur-sets">
+                  {currentSets.map((s, i) => (
+                    <li key={i}>{s.reps} reps{s.weight !== null ? ` × ${s.weight}` : ''}</li>
+                  ))}
+                </ul>
+
+                <button type="button" className="btn btn-primary" onClick={handleAddExerciseToDraft}>Add exercise</button>
+              </div>
+            )}
 
             {/* the running list of exercises added to the draft */}
             <ul className="draft-ex-list">
@@ -445,11 +511,18 @@ function App() {
                 <li key={i}>
                   {ex.name}
                   <button type="button" onClick={() => handleRemoveExercise(i)}>×</button>
+
+                  {/* this exercise's sets, nested underneath */}
+                  <ul className="draft-set-list">
+                    {ex.sets.map((s, si) => (
+                      <li key={si}>{s.reps} reps{s.weight !== null ? ` × ${s.weight}` : ''}</li>
+                    ))}
+                  </ul>
                 </li>
               ))}
             </ul>
 
-            <button className="btn btn-primary" type="button" onClick={() => {handleAdd(); setIsModalOpen(false)}}>Save session</button>
+            <button className="btn btn-primary" type="button" onClick={handleSaveSession}>Save session</button>
           </div>
         </div>
       </div>
