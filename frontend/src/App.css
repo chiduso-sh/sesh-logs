@@ -859,6 +859,7 @@ form {
    and slides to translateX(0) when .is-open is added. */
 .slidein {
   position: absolute;
+  text-align: left;
   top: 0;
   right: 0;
   bottom: 0;
@@ -944,6 +945,7 @@ form {
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  max-width: 560px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -952,6 +954,59 @@ form {
   font-size: 14px;
   color: var(--text);
   line-height: 1.6;
+}
+
+/* ---- 23.2 structured detail: exercise cards (v2.1) --------- */
+/* each exercise → a bordered surface card; sliced from the design's .ex-row */
+.ex-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  margin-top: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  max-width: 560px;
+}
+/* the little accent dot at the left of each card (decorative) */
+.ex-cat-dot {
+  flex: 0 0 auto;           /* grow 0, shrink 0, basis auto → locked at 8px, never squished by the flex row */
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;       /* half the box → a full circle */
+  background: var(--accent);
+}
+/* holds the name + the set lines */
+.ex-main {
+  flex: 1;
+  min-width: 0;                  /* lets a long name truncate instead of overflowing the card */
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+/* the exercise name — display font, truncates with an ellipsis if too long */
+.ex-name {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-strong);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* a set line: muted + lightweight, so the bold numbers stand out */
+.ex-detail {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+/* make just the NUMBERS pop: brighter + a touch heavier */
+.ex-detail b {
+  color: var(--text);
+  font-weight: 500;
 }
 
 /* ---- 14.5 new-session modal ------------------------------- */
