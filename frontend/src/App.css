@@ -1026,8 +1026,11 @@ form {
   display: flex;
 }
 .modal-card {
-  width: 440px;
+  width: 640px;
   max-width: 100%;
+  /* never taller than the viewport — scroll inside instead of clipping the CTA */
+  max-height: calc(100vh - var(--space-5));
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -1036,6 +1039,7 @@ form {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.95);
+  text-align: left; /* override the app-shell's inherited center */
 }
 .modal-head {
   display: flex;
@@ -1065,6 +1069,182 @@ form {
 /* smaller placeholder text, scoped to the modal's fields only */
 .modal-card .field::placeholder {
   font-size: 13px;
+}
+
+/* ---- v2.2 builder internals ------------------------------- */
+/* The picker, set-entry, and draft list were built functionally
+   in §19–20 but never skinned. Styling-only: reuse the detail
+   panel's .ex-row card vocabulary and the Oswald display face. */
+
+/* labels read in the Oswald display face, like the rest of the modal */
+.modal-card .field-label {
+  font-family: var(--display);
+  letter-spacing: 0.06em;
+}
+
+/* two-column body — halves the modal's height on desktop */
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+.modal-col {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* the primary actions span full width (not left-aligned with the text) */
+.modal-card > .btn-primary,
+.set-entry .btn {
+  width: 100%;
+}
+
+/* --- exercise picker: a wrap of silver chips --- */
+.ex-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.ex-picker .btn {
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.ex-picker .btn:hover {
+  color: var(--text-strong);
+  border-color: var(--muted);
+}
+
+/* --- set-entry card: shown once an exercise is picked --- */
+.set-entry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.now-adding {
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--text-strong);
+}
+.set-entry .field {
+  font-size: 15px;
+}
+/* "Add set" is a plain .btn — give it the outlined ghost treatment */
+.set-entry .btn:not(.btn-primary) {
+  color: var(--text-strong);
+  background: var(--surface);
+  border-color: var(--border);
+}
+.set-entry .btn:not(.btn-primary):hover {
+  border-color: var(--accent);
+}
+
+/* the sets accumulated for the exercise being built → small tags */
+.cur-sets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.cur-sets:empty {
+  display: none;
+}
+.cur-sets li {
+  padding: var(--space-1) var(--space-2);
+  font-size: 12px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+/* --- draft list: each added exercise as an .ex-row-style card --- */
+.draft-ex-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.draft-ex-list > li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  padding-left: calc(var(--space-4) + var(--space-1));
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--text-strong);
+}
+/* the decorative accent dot, echoing .ex-cat-dot in the detail panel */
+.draft-ex-list > li::before {
+  content: '';
+  position: absolute;
+  left: var(--space-3);
+  top: calc(var(--space-3) + 7px);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+/* the per-row remove button, pinned to the corner */
+.draft-ex-list > li > button {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 16px;
+  line-height: 1;
+}
+.draft-ex-list > li > button:hover {
+  color: var(--text-strong);
+  border-color: var(--muted);
+}
+
+/* the sets nested under each drafted exercise */
+.draft-set-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.draft-set-list li {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: var(--muted);
 }
 
 /* ---- 14.6 empty state ------------------------------------- */
@@ -1253,5 +1433,10 @@ form {
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     /* slide up on open (the scrim's display:flex mounts it, this plays) */
     animation: sheet-up 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+    max-height: 88vh;              /* leave a sliver of scrim above the sheet */
+  }
+  /* the two-column body stacks back to one column on a phone */
+  .modal-grid {
+    grid-template-columns: 1fr;
   }
 }
