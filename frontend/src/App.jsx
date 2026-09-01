@@ -493,53 +493,61 @@ function App() {
               </button>
             </div>
 
-            
-            <label className="field-label">
-              Workout
-              <input type="text" className='field' placeholder='workout title' value={workout} onChange={(e) => setWorkout(e.target.value)}/>
-            </label>
-            <label className="field-label">
-              Reflection
-             <textarea className='field textarea' placeholder="how it'd go bud" value={reflection} onChange={(e) => setReflection(e.target.value)}/>
-            </label>
+            {/* v2.2: two-column body so the modal stays short (single col on mobile) */}
+            <div className="modal-grid">
+              {/* left column — the session basics */}
+              <div className="modal-col">
+                <label className="field-label">
+                  Workout
+                  <input type="text" className='field' placeholder='workout title' value={workout} onChange={(e) => setWorkout(e.target.value)}/>
+                </label>
+                <label className="field-label">
+                  Reflection
+                 <textarea className='field textarea' placeholder="how it'd go bud" value={reflection} onChange={(e) => setReflection(e.target.value)}/>
+                </label>
+              </div>
 
-            {/* --- exercise picker (Section 20.1) --- */}
-            <div className="field-label">
-              Exercise
-              <div className="ex-picker">
-                {EXERCISES.map((name) => (
-                  <button
-                    type="button"
-                    key={name}
-                    className="btn"
-                    onClick={() => setCurrentExercise(name)}
-                  >
-                    {name}
-                  </button>
-                ))}
+              {/* right column — pick an exercise + build its sets */}
+              <div className="modal-col">
+                {/* --- exercise picker (Section 20.1) --- */}
+                <div className="field-label">
+                  Exercise
+                  <div className="ex-picker">
+                    {EXERCISES.map((name) => (
+                      <button
+                        type="button"
+                        key={name}
+                        className="btn"
+                        onClick={() => setCurrentExercise(name)}
+                      >
+                        {name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* which exercise you're currently building, plus its set-entry (20.2) */}
+                {currentExercise && (
+                  <div className="set-entry">
+                    <p className="now-adding">Now adding: {currentExercise}</p>
+                    <input type="number" className="field" placeholder="reps" value={reps} onChange={(e) => setReps(e.target.value)} />
+                    <input type="number" className="field" placeholder="weight (optional)" value={weight} onChange={(e) => setWeight(e.target.value)} />
+                    <button type="button" className="btn" onClick={handleAddSet}>Add set</button>
+
+                    {/* the sets added so far for this exercise */}
+                    <ul className="cur-sets">
+                      {currentSets.map((s, i) => (
+                        <li key={i}>{s.reps} reps{s.weight !== null ? ` × ${s.weight}` : ''}</li>
+                      ))}
+                    </ul>
+
+                    <button type="button" className="btn btn-primary" onClick={handleAddExerciseToDraft}>Add exercise</button>
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* which exercise you're currently building, plus its set-entry (20.2) */}
-            {currentExercise && (
-              <div className="set-entry">
-                <p className="now-adding">Now adding: {currentExercise}</p>
-                <input type="number" className="field" placeholder="reps" value={reps} onChange={(e) => setReps(e.target.value)} />
-                <input type="number" className="field" placeholder="weight (optional)" value={weight} onChange={(e) => setWeight(e.target.value)} />
-                <button type="button" className="btn" onClick={handleAddSet}>Add set</button>
-
-                {/* the sets added so far for this exercise */}
-                <ul className="cur-sets">
-                  {currentSets.map((s, i) => (
-                    <li key={i}>{s.reps} reps{s.weight !== null ? ` × ${s.weight}` : ''}</li>
-                  ))}
-                </ul>
-
-                <button type="button" className="btn btn-primary" onClick={handleAddExerciseToDraft}>Add exercise</button>
-              </div>
-            )}
-
-            {/* the running list of exercises added to the draft */}
+            {/* the running list of exercises added to the draft (full width) */}
             <ul className="draft-ex-list">
               {draftExercises.map((ex, i) => (
                 <li key={i}>
