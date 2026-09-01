@@ -453,23 +453,28 @@ function App() {
               <span className="detail-name">{selectedSession.workout}</span>
             </div>
             <div>
-              <span className="detail-block-label">Reflection</span>
-              <div className="reflect-read" style={{ marginTop: 12 }}>
-                <p>{selectedSession.reflection}</p>
-              </div>
-            </div>
-            <div>
               <span className="detail-block-label">Exercises</span>
               {!selectedTree && (<p>Loading...</p>)}
               {selectedTree && selectedTree.exercises.length === 0 && (<p>No exercises logged</p>)}
               {selectedTree && selectedTree.exercises.map((ex, i) => (
-                <div key={i} style={{ marginTop: 12 }}>
-                  <strong>{ex.name}</strong>
-                  {ex.sets.map((s, index) => (
-                    <div key={index}>{s.reps} {s.weight !== null ? `x ${s.weight}` : ''}</div>
-                  ))}
+                <div key={i} className="ex-row">
+                  <span className="ex-cat-dot"></span>
+                  <span className="ex-main">
+                    <span className="ex-name">{ex.name}</span>
+                    {ex.sets.map((s, index) => (
+                      <span key={index} className="ex-detail">
+                        <b>{s.reps}</b> reps{s.weight !== null ? <> · <b>{s.weight}</b> kg</> : ''}
+                      </span>
+                    ))}
+                  </span>
                 </div>
               ))}
+            </div>
+            <div>
+              <span className="detail-block-label">Reflection</span>
+              <div className="reflect-read" style={{ marginTop: 12 }}>
+                <p>{selectedSession.reflection}</p>
+              </div>
             </div>
             </>
             }
