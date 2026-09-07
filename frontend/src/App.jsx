@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import ModelViewer from './ModelViewer'
 import { computeStreak } from './streak'
+import StreakBar from './components/StreakBar';
+import FeedCard from './components/FeedCard';
+import Toast from './components/Toast';
 
 // The fixed exercise catalog the picker offers. A constant, not state:
 // it never changes at runtime, so it lives at module level (built once).
@@ -257,17 +260,7 @@ function App() {
         </div>
       )}
 
-      {authError && (
-        <div className="toast" role="alert">
-          <span className="toast-msg">{authError}</span>
-          <button
-            className="toast-close"
-            type="button"
-            aria-label="Dismiss"
-            onClick={() => setAuthError('')}
-          >×</button>
-        </div>
-      )}
+      <Toast message={authError} onDismiss={() => setAuthError('')} />
       { !token ? (
       authMode === 'signup' ? (
         /* ---- Sign-up view (the designed panel) ---- */
@@ -391,19 +384,7 @@ function App() {
             </div>
           </div>
           <div className="list-scroll">
-            <div className="home-streak">
-              <span className="streak-flame">
-                <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M10 2c.6 2.4-.7 3.6-1.9 4.8C6.7 8.1 5.5 9.4 5.5 12a4.5 4.5 0 0 0 9 0c0-1.6-.7-2.8-1.5-3.8-.3 1-.9 1.6-1.7 1.9.4-2.3-.4-4.6-1.8-8.1z" fill="currentColor"/></svg>
-              </span>
-              <div className="streak-main">
-                <div className="streak-num"><b>{streak}</b><span>day streak</span></div>
-              </div>
-              <div className="streak-dots">
-                {last7.map((last, i) => (
-                  <i className={last ? 'on' : ''} key={i}></i>
-                ))}
-              </div>
-            </div>
+            <StreakBar streak={streak} last7={last7}/>
 
 
             {sessions.length === 0 &&  (  <div className="feed-empty">
@@ -418,16 +399,7 @@ function App() {
                   {label}
                 </div>
                 {sessions.map((session) => (
-                  <div className="feed-card" key={session.id} onClick={() => {setSelectedSessionId(session.id)}}>
-                    <div className="card-top" >
-                      <span className="sesh-name">{session.workout}</span>
-                      
-                      <span className="sesh-date">{new Date(session.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
-                    </div>
-                    <div className="card-reflect">
-                      <p>{session.reflection}</p>
-                    </div>
-                  </div>
+                  <FeedCard key={session.id} session={session} onSelect={setSelectedSessionId} />
                 ))}
               </div>
             ))}
