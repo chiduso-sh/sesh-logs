@@ -1,5 +1,5 @@
 // count consecutive days (ending today) that have at least one session
-export function computeStreak(sessions) {
+export function computeStreak(sessions: {created_at: string}[]) : number {
   // a Set of unique day-labels like "Fri Aug 10 2026"
   const days = new Set(
     sessions
@@ -15,3 +15,4 @@ export function computeStreak(sessions) {
   }
   return streak
 }
+
