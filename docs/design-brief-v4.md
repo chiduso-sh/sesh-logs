@@ -3,10 +3,17 @@
 Brief to hand to a designer (or Claude Design). Self-contained by design — it
 restates the product and the design system so it needs no other context.
 
-Scope decided 2026-09-16: design the **interview** and the **navigation model**
-up front, because the interview is the product's centerpiece and routing can't
-be structured until the screens are known. Settings, upgrade, and search detail
-get designed inline in the sections that build them.
+Scope decided 2026-09-16, clarified 2026-09-17: design the **interview** and
+the **navigation model** up front, because the interview is the product's
+centerpiece and routing can't be structured until the screens are known.
+
+Settings and search are **in scope for placement and skeleton**, because the
+navigation model depends on them: there is currently no way to reach settings on
+a phone at all, so the nav has to fill that hole, and where search is entered
+from is a navigation decision rather than a search decision. Their interiors are
+**out of scope** and get designed inline in the sections that build them —
+specifically the upgrade / plan-change flow and the formatting of search
+results.
 
 ---
 
@@ -107,7 +114,9 @@ What I need:
     session, and settings. There is currently no way to reach settings on a
     phone at all, and the only persistent action is a floating "+" button.
   - A settings screen: account details, units preference (kg/lb), plan and
-    usage ("7 of 10 AI reflections used this month"), log out, delete account
+    usage ("7 of 10 AI reflections used this month"), log out, delete account.
+    The screen itself and its information hierarchy — not the upgrade or
+    plan-change flow it links out to, which is designed later.
   - Edit and delete affordances on a saved session, plus the LOCKED state —
     see below. Currently there is no way to fix a typo or remove a mis-logged
     session at all.
@@ -133,8 +142,10 @@ should feel like the app taking the journal seriously. Please design:
     wording matters a lot here and I'd welcome a suggestion.
   - The delete confirmation, which should mention that deletion is only
     possible today
-  - Search over past reflections — where the entry point lives and what
-    results look like
+  - Search over past reflections — where the entry point lives in the
+    navigation, on both desktop and phone. A rough result row is welcome for
+    context, but the result list is designed later with the section that
+    builds it.
 
 ## Constraints
 
