@@ -1,4 +1,8 @@
-import { pgTable, text, timestamp, integer, numeric, index } from 'drizzle-orm/pg-core'
+import { pgTable, pgEnum, text, timestamp, integer, numeric, index } from 'drizzle-orm/pg-core'
+
+// A Postgres enum type: the database itself only allows these values.
+// Must be exported, or drizzle-kit won't see it and won't create the type.
+export const unitsEnum = pgEnum('units', ['kg', 'lb'])
 
 // The users table, written as code instead of a CREATE TABLE string.
 // In each column: the key on the left is its name in TypeScript,
@@ -7,7 +11,7 @@ export const users = pgTable('users', {
   id: text('id').primaryKey(),
   username: text('username').notNull().unique(),
   passwordHash: text('password_hash').notNull(),
-  units: text('units', {enum: ['kg', 'lb']}).notNull().default('kg')
+  units: unitsEnum('units').notNull().default('kg')
 })
 
 // One row of the users table, as TypeScript sees it. Derived, not hand-written.
