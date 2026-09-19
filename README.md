@@ -56,8 +56,11 @@ Two separate programs talking over a JSON API. The frontend never touches the da
 ```bash
 cd backend
 npm install
-# create backend/.env with your database URL (this file is gitignored):
-#   DATABASE_URL=postgresql://user:pass@host/dbname
+# create backend/.env with your database URLs (this file is gitignored):
+#   DATABASE_URL=postgresql://user:pass@host/dbname?sslmode=verify-full
+#   DATABASE_URL_UNPOOLED=postgresql://user:pass@host/dbname?sslmode=verify-full
+# (the second one is the DIRECT, unpooled host — migrations need a single steady connection)
+npm run db:migrate            # creates the tables; run this once before the first start
 node --env-file=.env server.js
 ```
 
@@ -80,7 +83,8 @@ cd backend  && node --test     # signup route + a full save→read round-trip (i
 | Where | Variable | Purpose |
 | --- | --- | --- |
 | Frontend (Vercel) | `VITE_API_URL` | Base URL of the deployed backend |
-| Backend (Render) | `DATABASE_URL` | Postgres connection string |
+| Backend (Render) | `DATABASE_URL` | Postgres connection string (pooled) |
+| Backend (local) | `DATABASE_URL_UNPOOLED` | Direct (unpooled) connection string, used only by `npm run db:migrate` |
 | Backend (Render) | `JWT_SECRET` | Secret used to sign/verify tokens |
 | Backend (Render) | `FRONTEND_URL` | The one origin allowed by CORS |
 | Backend (Render) | `PORT` | Provided automatically by the host |
