@@ -1,0 +1,30 @@
+{
+  // Settings tsc reads when you run `npx tsc --noEmit` with no file names.
+  "compilerOptions": {
+    // Assume this JavaScript version exists. Node 22 understands modern syntax.
+    "target": "ES2022",
+
+    // Resolve imports the way Node itself does.
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+
+    // Every safety check on.
+    "strict": true,
+
+    // Skip type-checking inside node_modules. Faster, and their bugs are not ours.
+    "skipLibCheck": true,
+
+    // Check only, never write .js files. Nothing here compiles schema.ts -
+    // drizzle-kit reads it directly, and the rest of the backend is already .js.
+    "noEmit": true,
+
+    // The @types/* allowlist. Setting this field means ONLY what is listed
+    // gets loaded, so a future @types/* package must be added here by hand.
+    // "node" is what tells TS about `process` (drizzle.config.ts uses it).
+    "types": ["node"]
+  },
+
+  // Which files to check when tsc runs with no file names: every .ts file here
+  // and in any subfolder. node_modules is skipped automatically.
+  "include": ["**/*.ts"]
+}
