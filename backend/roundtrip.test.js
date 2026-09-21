@@ -1,9 +1,21 @@
-import { test } from 'node:test'
+import { after, before, test } from 'node:test'
 import assert from 'node:assert'
+import app from './app.js';
 
-const BASE = 'http://localhost:3000'
 
-// INTEGRATION test: it hits the REAL running server, so start the server first!
+let server
+let BASE
+
+
+before(() => {
+  server = app.listen(0)
+  BASE = `http://localhost:${server.address().port}`
+})
+
+
+after(() => {
+  server.close()
+})
 test('save a nested session, then read it back with its exercises + sets', async () => {
   // 1) make a fresh user + log in to get a token
   const username = 'test_' + Math.random().toString(36).slice(2)
