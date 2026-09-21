@@ -37,6 +37,10 @@ app.get('/', (req, res) => {
   res.send('wesh')
 })
 
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' })
+})
+
 // a route that returns the current list of sessions as JSON data
 app.get('/api/sessions', requireAuth, async (req, res) => {
   const result = await db.query('SELECT * FROM sessions WHERE user_id = $1', [req.userId])
