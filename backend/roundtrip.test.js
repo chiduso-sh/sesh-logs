@@ -15,14 +15,14 @@ before(() => {
 
 
 after(async () => {
-  await pool.query("DELETE FROM users WHERE username LIKE 'test%'")
+  await pool.query("DELETE FROM users WHERE username LIKE 'test_roundtrip%'")
 
   await pool.end()
   server.close()
 })
 test('save a nested session, then read it back with its exercises + sets', async () => {
   // 1) make a fresh user + log in to get a token
-  const username = 'test_' + Math.random().toString(36).slice(2)
+  const username = 'test_roundtrip' + Math.random().toString(36).slice(2)
   const creds = { username, password: 'longenough1' }
   await fetch(`${BASE}/api/signup`, {
     method: 'POST',

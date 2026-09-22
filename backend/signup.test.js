@@ -14,14 +14,14 @@ before(() => {
 })
 
 after(async () => {
-  await pool.query("DELETE FROM users WHERE username LIKE 'test%'")
+  await pool.query("DELETE FROM users WHERE username LIKE 'test_signup%'")
 
   await pool.end()
   server.close()
 })
 test('signing up the same username twice returns 409 the second time', async () => {
   // a random username so this test is repeatable (never collides with an existing user)
-  const username = 'test_' + Math.random().toString(36).slice(2)
+  const username = 'test_signup' + Math.random().toString(36).slice(2)
   const opts = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

@@ -82,6 +82,7 @@ app.post('/api/signup', async (req, res) => {
         await db.query('INSERT INTO users (id, username, password_hash) VALUES ($1, $2, $3)', [crypto.randomUUID(), username, password_hash])
         res.status(201).json({ username }) // send back the username (never the hash)
     } catch (error) {
+      console.error(error)
         return res.status(409).json({ error: 'Username already taken' })
     }
 })
