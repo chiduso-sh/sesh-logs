@@ -1,6 +1,7 @@
 import { test, before, after } from 'node:test'
 import assert from 'node:assert'
 import app from './app.js'
+import './testGuard.js'
 
 let server
 let BASE

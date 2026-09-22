@@ -1,7 +1,8 @@
 import { after, before, test } from 'node:test'
 import assert from 'node:assert'
 import app from './app.js';
-
+import pool from './db.js'
+import './testGuard.js'
 
 let server
 let BASE
@@ -13,7 +14,10 @@ before(() => {
 })
 
 
-after(() => {
+after(async () => {
+  await pool.query("DELETE FROM users WHERE username LIKE 'test%'")
+
+  await pool.end()
   server.close()
 })
 test('save a nested session, then read it back with its exercises + sets', async () => {

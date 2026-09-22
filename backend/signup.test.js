@@ -1,7 +1,8 @@
 import { after, before, test } from 'node:test'
 import assert from 'node:assert'
 import app from './app.js';
-
+import pool from './db.js'
+import './testGuard.js'
 
 let server
 let BASE
@@ -12,8 +13,11 @@ before(() => {
   BASE = `http://localhost:${server.address().port}`
 })
 
-after(() => {
-    server.close()
+after(async () => {
+  await pool.query("DELETE FROM users WHERE username LIKE 'test%'")
+
+  await pool.end()
+  server.close()
 })
 test('signing up the same username twice returns 409 the second time', async () => {
   // a random username so this test is repeatable (never collides with an existing user)
