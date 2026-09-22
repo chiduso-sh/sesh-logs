@@ -5,5 +5,5 @@
 // Without it, `node --env-file=.env --test` would write users to production.
 
 if(process.env.APP_ENV !== 'test'){
-    throw new Error("tests must be run with --env-file=.env.test"); 
+    throw new Error("APP_ENV must be 'test' — use .env.test locally or the CI secret"); 
 }
