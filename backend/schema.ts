@@ -11,7 +11,7 @@ export const users = pgTable('users', {
   id: text('id').primaryKey(),
   username: text('username').notNull().unique(),
   passwordHash: text('password_hash').notNull(),
-  units: unitsEnum('units').notNull().default('kg')
+  units: unitsEnum('units').notNull().default('ben')
 })
 
 // One row of the users table, as TypeScript sees it. Derived, not hand-written.
