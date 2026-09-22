@@ -1,0 +1,27 @@
+# Runs on GitHub's own machine. If any step fails, the run goes red.
+name: CI
+
+# When should this run?
+on: 
+  [push, pull_request] 
+  
+  
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest          # a fresh Linux machine, thrown away after
+    defaults:
+      run:
+        working-directory: backend  # every `run:` below happens inside backend/
+    steps:
+      - uses: actions/checkout@v5   # download the repo onto the machine
+      - uses: actions/setup-node@v5 # install Node
+        with:
+          node-version: 24
+      - run: npm ci 
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm test
+        env: 
+          DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+          APP_ENV:  test
