@@ -1,8 +1,8 @@
+import './testGuard.js'
 import { after, before, test } from 'node:test'
 import assert from 'node:assert'
-import app from './app.js';
+import app from './app.js'
 import pool from './db.js'
-import './testGuard.js'
 
 let server
 let BASE

@@ -2,10 +2,8 @@
 name: CI
 
 # When should this run?
-on: 
-  [push, pull_request] 
-  
-  
+on:
+  [push, pull_request]
 
 jobs:
   backend:
@@ -18,10 +16,10 @@ jobs:
       - uses: actions/setup-node@v5 # install Node
         with:
           node-version: 24
-      - run: npm ci 
+      - run: npm ci
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test
-        env: 
+        env:
           DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
-          APP_ENV:  test
+          APP_ENV: test
