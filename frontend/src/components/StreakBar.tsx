@@ -1,6 +1,6 @@
 interface StreakBarProp {
     streak: number,
-    last7: boolean[]
+    last7: number
 }
 
 
