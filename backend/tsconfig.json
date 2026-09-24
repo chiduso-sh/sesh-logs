@@ -12,8 +12,6 @@
     // Skip type-checking inside node_modules. Faster, and their bugs are not ours.
     "skipLibCheck": true,
 
-    // Check only, never write .js files. Nothing here compiles schema.ts -
-    // drizzle-kit reads it directly, and the rest of the backend is already .js.
     "noEmit": true,
 
     "types": ["node"]
