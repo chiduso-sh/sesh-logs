@@ -75,7 +75,7 @@ Then open the URL Vite prints (default `http://localhost:5173`). With no `VITE_A
 **Tests**
 ```bash
 cd frontend && node --test     # streak logic (unit)
-cd backend  && node --test     # signup route + a full save→read round-trip (integration — server must be running)
+cd backend  && npm test    # /health, signup, and a save→read round-trip (each test starts its own server, against the TEST database)
 ```
 
 ## Environment variables

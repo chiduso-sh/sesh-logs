@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --env-file-if-exists=.env.test --test",
     "start": "node server.js",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "typecheck": "tsc",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -21,8 +23,11 @@
     "pg": "^8.23.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^26.6.2",
     "drizzle-kit": "^0.31.10",
+    "eslint": "^10.11.0",
+    "globals": "^17.12.0",
     "typescript": "^7.0.2"
   }
 }

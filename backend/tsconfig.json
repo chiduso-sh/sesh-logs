@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+
+    // Resolve imports the way Node itself does.
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+
+    // Every safety check on.
+    "strict": true,
+
+    // Skip type-checking inside node_modules. Faster, and their bugs are not ours.
+    "skipLibCheck": true,
+
+    "noEmit": true,
+
+    "types": ["node"]
+  },
+
+  "include": ["**/*.ts"]
+}
