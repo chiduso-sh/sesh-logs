@@ -1,42 +1,36 @@
 import './testGuard.js'
 import { after, before, test } from 'node:test'
+import { start, stop } from './testServer.js'
 import assert from 'node:assert'
-import app from './app.js'
 import pool from './db.js'
 
-let server
-let BASE
 
+const username = 'test_roundtrip' + Math.random().toString(36).slice(2)
+let baseUrl
 
 before(() => {
-  server = app.listen(0)
-  BASE = `http://localhost:${server.address().port}`
+  baseUrl = start()
 })
-
 
 after(async () => {
-  await pool.query("DELETE FROM users WHERE username LIKE 'test_roundtrip%'")
-
+  await pool.query("DELETE FROM users WHERE username = $1", [username])
   await pool.end()
-  server.close()
+  stop()
 })
 test('save a nested session, then read it back with its exercises + sets', async () => {
-  // 1) make a fresh user + log in to get a token
-  const username = 'test_roundtrip' + Math.random().toString(36).slice(2)
   const creds = { username, password: 'longenough1' }
-  await fetch(`${BASE}/api/signup`, {
+  await fetch(`${baseUrl}/api/signup`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(creds),
   })
-  const loginRes = await fetch(`${BASE}/api/login`, {
+  const loginRes = await fetch(`${baseUrl}/api/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(creds),
   })
   const { token } = await loginRes.json()
 
-  // 2) POST a nested session: 1 exercise, 2 sets (one weighted, one bodyweight)
   const payload = {
     workout: 'Test day',
     reflection: 'felt fine',
@@ -44,20 +38,18 @@ test('save a nested session, then read it back with its exercises + sets', async
       { name: 'Squat', sets: [{ reps: 5, weight: 100 }, { reps: 8, weight: null }] },
     ],
   }
-  const postRes = await fetch(`${BASE}/api/sessions`, {
+  const postRes = await fetch(`${baseUrl}/api/sessions`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
     body: JSON.stringify(payload),
   })
-  const { id } = await postRes.json() // the route returns the new session's id
+  const { id } = await postRes.json() 
 
-  // 3) GET it back as the nested tree
-  const getRes = await fetch(`${BASE}/api/sessions/${id}`, {
+  const getRes = await fetch(`${baseUrl}/api/sessions/${id}`, {
     headers: { 'Authorization': 'Bearer ' + token },
   })
   const tree = await getRes.json()
 
-  // 4) assert the tree matches what we saved
 
   assert.strictEqual(tree.exercises.length, 1)
   assert.strictEqual(tree.exercises[0].name, 'Squat')
